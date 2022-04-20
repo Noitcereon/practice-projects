@@ -8,11 +8,14 @@ class Board extends React.Component {
       squares: Array(9).fill(null),
     };
   }
-  renderSquare(index) {
+  handleClick(squaresIndex){
+    
+  }
+  renderSquare(squaresIndex) {
     return (
       <Square
-        value={this.state.squares[index]}
-        onClick={() => this.handleClick(index)}
+        value={this.state.squares[squaresIndex]}
+        onClick={() => this.handleClick(squaresIndex)}
       ></Square>
     );
   }
