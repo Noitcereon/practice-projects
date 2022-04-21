@@ -7,7 +7,7 @@ function Square(props){
     </button>
   );
 }
-
+// THE BELOW CODE EQUIVALENT TO THE ABOVE (but is a class component instead). Note the onClick parentheses.
 // class Square extends React.Component {
 //   render() {
 //     return (
