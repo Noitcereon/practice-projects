@@ -1,7 +1,6 @@
 package noitcereon.mydemojavaapi.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
-import org.springframework.context.annotation.Primary;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
