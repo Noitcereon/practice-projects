@@ -42,6 +42,13 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- A dependency that enables the use of .env file together with Spring's @Value annotation
+			It works both in .java and .properties  files. https://github.com/paulschwarz/spring-dotenv -->
+		<dependency>
+			<groupId>me.paulschwarz</groupId>
+			<artifactId>spring-dotenv</artifactId>
+			<version>2.5.3</version>
+		</dependency>
 	</dependencies>
 
 	<build>
