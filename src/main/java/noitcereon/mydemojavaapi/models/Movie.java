@@ -1,23 +1,36 @@
 package noitcereon.mydemojavaapi.models;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import org.springframework.context.annotation.Primary;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
+@Entity
 public class Movie {
+    @Id
     private String uid;
     private String title;
     private Date releaseYear;
     private LocalTime duration;
-    private ArrayList<Actor> actors;
+
+//    @ManyToMany()
+//    private ArrayList<Actor> actors;
+
+    public Movie(){
+    }
 
     public Movie(String uid, String title, Date releaseYear, LocalTime duration, ArrayList<Actor> actors) {
         this.uid = uid;
         this.title = title;
         this.releaseYear = releaseYear;
         this.duration = duration;
-        this.actors = actors;
+//        this.actors = actors;
     }
 
     public String getUid() {
@@ -52,24 +65,24 @@ public class Movie {
         this.duration = duration;
     }
 
-    public ArrayList<Actor> getActors() {
-        return actors;
-    }
-
-    public void setActors(ArrayList<Actor> actors) {
-        this.actors = actors;
-    }
+//    public ArrayList<Actor> getActors() {
+//        return actors;
+//    }
+//
+//    public void setActors(ArrayList<Actor> actors) {
+//        this.actors = actors;
+//    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Movie)) return false;
         Movie movie = (Movie) o;
-        return getUid().equals(movie.getUid()) && getTitle().equals(movie.getTitle()) && getReleaseYear().equals(movie.getReleaseYear()) && getDuration().equals(movie.getDuration()) && getActors().equals(movie.getActors());
+        return getUid().equals(movie.getUid()) && getTitle().equals(movie.getTitle()) && getReleaseYear().equals(movie.getReleaseYear()) && getDuration().equals(movie.getDuration());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUid(), getTitle(), getReleaseYear(), getDuration(), getActors());
+        return Objects.hash(getUid(), getTitle(), getReleaseYear(), getDuration());
     }
 }
