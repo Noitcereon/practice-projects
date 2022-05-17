@@ -1,9 +1,18 @@
 package noitcereon.mydemojavaapi.models;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Actor {
+    @Id
+    private String uid;
     private String firstName;
     private String lastName;
     private int age;
+
+    public Actor() {
+    }
 
     public Actor(String firstName, String lastName, int age) {
         setFirstName(firstName);
@@ -32,7 +41,7 @@ public class Actor {
     }
 
     public void setAge(int age) {
-        if(age > 0 && age < 150){
+        if (age > 0 && age < 150) {
             this.age = age;
         }
     }
