@@ -19,18 +19,24 @@ public class Movie {
     private int durationInMinutes;
 
 
-//    @ManyToMany()
-//    private ArrayList<Actor> actors;
+    // When using ManyToMany you use @JoinTable to specify both the name of the table and
+    // the columns in the joined table (inverseJoinColumns is taken from the one where mappedBy is present)
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name = "movie_actor",
+            joinColumns = {@JoinColumn(name = "movie_id")},
+            inverseJoinColumns = {@JoinColumn(name = "actor_id")}
+    )
+    private Set<Actor> actors;
 
     public Movie() {
     }
 
-    public Movie(String uuid, String title, int releaseYear, int durationInMinutes) {
+    public Movie(String uuid, String title, int releaseYear, int durationInMinutes, Set<Actor> actors) {
         setUuid(uuid);
         setTitle(title);
         setReleaseYear(releaseYear);
         setDurationInMinutes(durationInMinutes);
-//         setActors(actors);
+        setActors(actors);
     }
 
     public String getUuid() {
@@ -38,11 +44,9 @@ public class Movie {
     }
 
     public void setUuid(String uuid) {
-        // TODO: Add UUID validation
-        if(uuid.length() == 36){
+        if (uuid.length() == 36) {
             this.uuid = uuid;
-        }
-        else{
+        } else {
             this.uuid = UUID.randomUUID().toString();
         }
     }
@@ -60,7 +64,7 @@ public class Movie {
     }
 
     public void setReleaseYear(int releaseYear) {
-        if(releaseYear > 9999){
+        if (releaseYear > 9999) {
             this.releaseYear = Calendar.getInstance();
             this.releaseYear.set(Calendar.YEAR, 0);
             return;
@@ -78,13 +82,13 @@ public class Movie {
         this.durationInMinutes = durationInMinutes;
     }
 
-//    public ArrayList<Actor> getActors() {
-//        return actors;
-//    }
-//
-//    public void setActors(ArrayList<Actor> actors) {
-//        this.actors = actors;
-//    }
+    public Set<Actor> getActors() {
+        return actors;
+    }
+
+    public void setActors(Set<Actor> actors) {
+        this.actors = actors;
+    }
 
 
     @Override
