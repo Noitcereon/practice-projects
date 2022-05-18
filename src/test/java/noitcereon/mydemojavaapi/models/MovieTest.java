@@ -55,8 +55,8 @@ class MovieTest {
         assertNotEquals(invalidYear, _movie.getReleaseYear().get(Calendar.YEAR));
     }
 
-    @Test
-    void given_invalidDuration_when_settingMovieDuration_then_durationIsNotSet() {
-
-    }
+//    @Test
+//    void given_invalidDuration_when_settingMovieDuration_then_durationIsNotSet() {
+//
+//    }
 }
