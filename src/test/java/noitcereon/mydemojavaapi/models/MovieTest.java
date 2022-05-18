@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import java.rmi.server.UID;
 import java.time.Year;
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,8 +28,9 @@ class MovieTest {
         String title = "My Movie";
         int releaseYear = 2022;
         int durationInMinutes = 98;
+        Set<Actor> actors = new HashSet<>();
 
-        Movie movie = new Movie(id.toString(), title, releaseYear, durationInMinutes);
+        Movie movie = new Movie(id.toString(), title, releaseYear, durationInMinutes, actors);
 
         assertEquals(id.toString(), movie.getUuid());
         assertEquals(title, movie.getTitle());
