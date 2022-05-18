@@ -1,8 +1,6 @@
 package noitcereon.mydemojavaapi.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.Duration;
 import java.util.*;
 
@@ -14,11 +12,11 @@ public class Movie {
     @Column
     private String title;
     @Column
+    @Temporal(TemporalType.TIMESTAMP)
     private Calendar releaseYear;
 
-    // SMALLINT type is a number between -32,768 and 32,767, which is sufficient for the runtime duration (in minutes)
-    @Column(columnDefinition = "SMALLINT")
-    private Duration duration;
+    @Column
+    private int durationInMinutes;
 
 
 //    @ManyToMany()
@@ -31,7 +29,7 @@ public class Movie {
         setUuid(uuid);
         setTitle(title);
         setReleaseYear(releaseYear);
-        setDuration(durationInMinutes);
+        setDurationInMinutes(durationInMinutes);
 //         setActors(actors);
     }
 
@@ -63,12 +61,12 @@ public class Movie {
     }
 
 
-    public Duration getDuration() {
-        return duration;
+    public int getDurationInMinutes() {
+        return durationInMinutes;
     }
 
-    public void setDuration(int durationInMinutes) {
-        this.duration = Duration.ofMinutes(durationInMinutes);
+    public void setDurationInMinutes(int durationInMinutes) {
+        this.durationInMinutes = durationInMinutes;
     }
 
 //    public ArrayList<Actor> getActors() {
@@ -79,16 +77,17 @@ public class Movie {
 //        this.actors = actors;
 //    }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Movie)) return false;
         Movie movie = (Movie) o;
-        return getUuid().equals(movie.getUuid()) && getTitle().equals(movie.getTitle()) && getReleaseYear().equals(movie.getReleaseYear()) && getDuration().equals(movie.getDuration());
+        return getDurationInMinutes() == movie.getDurationInMinutes() && getUuid().equals(movie.getUuid()) && getTitle().equals(movie.getTitle()) && getReleaseYear().equals(movie.getReleaseYear());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUuid(), getTitle(), getReleaseYear(), getDuration());
+        return Objects.hash(getUuid(), getTitle(), getReleaseYear(), getDurationInMinutes());
     }
 }
