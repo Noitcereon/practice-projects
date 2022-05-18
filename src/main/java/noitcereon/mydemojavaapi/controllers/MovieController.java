@@ -5,8 +5,8 @@ import noitcereon.mydemojavaapi.repositories.IMovieRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.rmi.server.UID;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/")
@@ -23,7 +23,7 @@ public class MovieController {
     }
     @PostMapping("movies")
     public ResponseEntity<Movie> createMovie(@RequestBody Movie movie){
-        movie.setUid(new UID().toString());
+        movie.setUuid(UUID.randomUUID().toString());
         Movie savedMovie = movieRepo.save(movie);
         return ResponseEntity.ok(savedMovie);
     }
