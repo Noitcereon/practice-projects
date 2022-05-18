@@ -1,5 +1,6 @@
 package noitcereon.mydemojavaapi.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.time.Duration;
@@ -8,10 +9,17 @@ import java.util.*;
 @Entity
 public class Movie {
     @Id
+    @Column
     private String uuid;
+    @Column
     private String title;
+    @Column
     private Calendar releaseYear;
+
+    // SMALLINT type is a number between -32,768 and 32,767, which is sufficient for the runtime duration (in minutes)
+    @Column(columnDefinition = "SMALLINT")
     private Duration duration;
+
 
 //    @ManyToMany()
 //    private ArrayList<Actor> actors;
@@ -53,6 +61,7 @@ public class Movie {
         specificCalendarYear.set(Calendar.YEAR, releaseYear);
         this.releaseYear = specificCalendarYear;
     }
+
 
     public Duration getDuration() {
         return duration;
