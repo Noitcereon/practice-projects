@@ -3,6 +3,7 @@ package noitcereon.mydemojavaapi.models;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.rmi.server.UID;
 import java.util.Calendar;
 import java.util.UUID;
 
@@ -34,8 +35,13 @@ class MovieTest {
     }
 
     @Test
-    void given_invalidUidInput_when_settingUid_then_uidIsNotSet() {
+    void given_invalidUuidInput_when_settingUuid_then_uuidIsDifferentToInput() {
+        String invalidUuid1 = "abcd";
+        String invalidUuid2 = new UID().toString();
+        _movie.setUuid("abcd");
 
+        assertNotEquals(invalidUuid1, _movie.getUuid());
+        assertNotEquals(invalidUuid2, _movie.getUuid());
     }
 
     @Test
