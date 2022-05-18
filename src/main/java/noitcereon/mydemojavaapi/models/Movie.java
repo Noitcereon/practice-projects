@@ -5,39 +5,39 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import java.time.Duration;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 public class Movie {
     @Id
     private String uid;
     private String title;
-    private Date releaseYear;
-    private LocalTime duration;
+    private Calendar releaseYear;
+    private Duration duration;
 
 //    @ManyToMany()
 //    private ArrayList<Actor> actors;
 
-    public Movie(){
+    public Movie() {
     }
 
-    public Movie(String uid, String title, Date releaseYear, LocalTime duration, ArrayList<Actor> actors) {
-        this.uid = uid;
-        this.title = title;
-        this.releaseYear = releaseYear;
-        this.duration = duration;
-//        this.actors = actors;
+    public Movie(String uuid, String title, int releaseYear, int durationInMinutes, ArrayList<Actor> actors) {
+        setUid(uuid);
+        setTitle(title);
+        setReleaseYear(releaseYear);
+        setDuration(durationInMinutes);
+//         setActors(actors);
     }
 
     public String getUid() {
         return uid;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setUid(String uuid) {
+        // TODO: Add UUID validation
+        this.uid = uuid;
     }
 
     public String getTitle() {
@@ -48,20 +48,22 @@ public class Movie {
         this.title = title;
     }
 
-    public Date getReleaseYear() {
+    public Calendar getReleaseYear() {
         return releaseYear;
     }
 
-    public void setReleaseYear(Date releaseYear) {
-        this.releaseYear = releaseYear;
+    public void setReleaseYear(int releaseYear) {
+        Calendar specificCalendarYear = Calendar.getInstance();
+        specificCalendarYear.set(Calendar.YEAR, releaseYear);
+        this.releaseYear = specificCalendarYear;
     }
 
-    public LocalTime getDuration() {
+    public Duration getDuration() {
         return duration;
     }
 
-    public void setDuration(LocalTime duration) {
-        this.duration = duration;
+    public void setDuration(int durationInMinutes) {
+        this.duration = Duration.ofMinutes(durationInMinutes);
     }
 
 //    public ArrayList<Actor> getActors() {
