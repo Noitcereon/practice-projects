@@ -1,5 +1,7 @@
 package noitcereon.mydemojavaapi.models;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+
 import javax.persistence.*;
 import java.time.Duration;
 import java.util.*;
@@ -81,6 +83,7 @@ public class Movie {
     public void setDurationInMinutes(int durationInMinutes) {
         this.durationInMinutes = durationInMinutes;
     }
+    // TODO: Make getActors into a JsonGetter (so the format returns endpoints of the actors)
 
     public Set<Actor> getActors() {
         return actors;
