@@ -39,7 +39,12 @@ public class Movie {
 
     public void setUuid(String uuid) {
         // TODO: Add UUID validation
-        this.uuid = uuid;
+        if(uuid.length() == 36){
+            this.uuid = uuid;
+        }
+        else{
+            this.uuid = UUID.randomUUID().toString();
+        }
     }
 
     public String getTitle() {
