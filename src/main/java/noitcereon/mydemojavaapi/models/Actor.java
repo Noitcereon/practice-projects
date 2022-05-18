@@ -5,8 +5,9 @@ import javax.persistence.Id;
 
 @Entity
 public class Actor {
+
     @Id
-    private String uid;
+    private String uuid;
     private String firstName;
     private String lastName;
     private int age;
@@ -14,10 +15,19 @@ public class Actor {
     public Actor() {
     }
 
-    public Actor(String firstName, String lastName, int age) {
+    public Actor(String uuid, String firstName, String lastName, int age) {
+        setUuid(uuid);
         setFirstName(firstName);
         setLastName(lastName);
         setAge(age);
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public String getFirstName() {

@@ -1,18 +1,14 @@
 package noitcereon.mydemojavaapi.models;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import java.time.Duration;
-import java.time.LocalTime;
 import java.util.*;
 
 @Entity
 public class Movie {
     @Id
-    private String uid;
+    private String uuid;
     private String title;
     private Calendar releaseYear;
     private Duration duration;
@@ -23,21 +19,21 @@ public class Movie {
     public Movie() {
     }
 
-    public Movie(String uuid, String title, int releaseYear, int durationInMinutes, ArrayList<Actor> actors) {
-        setUid(uuid);
+    public Movie(String uuid, String title, int releaseYear, int durationInMinutes) {
+        setUuid(uuid);
         setTitle(title);
         setReleaseYear(releaseYear);
         setDuration(durationInMinutes);
 //         setActors(actors);
     }
 
-    public String getUid() {
-        return uid;
+    public String getUuid() {
+        return uuid;
     }
 
-    public void setUid(String uuid) {
+    public void setUuid(String uuid) {
         // TODO: Add UUID validation
-        this.uid = uuid;
+        this.uuid = uuid;
     }
 
     public String getTitle() {
@@ -79,11 +75,11 @@ public class Movie {
         if (this == o) return true;
         if (!(o instanceof Movie)) return false;
         Movie movie = (Movie) o;
-        return getUid().equals(movie.getUid()) && getTitle().equals(movie.getTitle()) && getReleaseYear().equals(movie.getReleaseYear()) && getDuration().equals(movie.getDuration());
+        return getUuid().equals(movie.getUuid()) && getTitle().equals(movie.getTitle()) && getReleaseYear().equals(movie.getReleaseYear()) && getDuration().equals(movie.getDuration());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUid(), getTitle(), getReleaseYear(), getDuration());
+        return Objects.hash(getUuid(), getTitle(), getReleaseYear(), getDuration());
     }
 }
