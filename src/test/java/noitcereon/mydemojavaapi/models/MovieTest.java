@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.rmi.server.UID;
+import java.time.Year;
 import java.util.Calendar;
 import java.util.UUID;
 
@@ -48,7 +49,10 @@ class MovieTest {
 
     @Test
     void given_invalidYearInput_when_settingReleaseYear_then_yearIsNotSet() {
+        int invalidYear = 25555;
+        _movie.setReleaseYear(invalidYear);
 
+        assertNotEquals(invalidYear, _movie.getReleaseYear().get(Calendar.YEAR));
     }
 
     @Test
