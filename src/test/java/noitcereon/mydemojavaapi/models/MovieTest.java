@@ -1,16 +1,9 @@
 package noitcereon.mydemojavaapi.models;
 
-import org.hibernate.id.GUIDGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.rmi.server.UID;
-import java.time.Duration;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -37,7 +30,7 @@ class MovieTest {
         assertEquals(id.toString(), movie.getUuid());
         assertEquals(title, movie.getTitle());
         assertEquals(releaseYear, movie.getReleaseYear().get(Calendar.YEAR));
-        assertEquals(durationInMinutes, movie.getDuration().toMinutes());
+        assertEquals(durationInMinutes, movie.getDurationInMinutes());
     }
 
     @Test
