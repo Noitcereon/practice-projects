@@ -60,11 +60,13 @@ public class Movie {
     }
 
     public void setReleaseYear(int releaseYear) {
+        if(releaseYear > 9999){
+            this.releaseYear.set(Calendar.YEAR, 0);
+        }
         Calendar specificCalendarYear = Calendar.getInstance();
         specificCalendarYear.set(Calendar.YEAR, releaseYear);
         this.releaseYear = specificCalendarYear;
     }
-
 
     public int getDurationInMinutes() {
         return durationInMinutes;
