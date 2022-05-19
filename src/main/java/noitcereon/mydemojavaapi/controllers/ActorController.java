@@ -1,17 +1,13 @@
 package noitcereon.mydemojavaapi.controllers;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import noitcereon.mydemojavaapi.models.Actor;
 import noitcereon.mydemojavaapi.repositories.IActorRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/actors")
@@ -30,7 +26,7 @@ public class ActorController {
 
     @GetMapping
     public ResponseEntity<List<Actor>> getAll() {
-        // TODO: figure out how to make a SQL query with Hibernate to not include deleted actors, so a stream filter isn't needed.
+        // TODO: replace stream().filter with filtered SQL query on repository, when it is implemented.
         List<Actor> actors = actorRepo.findAll().stream().filter(actor -> !actor.isDeleted()).toList();
         if (actors.size() == 0) {
             return ResponseEntity.noContent().build();
