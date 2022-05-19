@@ -1,6 +1,7 @@
 package noitcereon.mydemojavaapi.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,11 +15,14 @@ import java.util.UUID;
 public class Actor {
 
     @Id
-//    @Column(length = 36)
+    @Column(length = 36)
     private String uuid;
     private String firstName;
     private String lastName;
     private int age;
+
+    @ColumnDefault("false")
+    private boolean isDeleted;
 
     // The "mappedBy" tells Hibernate, which private field to use in ORM mapping (exists in the related model).
     // In this case the private field variable name is actors (see Movie model)
