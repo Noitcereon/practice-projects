@@ -1,15 +1,15 @@
 package noitcereon.mydemojavaapi.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.time.Duration;
 import java.util.*;
 
 @Entity
 public class Movie {
     @Id
-    @Column
+    @Column(length = 36)
     private String uuid;
     @Column
     private String title;
@@ -19,6 +19,9 @@ public class Movie {
 
     @Column
     private int durationInMinutes;
+
+    @ColumnDefault("false")
+    private boolean isDeleted;
 
 
     // When using ManyToMany you use @JoinTable to specify both the name of the table and
@@ -39,6 +42,7 @@ public class Movie {
         setReleaseYear(releaseYear);
         setDurationInMinutes(durationInMinutes);
         setActors(actors);
+        this.isDeleted = false;
     }
 
     public String getUuid() {
@@ -93,6 +97,12 @@ public class Movie {
         this.actors = actors;
     }
 
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
 
     @Override
     public boolean equals(Object o) {
