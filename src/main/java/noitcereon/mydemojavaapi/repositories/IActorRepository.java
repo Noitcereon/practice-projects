@@ -2,8 +2,11 @@ package noitcereon.mydemojavaapi.repositories;
 
 import noitcereon.mydemojavaapi.models.Actor;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.Set;
 
 public interface IActorRepository extends JpaRepository<Actor, String> {
-    // TODO: Add getAll that filters deleted actors away
-    // TODO: Add FindById that does not select deleted actors
+    Set<Actor> findAllByIsDeletedIsFalse();
+    Actor findByUuidAndIsDeletedIsFalse(String uuid);
 }

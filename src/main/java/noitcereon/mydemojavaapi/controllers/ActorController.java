@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/actors")
@@ -25,9 +26,9 @@ public class ActorController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Actor>> getAll() {
+    public ResponseEntity<Set<Actor>> getAll() {
         // TODO: replace stream().filter with filtered SQL query on repository, when it is implemented.
-        List<Actor> actors = actorRepo.findAll().stream().filter(actor -> !actor.isDeleted()).toList();
+        Set<Actor> actors = actorRepo.findAllByIsDeletedIsFalse();
         if (actors.size() == 0) {
             return ResponseEntity.noContent().build();
         }
@@ -36,10 +37,7 @@ public class ActorController {
 
     @GetMapping("{actorId}")
     public ResponseEntity<Actor> getById(@PathVariable String actorId) {
-        Actor actor = actorRepo.getById(actorId);
-        if(actor.isDeleted()){
-            return ResponseEntity.noContent().build();
-        }
+        Actor actor = actorRepo.findByUuidAndIsDeletedIsFalse(actorId);
         return ResponseEntity.ok(actor);
     }
 
