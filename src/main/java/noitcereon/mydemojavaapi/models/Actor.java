@@ -3,10 +3,7 @@ package noitcereon.mydemojavaapi.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.ColumnDefault;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.Set;
 import java.util.UUID;
 
@@ -80,6 +77,14 @@ public class Actor {
 
     public Set<Movie> getMovies() {
         return movies;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 
     public void setMovies(Set<Movie> movies) {
