@@ -7,10 +7,7 @@ import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/movies")
@@ -29,22 +26,19 @@ public class MovieController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Movie>> getAllMovies() {
-        // TODO: use getAll that does not contain deleted movies.
-        return ResponseEntity.ok(movieRepo.findAll());
+    public ResponseEntity<Set<Movie>> getAllMovies() {
+        return ResponseEntity.ok(movieRepo.findAllByIsDeletedIsFalse());
     }
 
     @GetMapping("{movieId}")
     public ResponseEntity<Movie> getById(@PathVariable String movieId) {
-        var optionalMovie = movieRepo.findById(movieId);
-        if (optionalMovie.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(optionalMovie.get());
+        Movie movie = movieRepo.findByUuidAndIsDeletedIsFalse(movieId);
+        return ResponseEntity.ok(movie);
     }
 
     @PatchMapping("/{movieId}/actors")
     public ResponseEntity<Actor> addActors(@PathVariable String movieId, ArrayList<String> actorIds) {
+        // TODO: make method to add actors to a movie
         return null;
     }
 
