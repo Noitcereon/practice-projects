@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -27,7 +28,7 @@ public class Actor {
     // The "mappedBy" tells Hibernate, which private field to use in ORM mapping (exists in the related model).
     // In this case the private field variable name is actors (see Movie model)
     @ManyToMany(mappedBy = "actors")
-    private Set<Movie> movies;
+    private Set<Movie> movies = new HashSet<>();
 
     public Actor() {
     }
