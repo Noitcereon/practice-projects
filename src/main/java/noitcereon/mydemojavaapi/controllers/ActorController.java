@@ -27,7 +27,6 @@ public class ActorController {
 
     @GetMapping
     public ResponseEntity<Set<Actor>> getAll() {
-        // TODO: replace stream().filter with filtered SQL query on repository, when it is implemented.
         Set<Actor> actors = actorRepo.findAllByIsDeletedIsFalse();
         if (actors.size() == 0) {
             return ResponseEntity.noContent().build();
