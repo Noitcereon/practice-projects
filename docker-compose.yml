@@ -14,3 +14,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "4500:5432"
+    volumes:
+      - POSTGRES_DB:/var/lib/postgresql/data
+volumes:
+  POSTGRES_DB:
