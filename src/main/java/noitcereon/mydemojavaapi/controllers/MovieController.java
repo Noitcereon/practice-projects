@@ -4,7 +4,6 @@ import noitcereon.mydemojavaapi.models.Actor;
 import noitcereon.mydemojavaapi.models.Movie;
 import noitcereon.mydemojavaapi.repositories.IActorRepository;
 import noitcereon.mydemojavaapi.repositories.IMovieRepository;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
