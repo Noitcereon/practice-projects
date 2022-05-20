@@ -28,14 +28,16 @@ class MovieTest {
         String title = "My Movie";
         int releaseYear = 2022;
         int durationInMinutes = 98;
+        String genre = "Action";
         Set<Actor> actors = new HashSet<>();
 
-        Movie movie = new Movie(id.toString(), title, releaseYear, durationInMinutes, actors);
+        Movie movie = new Movie(id.toString(), title, releaseYear, durationInMinutes, actors, genre);
 
         assertEquals(id.toString(), movie.getUuid());
         assertEquals(title, movie.getTitle());
         assertEquals(releaseYear, movie.getReleaseYear().get(Calendar.YEAR));
         assertEquals(durationInMinutes, movie.getDurationInMinutes());
+        assertEquals(genre, movie.getPrimaryGenre());
     }
 
     @Test
