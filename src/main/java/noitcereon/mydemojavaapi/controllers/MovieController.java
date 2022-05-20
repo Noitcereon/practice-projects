@@ -41,7 +41,6 @@ public class MovieController {
 
     @PatchMapping("/{movieId}/actors")
     public ResponseEntity<Movie> addActors(@PathVariable String movieId, @RequestBody ArrayList<String> actorIds) {
-        // TODO: make method to add actors to a movie
         if (!movieRepo.existsById(movieId)) {
             return ResponseEntity.notFound().build();
         }
