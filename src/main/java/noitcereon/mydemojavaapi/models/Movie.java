@@ -24,7 +24,7 @@ public class Movie {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "genre_id")
-    private Genre primaryGenre;
+    private Genre primaryGenre = new Genre();
 
     // When using ManyToMany you use @JoinTable to specify both the name of the table and
     // the columns in the joined table (inverseJoinColumns is taken from the one where mappedBy is present)
@@ -42,7 +42,7 @@ public class Movie {
         setDurationInMinutes(durationInMinutes);
         setActors(actors);
         this.isDeleted = false;
-        this.primaryGenre = new Genre(genre);
+        this.primaryGenre.setName(genre);
     }
 
     public String getUuid() {
@@ -106,8 +106,12 @@ public class Movie {
         this.actors = actors;
     }
 
-    public String getPrimaryGenre() {
-        return primaryGenre.getName();
+    public Genre getPrimaryGenre() {
+        return primaryGenre;
+    }
+
+    public void setPrimaryGenre(Genre primaryGenre) {
+        this.primaryGenre = primaryGenre;
     }
 
     public boolean isDeleted() {
