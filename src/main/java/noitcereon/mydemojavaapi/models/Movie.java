@@ -22,23 +22,27 @@ public class Movie {
     @ColumnDefault("false")
     private boolean isDeleted;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "genre_id")
+    private Genre primaryGenre;
 
     // When using ManyToMany you use @JoinTable to specify both the name of the table and
     // the columns in the joined table (inverseJoinColumns is taken from the one where mappedBy is present)
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "movie_actor", joinColumns = {@JoinColumn(name = "movie_id")}, inverseJoinColumns = {@JoinColumn(name = "actor_id")})
-    private Set<Actor> actors;
+    private Set<Actor> actors = new HashSet<>();
 
     public Movie() {
     }
 
-    public Movie(String uuid, String title, int releaseYear, int durationInMinutes, Set<Actor> actors) {
+    public Movie(String uuid, String title, int releaseYear, int durationInMinutes, Set<Actor> actors, String genre) {
         setUuid(uuid);
         setTitle(title);
         setReleaseYear(releaseYear);
         setDurationInMinutes(durationInMinutes);
         setActors(actors);
         this.isDeleted = false;
+        this.primaryGenre = new Genre(genre);
     }
 
     public String getUuid() {
@@ -100,6 +104,10 @@ public class Movie {
 
     public void setActors(Set<Actor> actors) {
         this.actors = actors;
+    }
+
+    public String getPrimaryGenre() {
+        return primaryGenre.getName();
     }
 
     public boolean isDeleted() {
