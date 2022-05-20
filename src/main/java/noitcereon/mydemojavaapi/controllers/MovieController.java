@@ -2,6 +2,7 @@ package noitcereon.mydemojavaapi.controllers;
 
 import noitcereon.mydemojavaapi.models.Actor;
 import noitcereon.mydemojavaapi.models.Movie;
+import noitcereon.mydemojavaapi.repositories.IActorRepository;
 import noitcereon.mydemojavaapi.repositories.IMovieRepository;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +14,11 @@ import java.util.*;
 @RequestMapping("/api/movies")
 public class MovieController {
     private final IMovieRepository movieRepo;
+    private final IActorRepository actorRepo;
 
-    public MovieController(IMovieRepository movieRepo) {
+    public MovieController(IMovieRepository movieRepo, IActorRepository actorRepo) {
         this.movieRepo = movieRepo;
+        this.actorRepo = actorRepo;
     }
 
     @PostMapping
@@ -37,9 +40,20 @@ public class MovieController {
     }
 
     @PatchMapping("/{movieId}/actors")
-    public ResponseEntity<Actor> addActors(@PathVariable String movieId, ArrayList<String> actorIds) {
+    public ResponseEntity<Movie> addActors(@PathVariable String movieId, @RequestBody ArrayList<String> actorIds) {
         // TODO: make method to add actors to a movie
-        return null;
+        if (!movieRepo.existsById(movieId)) {
+            return ResponseEntity.notFound().build();
+        }
+        Movie movie = movieRepo.findByUuidAndIsDeletedIsFalse(movieId);
+        Set<Actor> actors = movie.getActors();
+        for (String actorId : actorIds) {
+            Actor actorToAdd = actorRepo.findByUuidAndIsDeletedIsFalse(actorId);
+            actors.add(actorToAdd);
+        }
+        movie.setActors(actors);
+        Movie savedObject = movieRepo.save(movie);
+        return ResponseEntity.ok(savedObject);
     }
 
     @PutMapping("{movieId}")
