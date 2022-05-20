@@ -1,0 +1,45 @@
+package noitcereon.mydemojavaapi.models;
+
+
+import org.hibernate.annotations.ColumnDefault;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+@Entity
+public class Genre {
+    @Id
+    private final String uuid;
+    private String name;
+    private LocalDateTime createdOn;
+    @ColumnDefault("false")
+    private boolean isDeleted;
+
+    public Genre() {
+        this.uuid = UUID.randomUUID().toString();
+    }
+
+    public Genre(String name) {
+        this.uuid = UUID.randomUUID().toString();
+        this.name = name;
+        this.createdOn = LocalDateTime.now();
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public LocalDateTime getCreatedOn() {
+        return createdOn;
+    }
+}
