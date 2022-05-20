@@ -3,6 +3,7 @@ package noitcereon.mydemojavaapi.controllers;
 import noitcereon.mydemojavaapi.models.Actor;
 import noitcereon.mydemojavaapi.models.Movie;
 import noitcereon.mydemojavaapi.repositories.IActorRepository;
+import noitcereon.mydemojavaapi.repositories.IGenreRepository;
 import noitcereon.mydemojavaapi.repositories.IMovieRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,15 +15,21 @@ import java.util.*;
 public class MovieController {
     private final IMovieRepository movieRepo;
     private final IActorRepository actorRepo;
+    private final IGenreRepository genreRepo;
 
-    public MovieController(IMovieRepository movieRepo, IActorRepository actorRepo) {
+    public MovieController(IMovieRepository movieRepo, IActorRepository actorRepo, IGenreRepository genreRepo) {
         this.movieRepo = movieRepo;
         this.actorRepo = actorRepo;
+        this.genreRepo = genreRepo;
     }
 
     @PostMapping
     public ResponseEntity<Movie> createMovie(@RequestBody Movie movie) {
         movie.setUuid(UUID.randomUUID().toString());
+        String genreName = movie.getPrimaryGenre().getName();
+        if(genreRepo.existsGenreByName(genreName)){
+            movie.setPrimaryGenre(genreRepo.findByName(genreName));
+        }
         Movie savedMovie = movieRepo.save(movie);
         return ResponseEntity.ok(savedMovie);
     }
