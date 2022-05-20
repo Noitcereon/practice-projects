@@ -26,10 +26,7 @@ public class Movie {
     // When using ManyToMany you use @JoinTable to specify both the name of the table and
     // the columns in the joined table (inverseJoinColumns is taken from the one where mappedBy is present)
     @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(name = "movie_actor",
-            joinColumns = {@JoinColumn(name = "movie_id")},
-            inverseJoinColumns = {@JoinColumn(name = "actor_id")}
-    )
+    @JoinTable(name = "movie_actor", joinColumns = {@JoinColumn(name = "movie_id")}, inverseJoinColumns = {@JoinColumn(name = "actor_id")})
     private Set<Actor> actors;
 
     public Movie() {
@@ -90,7 +87,10 @@ public class Movie {
     @JsonGetter(value = "actors")
     public Set<String> getActorEndpoints() {
         if (actors == null) return null;
-        return actors.stream().map(actor -> String.format("/api/actors/%s", actor.getUuid())).collect(Collectors.toSet());
+        return actors.stream().map(actor ->
+                        String.format("'%s %s', /api/actors/%s",
+                                actor.getFirstName(), actor.getLastName(), actor.getUuid()))
+                .collect(Collectors.toSet());
     }
 
     @JsonIgnore

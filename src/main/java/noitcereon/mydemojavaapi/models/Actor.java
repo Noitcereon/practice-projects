@@ -84,7 +84,7 @@ public class Actor {
     // The value attribute in the JsonGetter specifies the name of the property when it is displayed in JSON
     @JsonGetter(value = "movies")
     public Set<String> getMovieEndpoints() {
-        return movies.stream().map(movie -> String.format("/api/movies/%s", movie.getUuid())).collect(Collectors.toSet());
+        return movies.stream().map(movie -> String.format("'%s', /api/movies/%s", movie.getTitle(),movie.getUuid())).collect(Collectors.toSet());
     }
 
     public boolean isDeleted() {
