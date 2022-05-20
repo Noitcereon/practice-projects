@@ -52,6 +52,10 @@ public class Genre {
         return createdOn;
     }
 
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
     public Set<Movie> getMovies() {
         return movies;
     }
