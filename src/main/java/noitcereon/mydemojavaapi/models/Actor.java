@@ -1,11 +1,14 @@
 package noitcereon.mydemojavaapi.models;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -74,9 +77,14 @@ public class Actor {
             this.age = age;
         }
     }
-
+    @JsonIgnore
     public Set<Movie> getMovies() {
         return movies;
+    }
+    // The value attribute in the JsonGetter specifies the name of the property when it is displayed in JSON
+    @JsonGetter(value = "movies")
+    public Set<String> getMovieEndpoints() {
+        return movies.stream().map(movie -> String.format("/api/movies/%s", movie.getUuid())).collect(Collectors.toSet());
     }
 
     public boolean isDeleted() {

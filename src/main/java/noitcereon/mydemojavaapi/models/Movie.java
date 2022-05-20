@@ -1,23 +1,22 @@
 package noitcereon.mydemojavaapi.models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 public class Movie {
     @Id
     @Column(length = 36)
     private String uuid;
-    @Column
     private String title;
     @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar releaseYear;
-
-    @Column
     private int durationInMinutes;
 
     @ColumnDefault("false")
@@ -87,8 +86,14 @@ public class Movie {
     public void setDurationInMinutes(int durationInMinutes) {
         this.durationInMinutes = durationInMinutes;
     }
-    // TODO: Make getActors into a JsonGetter (so the format returns endpoints of the actors)
 
+    @JsonGetter(value = "actors")
+    public Set<String> getActorEndpoints() {
+        if (actors == null) return null;
+        return actors.stream().map(actor -> String.format("/api/actors/%s", actor.getUuid())).collect(Collectors.toSet());
+    }
+
+    @JsonIgnore
     public Set<Actor> getActors() {
         return actors;
     }
@@ -100,6 +105,7 @@ public class Movie {
     public boolean isDeleted() {
         return isDeleted;
     }
+
     public void setDeleted(boolean deleted) {
         isDeleted = deleted;
     }
