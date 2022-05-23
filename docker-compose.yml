@@ -9,7 +9,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
-      - "8081:8081"
+      - "8082:8081"
   postgresDB:
     container_name: practice_postgres_db
     # Image source: https://hub.docker.com/_/postgres/
