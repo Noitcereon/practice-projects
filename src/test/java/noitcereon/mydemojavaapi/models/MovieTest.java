@@ -37,7 +37,7 @@ class MovieTest {
         assertEquals(title, movie.getTitle());
         assertEquals(releaseYear, movie.getReleaseYear().get(Calendar.YEAR));
         assertEquals(durationInMinutes, movie.getDurationInMinutes());
-        assertEquals(genre, movie.getPrimaryGenre());
+        assertEquals(genre, movie.getPrimaryGenre().getName());
     }
 
     @Test
