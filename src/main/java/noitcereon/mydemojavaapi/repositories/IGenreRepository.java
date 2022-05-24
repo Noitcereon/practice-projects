@@ -1,6 +1,6 @@
 package noitcereon.mydemojavaapi.repositories;
 
-import noitcereon.mydemojavaapi.models.Genre;
+import noitcereon.mydemojavaapi.models.entities.Genre;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Set;

@@ -1,4 +1,4 @@
-package noitcereon.mydemojavaapi.models;
+package noitcereon.mydemojavaapi.models.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -21,7 +21,7 @@ public class Genre {
 
     @JsonIgnore
     @OneToMany(mappedBy = "primaryGenre")
-    private Set<Movie> movies = new HashSet<>();
+    private final Set<Movie> movies = new HashSet<>();
 
     @ColumnDefault("false")
     private boolean isDeleted;

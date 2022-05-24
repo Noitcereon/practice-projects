@@ -1,7 +1,7 @@
 package noitcereon.mydemojavaapi.controllers;
 
-import noitcereon.mydemojavaapi.models.Actor;
-import noitcereon.mydemojavaapi.models.Movie;
+import noitcereon.mydemojavaapi.models.entities.Actor;
+import noitcereon.mydemojavaapi.models.entities.Movie;
 import noitcereon.mydemojavaapi.repositories.IActorRepository;
 import noitcereon.mydemojavaapi.repositories.IGenreRepository;
 import noitcereon.mydemojavaapi.repositories.IMovieRepository;

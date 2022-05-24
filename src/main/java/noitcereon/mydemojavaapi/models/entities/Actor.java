@@ -1,8 +1,9 @@
-package noitcereon.mydemojavaapi.models;
+package noitcereon.mydemojavaapi.models.entities;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import noitcereon.mydemojavaapi.models.ActorUtils;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -48,9 +49,9 @@ public class Actor {
     public void setUuid(String uuid) {
         if (uuid.length() == 36) {
             this.uuid = uuid;
-        } else {
-            this.uuid = UUID.randomUUID().toString();
+            return;
         }
+        this.uuid = UUID.randomUUID().toString();
     }
 
     public String getFirstName() {
@@ -74,18 +75,20 @@ public class Actor {
     }
 
     public void setAge(int age) {
-        if (age > 0 && age < 150) {
+        if (ActorUtils.isValidAgeRange(age)) {
             this.age = age;
         }
     }
+
     @JsonIgnore
     public Set<Movie> getMovies() {
         return movies;
     }
+
     // The value attribute in the JsonGetter specifies the name of the property when it is displayed in JSON
     @JsonGetter(value = "movies")
     public Set<String> getMovieEndpoints() {
-        return movies.stream().map(movie -> String.format("'%s', /api/movies/%s", movie.getTitle(),movie.getUuid())).collect(Collectors.toSet());
+        return movies.stream().map(movie -> String.format("'%s', /api/movies/%s", movie.getTitle(), movie.getUuid())).collect(Collectors.toSet());
     }
 
     public boolean isDeleted() {

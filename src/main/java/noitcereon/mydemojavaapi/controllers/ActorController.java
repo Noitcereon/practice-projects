@@ -1,12 +1,10 @@
 package noitcereon.mydemojavaapi.controllers;
 
-import noitcereon.mydemojavaapi.models.Actor;
+import noitcereon.mydemojavaapi.models.entities.Actor;
 import noitcereon.mydemojavaapi.repositories.IActorRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 

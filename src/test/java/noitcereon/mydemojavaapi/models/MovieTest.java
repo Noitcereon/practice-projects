@@ -1,10 +1,11 @@
 package noitcereon.mydemojavaapi.models;
 
+import noitcereon.mydemojavaapi.models.entities.Actor;
+import noitcereon.mydemojavaapi.models.entities.Movie;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.rmi.server.UID;
-import java.time.Year;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;

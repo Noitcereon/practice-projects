@@ -1,6 +1,6 @@
 package noitcereon.mydemojavaapi.controllers;
 
-import noitcereon.mydemojavaapi.models.Genre;
+import noitcereon.mydemojavaapi.models.entities.Genre;
 import noitcereon.mydemojavaapi.repositories.IGenreRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

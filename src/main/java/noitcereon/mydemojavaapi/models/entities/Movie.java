@@ -1,4 +1,4 @@
-package noitcereon.mydemojavaapi.models;
+package noitcereon.mydemojavaapi.models.entities;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
