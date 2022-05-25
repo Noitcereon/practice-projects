@@ -1,5 +1,7 @@
 package noitcereon.mydemojavaapi.controllers;
 
+import noitcereon.mydemojavaapi.models.ActorPostModel;
+import noitcereon.mydemojavaapi.models.ActorReadonly;
 import noitcereon.mydemojavaapi.models.entities.Actor;
 import noitcereon.mydemojavaapi.repositories.IActorRepository;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +20,12 @@ public class ActorController {
     }
 
     @PostMapping
-    public ResponseEntity<Actor> createActor(@RequestBody Actor actor) {
-        Actor savedObject = actorRepo.save(actor);
-        return ResponseEntity.ok(savedObject);
+    public ResponseEntity<ActorReadonly> createActor(@RequestBody ActorPostModel actor) {
+        Actor actorEntity = new Actor(actor);
+        Actor savedObject = actorRepo.save(actorEntity);
+        ActorReadonly readonlyActor = new ActorReadonly(savedObject);
+        return ResponseEntity.ok(readonlyActor);
     }
-
     @GetMapping
     public ResponseEntity<Set<Actor>> getAll() {
         Set<Actor> actors = actorRepo.findAllByIsDeletedIsFalse();

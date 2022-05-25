@@ -3,6 +3,7 @@ package noitcereon.mydemojavaapi.models.entities;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import noitcereon.mydemojavaapi.models.ActorPostModel;
 import noitcereon.mydemojavaapi.models.ActorUtils;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -40,6 +41,12 @@ public class Actor {
         setLastName(lastName);
         setAge(age);
         setMovies(movies);
+    }
+    public Actor(ActorPostModel actor){
+        setUuid(UUID.randomUUID().toString());
+        setFirstName(actor.getFirstName());
+        setLastName(actor.getLastName());
+        setAge(actor.getAge());
     }
 
     public String getUuid() {
