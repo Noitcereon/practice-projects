@@ -12,7 +12,7 @@
 	<artifactId>my-demo-java-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>my-demo-java-api</name>
-	<description>Relearning how to use Spring Boot to make REST APIs with Hibernate.</description>
+	<description>Relearning how to use Spring Boot to make REST APIs with Hibernate and Spring Data JPA</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
