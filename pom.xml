@@ -62,6 +62,23 @@
 			<artifactId>commons-dbcp2</artifactId>
 			<version>2.3.0</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
+		<!-- Mockito is one of the most popular Java mocking frameworks -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>4.6.0</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy
+		 (Mockito dependency, which I added to fix an exception when running tests)-->
+		<dependency>
+			<groupId>net.bytebuddy</groupId>
+			<artifactId>byte-buddy</artifactId>
+			<version>1.12.10</version>
+			<scope>test</scope>
+		</dependency>
+
 
 	</dependencies>
 
