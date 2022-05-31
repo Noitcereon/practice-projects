@@ -27,9 +27,9 @@ class ActorControllerTest {
 
     @BeforeEach
     void setUp() {
-        // The Mockity.when specifies the behaviour the mocked method should do
-        // In the case below it takes in any Actor class (and the first one only argument)
-        // and via the answer override returns that same Actor object. You could also do
+        // The Mockity.when() specifies the behaviour the mocked method should do
+        // In the case below it takes in any Actor class and, via the answer
+        // override, returns that same Actor object. You could also do
         // some operations on the arguments before returning it.
         Mockito.when(mockedRepository.save(any(Actor.class))).then(
                 (Answer<Actor>) invocationOnMock -> {
