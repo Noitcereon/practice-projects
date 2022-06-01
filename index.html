@@ -101,7 +101,7 @@
             },
             {
                 year: 2021,
-                value: 212
+                value: 5930
             }
         ];
         const barGraph = document.getElementById("bar-graph");
@@ -113,23 +113,25 @@
         const minValue = Math.min(...dataNumbers);
         const maxValue = Math.max(...dataNumbers);
 
-        generateYAxis(minValue, maxValue);
+        generateYAxis(maxValue);
 
 
 
-        function generateYAxis(minValue, maxValue) {
+        function generateYAxis(maxValue) {
             const yAxis = document.getElementById("y-axis");
-            const noOfYAxisNumbersBetweenMinAndMax = 3;
+            const noOfYAxisNumbersBetweenMinAndMax = 4;
+            // The yAxisIncrement calculation should be modified if noOfYAxisNumbersBetweenMinAndMax changes to have accurate procentage display
+            const yAxisIncrement = Math.round((maxValue/100)*20);
             const yAxisSize = noOfYAxisNumbersBetweenMinAndMax + 2;
             const lastIteration = yAxisSize - 1;
-            const yAxisIncrement = Math.round((maxValue - minValue) / noOfYAxisNumbersBetweenMinAndMax);
-            let nextValue = minValue + yAxisIncrement;
+            console.log(yAxisIncrement);
+            let nextValue = yAxisIncrement;
             for (let i = 0; i < noOfYAxisNumbersBetweenMinAndMax + 2; i++) {
                 const span = document.createElement("span");
                 switch (i) {
                     case 0:
                         span.id = "min-value";
-                        span.innerText = minValue;
+                        span.innerText = 0;
                         break;
                     case lastIteration:
                         span.id = "max-value";
