@@ -114,8 +114,11 @@
         const maxValue = Math.max(...dataNumbers);
 
         generateYAxis(maxValue);
+        generateBars(data, maxValue);
 
-
+        function generateBars(data, maxValue){
+            // TODO: generate bars height based on percentage of maxValue
+        }
 
         function generateYAxis(maxValue) {
             const yAxis = document.getElementById("y-axis");
