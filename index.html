@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple Data Visualisation</title>
     <link rel="stylesheet" href="index.css">
-    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
 </head>
 
 <body>
@@ -26,7 +25,7 @@
             text-align: center;
             width: 20%;
             height: 5px;
-            margin: 5px 10px;
+            margin: 0px 10px 10px 10px;
             background-color: red;
             position: relative;
         }
@@ -58,10 +57,10 @@
     </style>
     <!-- CSS END -->
     <!-- HTML Content -->
-    <section class="mx-auto container">
-        <h1 class="text-2xl font-bold">Data visualisation</h1>
+    <section>
+        <h1>Data visualisation</h1>
         This section contains some random number data for 5 years at a time (displayed as a bar graph)
-        <div id="bar-graph" class="">
+        <div id="bar-graph">
             <div id="y-axis">
                 <!-- The letters in the span tags represent generated numbers-->
                 <!-- <span id="min-value">a</span>
@@ -84,23 +83,23 @@
     <script>
         const data = [
             {
-                year: 2018,
+                year: "2018",
                 value: 50
             },
             {
-                year: 2019,
+                year: "2019",
                 value: 45
             },
             {
-                year: 2020,
+                year: "2020",
                 value: 70
             },
             {
-                year: 2021,
+                year: "2021",
                 value: 164
             },
             {
-                year: 2021,
+                year: "2022",
                 value: 5930
             }
         ];
@@ -110,7 +109,7 @@
         if (barGraphBars !== null) console.log("Bars are present");
 
         const dataNumbers = data.map(dataObjectKey => dataObjectKey.value);
-        const minValue = Math.min(...dataNumbers);
+        // const minValue = Math.min(...dataNumbers); // This can maybe be used in a future algorith, so the graph doesn't always start a 0.
         const maxValue = Math.max(...dataNumbers);
 
         generateYAxis(maxValue);
@@ -118,6 +117,11 @@
 
         function generateBars(data, maxValue){
             // TODO: generate bars height based on percentage of maxValue
+            for (const dataObject of data) {
+                // dataObject.year;
+                // dataObject.value;
+                console.log(dataObject.year, dataObject.value);
+            }
         }
 
         function generateYAxis(maxValue) {
