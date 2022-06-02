@@ -124,11 +124,11 @@
         function generateBars(data, maxValue) {
             const barGraph = document.getElementById("bar-graph");
 
-            // TODO: generate bars height based on percentage of maxValue
             for (const dataObject of data) {
                 // dataObject.year;
                 // dataObject.value;
                 const barDiv = document.createElement("div");
+                barDiv.title = `Year: ${dataObject.year}, Value: ${dataObject.value}`; 
                 barDiv.classList.add("bar");
                 const yearSpanEl = document.createElement("span");
                 const valueSpanEl = document.createElement("span");
