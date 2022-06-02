@@ -30,7 +30,7 @@
             position: relative;
         }
 
-        #bar-graph .bar span {
+        .bar span {
             z-index: 2;
             display: inline-block;
             transform: translate(0, 0.5rem);
@@ -54,6 +54,12 @@
             color: rgb(58, 58, 58);
             font-weight: bold;
         }
+        #bar-graph .bar-title{
+            position:absolute;
+            bottom:0;
+            display:inline-block;
+            transform: translateY(25px);
+        }
     </style>
     <!-- CSS END -->
     <!-- HTML Content -->
@@ -70,11 +76,11 @@
                 <span>x</span>
                 <span id="max-value">z</span> -->
             </div>
-            <div class="bar"><span>2018</span></div>
+            <!-- <div class="bar"><span>2018</span></div>
             <div class="bar"><span>2019</span></div>
             <div class="bar"><span>2020</span></div>
             <div class="bar"><span>2021</span></div>
-            <div class="bar"><span>2022</span></div>
+            <div class="bar"><span>2022</span></div> -->
         </div>
     </section>
 
@@ -88,7 +94,7 @@
             },
             {
                 year: "2019",
-                value: 45
+                value: 213
             },
             {
                 year: "2020",
@@ -100,13 +106,13 @@
             },
             {
                 year: "2022",
-                value: 5930
+                value: 45
             }
         ];
         const barGraph = document.getElementById("bar-graph");
 
-        const barGraphBars = barGraph.getElementsByClassName("bar");
-        if (barGraphBars !== null) console.log("Bars are present");
+        // const barGraphBars = barGraph.getElementsByClassName("bar");
+        // if (barGraphBars !== null) console.log("Bars are present");
 
         const dataNumbers = data.map(dataObjectKey => dataObjectKey.value);
         // const minValue = Math.min(...dataNumbers); // This can maybe be used in a future algorith, so the graph doesn't always start a 0.
@@ -115,12 +121,34 @@
         generateYAxis(maxValue);
         generateBars(data, maxValue);
 
-        function generateBars(data, maxValue){
+        function generateBars(data, maxValue) {
+            const barGraph = document.getElementById("bar-graph");
+
             // TODO: generate bars height based on percentage of maxValue
             for (const dataObject of data) {
                 // dataObject.year;
                 // dataObject.value;
-                console.log(dataObject.year, dataObject.value);
+                const barDiv = document.createElement("div");
+                barDiv.classList.add("bar");
+                const yearSpanEl = document.createElement("span");
+                const valueSpanEl = document.createElement("span");
+                valueSpanEl.innerText = dataObject.value;
+                yearSpanEl.innerText = dataObject.year;
+
+                yearSpanEl.classList.add("bar-title");
+                barDiv.appendChild(yearSpanEl);
+                barDiv.appendChild(valueSpanEl);
+
+                // Give bar their height
+                const maxHeightPx = 300;
+                const onePercentOfMaxHeight = maxHeightPx / 100;
+                const valueIsXPercentOfMaxValue = Math.round(dataObject.value / maxValue * 100);
+                console.log(`${dataObject.value} is ${valueIsXPercentOfMaxValue}% of ${maxValue}`);
+                const barHeight = Math.round(maxHeightPx/100*valueIsXPercentOfMaxValue);
+
+                barDiv.style.height = barHeight + "px";
+
+                barGraph.appendChild(barDiv);
             }
         }
 
@@ -128,7 +156,7 @@
             const yAxis = document.getElementById("y-axis");
             const noOfYAxisNumbersBetweenMinAndMax = 4;
             // The yAxisIncrement calculation should be modified if noOfYAxisNumbersBetweenMinAndMax changes to have accurate procentage display
-            const yAxisIncrement = Math.round((maxValue/100)*20);
+            const yAxisIncrement = Math.round((maxValue / 100) * 20);
             const yAxisSize = noOfYAxisNumbersBetweenMinAndMax + 2;
             const lastIteration = yAxisSize - 1;
             console.log(yAxisIncrement);
