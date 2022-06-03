@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -84,24 +85,53 @@ class ActorControllerTest {
     @Test
     void givenRequestForSpecificActor_whenExecutingGetSpecificActor_thenReturnStatusCode200() {
         // Arrange
+        HttpStatus expectedStatusCode = HttpStatus.OK;
+        String simulatedId = "abc";
         // Act
+        Mockito.when(mockedRepository.findByUuidAndIsDeletedIsFalse(simulatedId)).thenReturn(new Actor());
+        ResponseEntity<ActorReadonly> response = actorController.getById(simulatedId);
         // Assert
-        fail("Test not implemented");
+        assertEquals(expectedStatusCode, response.getStatusCode());
     }
 
     @Test
     void givenRequestForUpdatingActor_whenExecutingPutSpecificActor_thenReturnStatusCode200() {
-        fail("Test not implemented");
         // Arrange
+        HttpStatus expectedStatusCode = HttpStatus.OK;
+        String simulatedId = "abc";
         // Act
+        Mockito.when(mockedRepository.findByUuidAndIsDeletedIsFalse(simulatedId)).thenReturn(new Actor());
+        ResponseEntity<ActorReadonly> response = actorController.updateActor(new ActorPostModel(), simulatedId);
         // Assert
+        assertEquals(expectedStatusCode, response.getStatusCode());
     }
-
+    @Test
+    void givenRequestForUpdatingActor_whenExecutingPutSpecificActor_thenSpecifiedActorIsUpdated() {
+        // Arrange
+        String expectedId = "1bfae8ca-002c-4b69-8b7c-6b16da1b97ea";
+        ActorPostModel expectedActorValues = new ActorPostModel("FirstName", "LastName", 24);
+        Actor entity = new Actor();
+        entity.setUuid(expectedId); // if the setUuid validation changes to be more strict this could fail.
+        // Act
+        Mockito.when(mockedRepository.findByUuidAndIsDeletedIsFalse(expectedId)).thenReturn(entity);
+        ResponseEntity<ActorReadonly> response = actorController.updateActor(expectedActorValues, expectedId);
+        // Assert
+        assertNotNull(response.getBody());
+        assertEquals(expectedId, response.getBody().uuid);
+        assertEquals(expectedActorValues.getFirstName(), response.getBody().firstName);
+        assertEquals(expectedActorValues.getLastName(), response.getBody().lastName);
+        assertEquals(expectedActorValues.getAge(), response.getBody().age);
+    }
     @Test
     void givenRequestForDeletingActor_whenExecutingDeleteSpecificActor_thenReturnStatusCode200() {
-        fail("Test not implemented");
         // Arrange
+        HttpStatus expectedStatusCode = HttpStatus.OK;
+        String simulatedId = "abc";
+        Optional<Actor> mockedRepoResponse = Optional.of(new Actor());
         // Act
+        Mockito.when(mockedRepository.findById(simulatedId)).thenReturn(mockedRepoResponse);
+        ResponseEntity<ActorReadonly> response = actorController.disableActor(simulatedId);
         // Assert
+        assertEquals(expectedStatusCode, response.getStatusCode());
     }
 }
