@@ -1,6 +1,6 @@
 import Keycloak from "keycloak-js";
 
-const keycloak = new Keycloak("./src/keycloak.json");
+const keycloak = new Keycloak("./src/keycloak.json"); // relative path from index.html
 
 const initKeycloak = (renderApp: CallableFunction) => {
   keycloak
@@ -12,10 +12,9 @@ const initKeycloak = (renderApp: CallableFunction) => {
     })
     .then(function (authenticated) {
       renderApp();
-      if(authenticated){
+      if (authenticated) {
         console.info("Authenticated");
-      }
-      else{
+      } else {
         console.info("Not authenticated");
       }
     })
@@ -24,5 +23,17 @@ const initKeycloak = (renderApp: CallableFunction) => {
     });
 };
 
+const getUsername = () => String(keycloak.tokenParsed?.preferred_username);
 
-export { initKeycloak, keycloak };
+const login = () => keycloak.login();
+const logout = () => keycloak.logout();
+const isLoggedIn = () => keycloak.authenticated;
+
+export default {
+  initKeycloak,
+  keycloak,
+  getUsername,
+  isLoggedIn,
+  login,
+  logout,
+};
