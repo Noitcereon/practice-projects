@@ -8,7 +8,7 @@ function App() {
 
   return (
     <div id="app">
-      <header className='flex justify-end pr-2 bg-zinc-800 p-2'>
+      <header className='flex justify-end pr-2 bg-zinc-800 p-2 text-gray-200'>
         <Login></Login>
       </header>
       <main>
