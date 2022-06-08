@@ -6,14 +6,14 @@ export default function Login() {
   return (
     <section>
       <button
-        className={`bg-blue-600 rounded-lg px-5 py-1 
+        className={`bg-blue-600 rounded-lg px-5 py-1 my-2 
         ${keycloak.authenticated ? "hidden" : ""}`}
         onClick={() => keycloak.login()}
       >
         Login
       </button>
       <button
-        className={`bg-blue-600 rounded-lg px-5 py-1 
+        className={`bg-blue-600 rounded-lg px-5 py-1 my-2 
         ${keycloak.authenticated ? "" : "hidden"}`}
         onClick={() => keycloak.logout()}
       >
