@@ -4,9 +4,12 @@ const keycloak = new Keycloak("src/AppConfig/keycloak.json");
 
 const initKeycloak = () => {
   keycloak
-    .init({})
+    .init({
+      onLoad: "check-sso",
+      silentCheckSsoRedirectUri: window.location.origin + "/silent-check-sso.html"
+    })
     .then(function (authenticated) {
-      if (authenticated !== null) console.info("Keycloak initialized");
+      if (authenticated !== undefined) console.info("Keycloak initialized");
     })
     .catch(function () {
       console.error("Failed to initialize Keycloak");
