@@ -21,7 +21,7 @@ export default function Login() {
       >
         Logout
       </button>
-      <span>Current user: {UserService.getUsername()}</span>
+      <span className={UserService.isLoggedIn() ? "" : "hidden"}>Current user: {UserService.getUsername()}</span>
       
     </section>
   );
