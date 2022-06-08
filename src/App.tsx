@@ -1,19 +1,18 @@
 import { useState } from 'react'
 import logo from './logo.svg'
 import './App.css'
-import Home from './Components/Home'
 import Login from './Components/Login'
+import { Outlet } from 'react-router-dom'
 
 function App() {
 
   return (
     <div id="app">
-      <header>
-
+      <header className='flex justify-end pr-2 bg-zinc-800 p-2'>
         <Login></Login>
       </header>
       <main>
-        <Home/>
+        <Outlet/>
       </main>
       <footer>
 
