@@ -1,9 +1,6 @@
-// import { useContext } from "react";
-// import { LoginContext } from "../Context/LoginContext";
 import UserService from '../Services/KeycloakService';
 
 export default function Login() {
-  // const keycloak = useContext(LoginContext);
   console.log(UserService.isLoggedIn(), "isLoggedIn");
   return (
     <section>
