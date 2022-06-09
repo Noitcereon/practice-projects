@@ -25,6 +25,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+			<version>2.7.0</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -60,7 +66,7 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-dbcp2</artifactId>
-			<version>2.3.0</version>
+			<version>2.3.0</version> <!-- Intentionally left at v. 2.3.0 for vulnerability reasons -->
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
 		<!-- Mockito is one of the most popular Java mocking frameworks -->
@@ -71,15 +77,14 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy
-		 (Mockito dependency, which I added to fix an exception when running tests)-->
+		 (Mockito dependency, which I added to fix an exception when running tests) -->
+
 		<dependency>
 			<groupId>net.bytebuddy</groupId>
 			<artifactId>byte-buddy</artifactId>
 			<version>1.12.10</version>
-			<scope>test</scope>
+			<!-- Scope test should not be here, else the app won't start -->
 		</dependency>
-
-
 	</dependencies>
 
 	<build>
