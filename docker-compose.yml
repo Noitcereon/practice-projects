@@ -26,5 +26,22 @@ services:
       - "4500:5432"
     volumes:
       - POSTGRES_DB:/var/lib/postgresql/data
+  keycloak:
+    container_name: practice_keycloak
+    # Image source: https://quay.io/repository/keycloak/keycloak?tab=tags
+    image: quay.io/keycloak/keycloak
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    command:
+      - start-dev
+    ports:
+      - "8083:8080"
+    # Experimental volume (I think it uses H2, an in-memory database)
+
+    volumes:
+      - KEYCLOAK:/var/lib/keycloak/data
+
 volumes:
   POSTGRES_DB:
+  KEYCLOAK:
