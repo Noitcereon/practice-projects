@@ -30,7 +30,26 @@ namespace CSharpRestAPI.Services
 
         public IEnumerable<Game> GetAll()
         {
-            throw new NotImplementedException();
+            var games = new List<Game>();
+            using (var dbConnection = _dbConnection)
+            {
+                var sqlCommand = dbConnection.CreateCommand();
+                sqlCommand.CommandText = "SELECT * FROM Game";
+                dbConnection.Open();
+                var reader = sqlCommand.ExecuteReader();
+                while (reader.Read())
+                {
+                    var game = new Game(
+                        id: reader.GetString(reader.GetOrdinal("Id")),
+                        title: reader.GetString(reader.GetOrdinal("Title")),
+                        description: reader.GetString(reader.GetOrdinal("Description")),
+                        releaseYear: reader.GetString(reader.GetOrdinal("ReleaseYear")),
+                        price: reader.GetDecimal(reader.GetOrdinal("Price")));
+                    games.Add(game);
+                }
+                dbConnection.Close();
+            }
+            return games;
         }
 
         public Game Update(String id, Game updatedModel)
