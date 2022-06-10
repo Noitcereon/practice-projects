@@ -9,7 +9,9 @@ namespace CSharpRestAPI.Helpers
 
         public static IDbConnection RetrieveDefaultConnection()
         {
-            IDbConnection dbConn = new SqlConnection(Environment.GetEnvironmentVariable(DEFAULT_CONNECTIONSTRING_ENV_VARIABLE));
+            String? connectionString = Environment.GetEnvironmentVariable(DEFAULT_CONNECTIONSTRING_ENV_VARIABLE);
+            if (connectionString == null) throw new ArgumentNullException(nameof(connectionString));
+            IDbConnection dbConn = new SqlConnection(connectionString);
 
             return dbConn;
         }
