@@ -1,6 +1,8 @@
+using CSharpRestAPI.DataAccess;
 using CSharpRestAPI.Helpers;
+using CSharpRestAPI.Services;
+using ModelLib;
 using System.Data;
-using System.Data.SqlClient;
 
 #region Setup app to use .env file
 String root = Directory.GetCurrentDirectory();
@@ -12,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddSingleton<IDbConnection>(AppConfig.RetrieveDefaultConnection());
+builder.Services.AddScoped <ICrud<Game, GamePost, string>, GameService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
