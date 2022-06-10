@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CSharpRestAPI.DataAccess;
+using CSharpRestAPI.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ModelLib;
 using System.Diagnostics;
 
 namespace CSharpRestAPI.Controllers
@@ -9,10 +12,12 @@ namespace CSharpRestAPI.Controllers
     public class GamesController : ControllerBase
     {
         private readonly ILogger<GamesController> _logger;
+        private readonly ICrud<Game, GamePost, String> _gameService;
 
-        public GamesController(ILogger<GamesController> logger)
+        public GamesController(ILogger<GamesController> logger, ICrud<Game, GamePost, String> gameService)
         {
             _logger = logger;
+            _gameService = gameService;
         }
 
         [HttpGet]
@@ -20,7 +25,7 @@ namespace CSharpRestAPI.Controllers
         {
             if (Debugger.IsAttached) _logger.LogInformation("Get All Games was called");
            
-            return Ok("Hello World");
+            return Ok(_gameService.GetAll());
         }
     }
 }
