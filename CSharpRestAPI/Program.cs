@@ -1,3 +1,11 @@
+using CSharpRestAPI.Helpers;
+
+#region Setup app to use .env file
+String root = Directory.GetCurrentDirectory();
+String dotenvFilePath = Path.Combine(root, ".env");
+DotEnv.Load(dotenvFilePath);
+#endregion
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
