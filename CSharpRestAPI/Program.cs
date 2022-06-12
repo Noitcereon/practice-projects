@@ -13,7 +13,6 @@ DotEnv.Load(dotenvFilePath);
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddSingleton<IDbConnection>(AppConfig.RetrieveDefaultConnection());
 builder.Services.AddScoped <ICrud<Game, GamePost, string>, GameService>();
 
 builder.Services.AddControllers();

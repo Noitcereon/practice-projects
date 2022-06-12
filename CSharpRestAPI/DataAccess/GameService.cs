@@ -1,6 +1,8 @@
 ﻿using CSharpRestAPI.DataAccess;
+using CSharpRestAPI.Helpers;
 using ModelLib;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace CSharpRestAPI.Services
 {
@@ -8,9 +10,13 @@ namespace CSharpRestAPI.Services
     {
         IDbConnection _dbConnection;
 
-        public GameService(IDbConnection dbConnection)
+        public GameService()
         {
-            _dbConnection = dbConnection;
+            _dbConnection = AppConfig.RetrieveDefaultConnection();
+        }
+        public GameService(String connectionString)
+        {
+            _dbConnection = new SqlConnection(connectionString);
         }
 
         public Game Create(GamePost modelToCreate)
@@ -31,7 +37,7 @@ namespace CSharpRestAPI.Services
         public IEnumerable<Game> GetAll()
         {
             var games = new List<Game>();
-            using (var dbConnection = _dbConnection)
+            using (IDbConnection dbConnection = _dbConnection)
             {
                 var sqlCommand = dbConnection.CreateCommand();
                 sqlCommand.CommandText = "SELECT * FROM Game";
