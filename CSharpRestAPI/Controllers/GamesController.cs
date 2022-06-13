@@ -27,5 +27,12 @@ namespace CSharpRestAPI.Controllers
            
             return Ok(_gameService.GetAll());
         }
+        [HttpPost]
+        public IActionResult Create([FromBody] GamePost game)
+        {
+            Game createdGame = _gameService.Create(game);
+
+            return Ok(createdGame);
+        }
     }
 }

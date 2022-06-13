@@ -21,7 +21,30 @@ namespace CSharpRestAPI.Services
 
         public Game Create(GamePost modelToCreate)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Game game = new Game(modelToCreate);
+
+                using (SqlCommand command = (SqlCommand)_dbConnection.CreateCommand())
+                {
+                    command.CommandText = "INSERT INTO Game VALUES(@Id, @Title, @Description, @ReleaseYear, @Price)";
+
+                    command.Parameters.AddWithValue("@Id", game.Id);
+                    command.Parameters.AddWithValue("@Title", game.Title);
+                    command.Parameters.AddWithValue("@Description", game.Description);
+                    command.Parameters.AddWithValue("@ReleaseYear", game.ReleaseYear);
+                    command.Parameters.AddWithValue("@Price", game.Price);
+
+                    _dbConnection.Open();
+                    int rowsAffected = command.ExecuteNonQuery();
+                    if (rowsAffected == 1) return game;
+                    else throw new Exception("Not enough rowsaffected.");
+                }
+            }
+            finally
+            {
+                _dbConnection.Close();
+            }
         }
 
         public Game Delete(String id)
@@ -45,12 +68,7 @@ namespace CSharpRestAPI.Services
                 var reader = sqlCommand.ExecuteReader();
                 while (reader.Read())
                 {
-                    var game = new Game(
-                        id: reader.GetString(reader.GetOrdinal("Id")),
-                        title: reader.GetString(reader.GetOrdinal("Title")),
-                        description: reader.GetString(reader.GetOrdinal("Description")),
-                        releaseYear: reader.GetString(reader.GetOrdinal("ReleaseYear")),
-                        price: reader.GetDecimal(reader.GetOrdinal("Price")));
+                    Game game = ModelConverter<Game>.Convert(reader);
                     games.Add(game);
                 }
                 dbConnection.Close();
@@ -62,8 +80,6 @@ namespace CSharpRestAPI.Services
         {
             throw new NotImplementedException();
         }
-
-        // TODO: Implement GameService & an interface for default CRUD.
 
     }
 }
