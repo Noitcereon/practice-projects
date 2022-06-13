@@ -18,6 +18,11 @@ namespace ModelLib
         {
             Id = id;
         }
+        public Game(GamePost gamePost) : base(gamePost.Title, gamePost.Description, gamePost.ReleaseYear, 0)
+        {
+            Id = Guid.NewGuid().ToString();
+            if(gamePost.Price != null) Price = gamePost.Price;
+        }
 
 
         public String Id { get; set; }
