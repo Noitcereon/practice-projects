@@ -30,10 +30,12 @@ namespace MyHttpTriggerFunction
                 DateTime dateTime = DateTime.Now;
                 HttpContent content = response.Content;
                 String json = await content.ReadAsStringAsync();
-                
+
                 dynamic deserializedJoke = JsonConvert.DeserializeObject(json);
-                log.LogInformation($"Returning: Response Content: {deserializedJoke}, RequestTime: {dateTime}");
-                return new OkObjectResult($"Setup: {deserializedJoke.setup}, Delivery: {deserializedJoke.delivery}, RequestTime: {dateTime}");
+
+                String output = $"Setup: {deserializedJoke.setup}, Delivery: {deserializedJoke.delivery}, RequestTime: {dateTime}";
+                log.LogInformation($"Returning: {output}");
+                return new OkObjectResult(output);
             }
             else
             {
