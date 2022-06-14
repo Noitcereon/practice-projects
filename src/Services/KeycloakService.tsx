@@ -24,6 +24,7 @@ const initKeycloak = (renderApp: CallableFunction) => {
 };
 
 const getUsername = () => String(keycloak.tokenParsed?.preferred_username);
+const getToken = () => keycloak.token;
 
 const login = () => keycloak.login();
 const logout = () => keycloak.logout();
