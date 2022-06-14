@@ -8,6 +8,12 @@ import io.swagger.v3.oas.annotations.security.OAuthFlow;
 import io.swagger.v3.oas.annotations.security.OAuthFlows;
 import io.swagger.v3.oas.annotations.security.OAuthScope;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
 
 @OpenAPIDefinition(info = @Info(title = "Java Demo Api",
         description = "An API made to renew or attain knowledge of Java Api with Spring boot w. Hibernate + Keycloak",
@@ -35,4 +41,14 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
                                 @OAuthScope(name = "groups"),
                         }
 )))
-public class OpenApiConfig { }
+@Configuration
+public class OpenApiConfig {
+    private final Logger _logger = LoggerFactory.getLogger(getClass());
+    @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
+    private String _issuerUri;
+    @Bean(name = "initializeOpenApiConfig")
+    public void initializeOpenApiConfig(){
+        _logger.debug("Initialing OpenApiConfig");
+        _logger.debug("Issuer Uri = " + _issuerUri);
+    }
+}
