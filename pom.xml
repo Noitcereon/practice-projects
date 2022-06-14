@@ -60,6 +60,14 @@
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>1.6.8</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.networknt/openapi-security -->
+		<!-- Adds security to swagger/openApi -->
+		<dependency>
+			<groupId>com.networknt</groupId>
+			<artifactId>openapi-security</artifactId>
+			<version>2.1.1</version>
+		</dependency>
+
 		<!-- This dependency is used to get BasicDataSource class used in the DatabaseConfig class -->
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2 -->
 		<dependency>
