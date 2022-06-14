@@ -1,6 +1,8 @@
 package noitcereon.mydemojavaapi.config;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +13,7 @@ import java.net.URISyntaxException;
 
 @Configuration
 public class DatabaseConfig {
-
+    private final Logger _logger = LoggerFactory.getLogger(getClass());
     @Value("${spring.datasource.url}")
     private String DATABASE_URI_FROM_ENVIRONMENT;
     /**
@@ -31,7 +33,7 @@ public class DatabaseConfig {
         basicDataSource.setUrl(dbUrl);
         basicDataSource.setUsername(username);
         basicDataSource.setPassword(password);
-
+        _logger.debug("dataSource after modification: " + dbUri);
         return basicDataSource;
     }
 }
