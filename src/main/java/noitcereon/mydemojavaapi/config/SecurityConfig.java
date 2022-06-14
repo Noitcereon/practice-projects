@@ -16,6 +16,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        logger.trace("Starting Security Configuration");
         http
                 // Enable CORS -- this is configured on controllers with @CrossOrigin
                 .cors().and()
@@ -42,6 +43,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                             // All remaining paths require authentication
                             .anyRequest().authenticated();
                 });
-
+        logger.trace("Finished Security Configuration");
     }
 }
