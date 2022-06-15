@@ -14,7 +14,7 @@ public interface IActorRepository extends JpaRepository<Actor, String> {
     // When Query is there, it overwrites the "derrived" query from the method name.
     // Sub-queries (a.uuid, a.firstName...) are not available in JPQL, but can be used in native.
     @Query(value = "SELECT a FROM Actor a" +
-            " JOIN FETCH a.movies WHERE a.uuid = :uuid AND a.isDeleted = false")
+            " LEFT JOIN FETCH a.movies WHERE a.uuid = :uuid AND a.isDeleted = false")
     Actor findByUuidAndIsDeletedIsFalse(@Param("uuid") String uuid);
 
 }
