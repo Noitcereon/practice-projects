@@ -3,6 +3,7 @@ package noitcereon.mydemojavaapi.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -10,6 +11,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true) // This enables the use of @PreAuthorize
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -42,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                             // All remaining paths require authentication
                             .anyRequest().authenticated();
                 })
-                // Configure OAuth2 Resource Server (JWT authentication) so @PreAuthorize can be used
+                // Configure OAuth2 Resource Server (JWT authentication) tentative note: gives @PreAuthorize more options
                 .oauth2ResourceServer(oauth2 -> {
                     // Used to convert JWT to AbstractAuthenticationToken
                     JwtAuthenticationConverter jwtConverter = new JwtAuthenticationConverter();
