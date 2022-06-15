@@ -33,6 +33,7 @@ const isLoggedIn = () => keycloak.authenticated;
 export default {
   initKeycloak,
   keycloak,
+  getToken,
   getUsername,
   isLoggedIn,
   login,

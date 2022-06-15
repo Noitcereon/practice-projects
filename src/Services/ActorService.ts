@@ -1,16 +1,31 @@
+import KeycloakService from "./KeycloakService";
 import MyJavaApi from "./MyJavaApiService";
 
-const retrieveActorsAsync = async ()=> {
-    // TODO: define the full request, including the JWT token.
-    // TODO: define return type of this metod.
-    const response = await fetch(`${MyJavaApi.baseUrl}/actors`) 
-    const result = await response.json();
+const retrieveActorsAsync = async (): Promise<void> => {
+  try {
+    if (!KeycloakService.isLoggedIn()) {
+      console.warn("Not logged in");
+      return;
+    }
 
-    console.table(result);
-}
+    const token = KeycloakService.getToken();
+    const response = await fetch(`${MyJavaApi.baseUrl}/actors`, {
+      method: "GET",
+      headers: {
+        Authorize: `Bearer ${token}`,
+      },
+    });
 
+    if (response.ok) {
+      const result = await response.json();
+      console.log(result);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 const ActorService = {
-    retrieveActors: retrieveActorsAsync
-}
+  retrieveActors: retrieveActorsAsync,
+};
 export default ActorService;
