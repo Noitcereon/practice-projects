@@ -3,12 +3,14 @@ package noitcereon.mydemojavaapi.controllers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import noitcereon.mydemojavaapi.models.ActorPostModel;
 import noitcereon.mydemojavaapi.models.ActorReadonly;
 import noitcereon.mydemojavaapi.models.ActorUtils;
 import noitcereon.mydemojavaapi.models.entities.Actor;
 import noitcereon.mydemojavaapi.repositories.IActorRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -16,6 +18,8 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/api/actors")
+@CrossOrigin(origins = {"http://localhost:3000"})
+@SecurityRequirement(name = "keycloak_implicit") // This should match the name given in OpenApiConfig
 public class ActorController {
     private final IActorRepository actorRepo;
 
