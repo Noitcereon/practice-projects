@@ -38,7 +38,6 @@ import org.springframework.context.annotation.Configuration;
                                 @OAuthScope(name = "openid"),
                                 @OAuthScope(name = "profile"),
                                 @OAuthScope(name = "email"),
-                                @OAuthScope(name = "groups"),
                         }
 )))
 @Configuration
