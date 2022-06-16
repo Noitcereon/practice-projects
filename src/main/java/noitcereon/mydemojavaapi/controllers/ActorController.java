@@ -36,7 +36,7 @@ public class ActorController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('SCOPE_openid')")
+    @PreAuthorize("hasAnyAuthority('GROUP_standard', 'ROLE_standard')")
     public ResponseEntity<Set<ActorReadonly>> getAll() {
         Set<Actor> actorEntities = actorRepo.findAllByIsDeletedIsFalse();
         if (actorEntities.size() == 0) {
