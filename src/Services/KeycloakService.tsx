@@ -24,7 +24,16 @@ const initKeycloak = (renderApp: CallableFunction) => {
 };
 
 const getUsername = () => String(keycloak.tokenParsed?.preferred_username);
-const getToken = () => keycloak.token;
+const getToken = () => {
+  if (!keycloak.isTokenExpired()) return keycloak.token;
+  keycloak
+    .updateToken(0)
+    .then((refreshed) => {
+      if (refreshed) alert("Token was refreshed");
+      else alert("Token is still valid");
+    })
+    .catch((error) => alert("Failed to refresh token or session has expired"));
+};
 
 const login = () => keycloak.login();
 const logout = () => keycloak.logout();
