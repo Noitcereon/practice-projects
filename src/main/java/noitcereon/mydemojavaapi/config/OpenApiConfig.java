@@ -33,11 +33,12 @@ import org.springframework.context.annotation.Configuration;
                         authorizationUrl = "${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/auth",
                         tokenUrl = "${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/token",
                         scopes = {
-                                // I think these scopes are defined in the Keycloak Server.
+                                // These scopes are defined in the Keycloak Server.
                                 // They specify what information comes with the JWT
                                 @OAuthScope(name = "openid"),
                                 @OAuthScope(name = "profile"),
                                 @OAuthScope(name = "email"),
+                                @OAuthScope(name = "groups"),
                         }
 )))
 @Configuration
