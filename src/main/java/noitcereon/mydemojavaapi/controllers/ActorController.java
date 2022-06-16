@@ -36,6 +36,7 @@ public class ActorController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('SCOPE_openid')")
     public ResponseEntity<Set<ActorReadonly>> getAll() {
         Set<Actor> actorEntities = actorRepo.findAllByIsDeletedIsFalse();
         if (actorEntities.size() == 0) {
@@ -46,6 +47,7 @@ public class ActorController {
     }
 
     @GetMapping("{actorId}")
+    @PreAuthorize("hasRole('admin')")
     public ResponseEntity<ActorReadonly> getById(@PathVariable String actorId) {
         Actor actorEntity = actorRepo.findByUuidAndIsDeletedIsFalse(actorId);
         if(actorEntity == null) return ResponseEntity.notFound().build();
