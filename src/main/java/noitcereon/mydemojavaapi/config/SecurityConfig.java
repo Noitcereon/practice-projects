@@ -54,6 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     // Used to convert JWT to AbstractAuthenticationToken
                     JwtAuthenticationConverter jwtConverter = new JwtAuthenticationConverter();
 
+                    // Groups and roles need to be configured in Keycloak (Mapping to claims 'roles' & 'groups')
                     // Convert role claims on the JWT into GrantedAuthorities
                     JwtGrantedAuthoritiesConverter roleConverter = new JwtGrantedAuthoritiesConverter();
                     roleConverter.setAuthorityPrefix("ROLE_");
