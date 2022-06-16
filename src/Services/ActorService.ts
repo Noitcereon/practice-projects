@@ -3,16 +3,11 @@ import MyJavaApi from "./MyJavaApiService";
 
 const retrieveActorsAsync = async (): Promise<void> => {
   try {
-    if (!KeycloakService.isLoggedIn()) {
-      console.warn("Not logged in");
-      return;
-    }
-
     const token = KeycloakService.getToken();
     const response = await fetch(`${MyJavaApi.baseUrl}/actors`, {
       method: "GET",
       headers: {
-        Authorize: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 
