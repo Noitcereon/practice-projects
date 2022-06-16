@@ -7,11 +7,16 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 
+import java.util.Collection;
+import java.util.HashSet;
+
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true) // This enables the use of @PreAuthorize
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
+// Enables the use of @PreAuthorize & @Security
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -49,13 +54,40 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     // Used to convert JWT to AbstractAuthenticationToken
                     JwtAuthenticationConverter jwtConverter = new JwtAuthenticationConverter();
 
-                    // Used to convert JWT 'roles' claim into GrantedAuthorities
+                    // Convert role claims on the JWT into GrantedAuthorities
                     JwtGrantedAuthoritiesConverter roleConverter = new JwtGrantedAuthoritiesConverter();
                     roleConverter.setAuthorityPrefix("ROLE_");
                     roleConverter.setAuthoritiesClaimName("roles");
+                    // Convert group claims on the JWT into GrantedAuthorities
+                    JwtGrantedAuthoritiesConverter groupConverter = new JwtGrantedAuthoritiesConverter();
+                    groupConverter.setAuthorityPrefix("GROUP_");
+                    groupConverter.setAuthoritiesClaimName("groups");
+                    // Convert scope claims on the JWT into GrantedAuthorities
+                    JwtGrantedAuthoritiesConverter scopeConverter = new JwtGrantedAuthoritiesConverter();
 
                     // Set the jwtConverters JwtGrantedAuthoritiesConverter object
-                    jwtConverter.setJwtGrantedAuthoritiesConverter(roleConverter);
+                    jwtConverter.setJwtGrantedAuthoritiesConverter(jwt -> {
+                        // Converts the JWTs roles, groups and scopes fields into GrantedAuthorities (which can be used
+                        // when checking if the provided jwt has various kinds of authorization.
+
+                        // This will read the 'roles' claim you configured above
+                        // jwt["roles"] -> new GrantedAuthority("ROLE_roleName")
+                        Collection<GrantedAuthority> roles = roleConverter.convert(jwt);
+
+                        // This will read the 'groups' claim you configured above
+                        // jwt["groups"] -> new GrantedAuthority("GROUP_groupName")
+                        Collection<GrantedAuthority> groups = groupConverter.convert(jwt);
+
+                        Collection<GrantedAuthority> scopes = scopeConverter.convert(jwt);
+                        HashSet<GrantedAuthority> mergedAuthorities = new HashSet<>();
+                        mergedAuthorities.addAll(roles);
+                        mergedAuthorities.addAll(groups);
+                        mergedAuthorities.addAll(scopes);
+                        for (GrantedAuthority authority : mergedAuthorities) {
+                            logger.debug(String.format("GrantedAuthority: %s", authority));
+                        }
+                        return mergedAuthorities;
+                    });
 
                     // Tell the oauth2 config to use the jwtConverter we just configured.
                     // This enables JWT authentication and access control from JWT claims
