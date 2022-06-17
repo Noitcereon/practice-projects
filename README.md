@@ -8,7 +8,7 @@ This repository holds a Java API, which I made to refresh my knowledge on the to
 - I've tried to implement basic DTOs (Data Transfer Objects) for Actors (more models, to make it easier for client to use and obfuscating internal structure from consumers)
 - DatabaseConfig is in this case used to configure the connection string to the database for use with Heroku
 - When you setup a new container of keycloak, you need to configure it's instance, such as adding a new realm, new clients and setup role/group mapping
-- In Keycloak you can evaluate JWT claims for a client by going to: 'client you made' -> Client Scopes -> Evalute (submenu)
+- In Keycloak you can evaluate JWT claims for a client by going to: 'client you made' -> Client Scopes -> Evaluate (submenu)
 
 ## Installation
 **Requires Docker** (for the PostgresSql Database)
