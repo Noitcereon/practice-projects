@@ -26,6 +26,10 @@ services:
       - "4500:5432"
     volumes:
       - POSTGRES_DB:/var/lib/postgresql/data
+
+  # This runs a dev only keycloak instance using an H2 in-memory database.
+  # For proper use, it should use an external database such as Postgres.
+  # This external database ought to be configured with volumes as well for persistence.
   keycloak:
     container_name: practice_keycloak
     # Image source: https://quay.io/repository/keycloak/keycloak?tab=tags
@@ -34,14 +38,9 @@ services:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
     command:
+      # This starts keycloak in development mode
       - start-dev
     ports:
       - "8083:8080"
-    # Experimental volume (I think it uses H2, an in-memory database)
-
-    volumes:
-      - KEYCLOAK:/var/lib/keycloak/data
-
 volumes:
   POSTGRES_DB:
-  KEYCLOAK:
