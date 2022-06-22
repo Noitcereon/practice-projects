@@ -1,9 +1,11 @@
 package Topics;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 public class Predicates implements Runnable {
     @Override
     public void run() {
-
+        throw new NotImplementedException();
     }
 
     // Below code can maybe be used as an example of usage?
