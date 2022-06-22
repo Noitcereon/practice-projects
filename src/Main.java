@@ -9,31 +9,13 @@ public class Main {
         // Java Stream API
         // Parallel Sorting
         // Consumer/Supplier/Predicate
-
+        Thread streamPractice = new Thread(new JavaStreamApi());
+        streamPractice.start();
+        try {
+            streamPractice.join();
+        } catch (InterruptedException ignored) {}
         Optional<String> s = Optional.of("Hello");
-        List<Integer> numbers = new ArrayList<>();
-
-        for (int i = 65; i <= 100; i += 5) {
-            numbers.add(i);
-        }
-       numbers.add(100);
-        for (int i = 0; i < 56; i += 5) {
-            numbers.add(i);
-        }
-
-        System.out.println(numbers);
-        numbers.sort((num1, num2) -> {
-            if (num1.equals(num2))
-                return 0;
-            else if (num1 > num2)
-                return 1;
-            else
-                return -1;
-        });
-        System.out.println(numbers);
-        List<Integer> filteredNumbers = numbers.stream().filter((number) -> number.equals(0) || number.equals(100)).collect(Collectors.toList());
-        System.out.println(filteredNumbers);
-
+        System.out.println(s.get());
     }
 }
 
