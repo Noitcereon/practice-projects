@@ -12,18 +12,20 @@ public class OptionalPractice implements Runnable {
         System.out.println(s.get());
         System.out.println(Optional.empty());
 
-        //noinspection ConstantConditions
-        if (s2.isPresent()) {
-            System.out.println("s2 is not null");
-        } else {
-            System.out.println("An Optional that contains null is equivalent to Optional.empty");
-            System.out.println("'" + s2 + "'" + " is the current value of s2");
-            s2 = Optional.of("s2 is no longer null");
-
-            //noinspection OptionalIsPresent,ConstantConditions
-            if (s2.isPresent()) {
-                System.out.println(s2.get());
-            }
-        }
+        // The 13 code lines below here show a very simple example.
+//        //noinspection ConstantConditions
+//        if (s2.isPresent()) {
+//            System.out.println("s2 is not null");
+//        } else {
+//            System.out.println("An Optional that contains null is equivalent to Optional.empty");
+//            System.out.println("'" + s2 + "'" + " is the current value of s2");
+//            s2 = Optional.of("s2 is no longer null");
+//
+//            //noinspection OptionalIsPresent,ConstantConditions
+//            if (s2.isPresent()) {
+//                System.out.println(s2.get());
+//            }
+//        }
+        System.out.println(s2.orElse("s2 is null"));
     }
 }
