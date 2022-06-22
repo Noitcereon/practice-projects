@@ -1,10 +1,29 @@
 package Topics;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import java.util.Optional;
 
-public class OptionalPractice implements Runnable{
+public class OptionalPractice implements Runnable {
     @Override
     public void run() {
-        throw new NotImplementedException();
+        Optional<String> s = Optional.of("Hello optionals");
+
+        @SuppressWarnings("ConstantConditions")
+        Optional<String> s2 = Optional.ofNullable(null);
+        System.out.println(s.get());
+        System.out.println(Optional.empty());
+
+        //noinspection ConstantConditions
+        if (s2.isPresent()) {
+            System.out.println("s2 is not null");
+        } else {
+            System.out.println("An Optional that contains null is equivalent to Optional.empty");
+            System.out.println("'" + s2 + "'" + " is the current value of s2");
+            s2 = Optional.of("s2 is no longer null");
+
+            //noinspection OptionalIsPresent,ConstantConditions
+            if (s2.isPresent()) {
+                System.out.println(s2.get());
+            }
+        }
     }
 }
