@@ -26,12 +26,12 @@ public class Main {
         optionalPractice.run();
 
         ParallelSorting parallelSorting = new ParallelSorting();
-        parallelSorting.run();
+//        parallelSorting.run();
 
         DateAndTime dateAndTime = new DateAndTime();
         dateAndTime.run();
 
-        Predicates predicates = new Predicates();
-        predicates.run();
+        FunctionalInterfaces functionalInterfaces = new FunctionalInterfaces();
+        functionalInterfaces.run();
     }
 }
