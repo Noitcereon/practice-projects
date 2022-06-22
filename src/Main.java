@@ -4,11 +4,11 @@ import java.util.stream.Collectors;
 public class Main {
     public static void main(String... args) {
         // TODO: Explore most of the concepts in this article: https://medium.com/linkit-intecs/comparison-of-java-7-with-java-8-e99e407832af (see below comments)
-        // Lambda Expressions
         // Null Reference Template (aka. Optional)
         // New Date and Time API
         // Java Stream API
         // Parallel Sorting
+        // Consumer/Supplier/Predicate
 
         Optional<String> s = Optional.of("Hello");
         List<Integer> numbers = new ArrayList<>();
