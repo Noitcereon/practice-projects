@@ -1,4 +1,4 @@
-import Topics.JavaStreamApi;
+import Topics.*;
 
 import java.util.*;
 
@@ -10,15 +10,28 @@ public class Main {
         // Java Stream API
         // Parallel Sorting
         // Consumer/Supplier/Predicate
+
         Thread streamPractice = new Thread(new JavaStreamApi());
-        streamPractice.start();
-        try {
-            streamPractice.join();
-        } catch (InterruptedException ignored) {}
-        Optional<String> s = Optional.of("Hello");
-        System.out.println(s.get());
+        //noinspection CallToThreadRun
+        streamPractice.run(); // I intentionally call .run instead of .start to make it synchronous. I've used Thread here
+                              // to showcase how to make something multithreaded. (by just .using start instead of .run)
+
+        // One can use a class that implements Runnable without Thread (as was my original intention), but then I discovered Runnable was related to multithreading
+        // The 2 lines below showcase what I originally had in mind.
+//        JavaStreamApi streamPracticeNonThread = new JavaStreamApi();
+//        streamPracticeNonThread.run();
+
+        Thread optionalPractice = new Thread(new OptionalPractice());
+        //noinspection CallToThreadRun
+        optionalPractice.run();
+
+        ParallelSorting parallelSorting = new ParallelSorting();
+        parallelSorting.run();
+
+        DateAndTime dateAndTime = new DateAndTime();
+        dateAndTime.run();
+
+        Predicates predicates = new Predicates();
+        predicates.run();
     }
 }
-
-
-
