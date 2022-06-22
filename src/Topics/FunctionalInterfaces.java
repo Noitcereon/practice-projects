@@ -10,7 +10,7 @@ public class FunctionalInterfaces implements Runnable {
         // Functional Interfaces are what defines Predicates, Consumer and Supplier in Java.
         // Consumer, Predicate, Supplier and other are annotated with @FunctionalInterface
         // Consumer is similar to the C# Action<T>, which has no output.
-        // Supplier is similar to Func<out T>, which has a return type of <T>.
+        // Supplier is similar to Func<out T>, which has a return type of <T> usage could be as a Factory.
 
         List<Integer> numbers = new ArrayList<>();
         numbers.add(2);
