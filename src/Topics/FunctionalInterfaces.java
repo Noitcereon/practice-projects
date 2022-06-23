@@ -48,8 +48,6 @@ public class FunctionalInterfaces implements Runnable {
         funcInterfaceExample.noReturnTypeFunction(2, 2); // does the thing as specifed by the passed in Action<Integer, Integer> (addNumbers)
     }
 
-    // Below code can maybe be used as an example of usage?
-
 }
 
 // Me trying to do something similar to C# Func<T, T2, T3>
