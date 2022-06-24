@@ -1,10 +1,13 @@
 package Topics;
 
+import Helpers.ConsoleHelper;
+
 import java.util.Optional;
 
 public class OptionalPractice implements Runnable {
     @Override
     public void run() {
+        ConsoleHelper.printHeadline("Optional Practice");
         Optional<String> s = Optional.of("Hello optionals");
 
         @SuppressWarnings("ConstantConditions")

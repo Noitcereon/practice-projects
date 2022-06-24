@@ -1,5 +1,7 @@
 package Topics;
 
+import Helpers.ConsoleHelper;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -11,7 +13,7 @@ public class FunctionalInterfaces implements Runnable {
         // Consumer, Predicate, Supplier and other are annotated with @FunctionalInterface
         // Consumer is similar to the C# Action<T>, which has no output.
         // Supplier is similar to Func<out T>, which has a return type of <T> usage could be as a Factory.
-
+        ConsoleHelper.printHeadline("Functional Interfaces");
         List<Integer> numbers = new ArrayList<>();
         numbers.add(2);
         numbers.add(1);

@@ -1,5 +1,7 @@
 package Topics;
 
+import Helpers.ConsoleHelper;
+
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -21,6 +23,7 @@ public class JavaStreamApi implements Runnable {
 
     @Override
     public void run() {
+        ConsoleHelper.printHeadline("Java Stream API");
         System.out.println("Original numbers array: " + numbers);
         sortExample();
 
