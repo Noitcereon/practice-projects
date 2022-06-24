@@ -1,7 +1,5 @@
 import Topics.*;
 
-import java.util.*;
-
 public class Main {
     public static void main(String... args) {
         // TODO: Explore most of the concepts in this article: https://medium.com/linkit-intecs/comparison-of-java-7-with-java-8-e99e407832af (see below comments)
@@ -10,7 +8,6 @@ public class Main {
         // Java Stream API
         // Parallel Sorting
         // Consumer/Supplier/Predicate
-
         Thread streamPractice = new Thread(new JavaStreamApi());
         //noinspection CallToThreadRun
         streamPractice.run(); // I intentionally call .run instead of .start to make it synchronous. I've used Thread here
@@ -26,7 +23,7 @@ public class Main {
         optionalPractice.run();
 
         ParallelSorting parallelSorting = new ParallelSorting();
-//        parallelSorting.run();
+        parallelSorting.run();
 
         DateAndTime dateAndTime = new DateAndTime();
         dateAndTime.run();
