@@ -10,6 +10,7 @@ public class SearchEngine2 extends BaseSearchEngine<String>{
 
     @Override
     public Set<String> search(String searchQuery) {
+        // TODO: Write tests for search function
         String normalizedQuery = searchQuery.toLowerCase(Locale.ROOT);
 
         String[] searchQuerySplitOnQuotes = searchQuery.split("\"");
