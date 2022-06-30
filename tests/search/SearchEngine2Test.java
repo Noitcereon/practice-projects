@@ -50,4 +50,22 @@ class SearchEngine2Test {
         Assertions.assertEquals(expected.toString(), result.toString());
         Assertions.assertEquals(expected.toString(), result2.toString());
     }
+    @Test
+    void givenLooseSearchQuery_whenSearching_thenShowResultsContainingCharsFromQueryCaseInsensitive(){
+        String searchQuery = "Era?";
+        Collection<String> expected = new ArrayList<>(1);
+        expected.add("Eragon");
+
+        Collection<String> result = searchEngine.search(searchQuery);
+
+        Assertions.assertEquals(expected.toString(), result.toString());
+    }
+    @Test
+    void givenEmptySearchQuery_whenSearching_thenGetAll(){
+        String searchQuery = "";
+        Integer expectedSize = fakeData.get().size();
+        Collection<String> result = searchEngine.search(searchQuery);
+
+        Assertions.assertEquals(expectedSize, result.size());
+    }
 }
