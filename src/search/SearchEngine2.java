@@ -11,10 +11,11 @@ public class SearchEngine2 extends BaseSearchEngine<String> {
     @Override
     public Set<String> search(String searchQuery) {
         String normalizedQuery = searchQuery.toLowerCase(Locale.ROOT);
-
-        String[] searchQuerySplitOnQuotes = searchQuery.split("\"");
-        boolean containsStrictSearch = searchQuerySplitOnQuotes.length > 1;
+        // regex: (.*)("\w+")+(.*)
+        // Checks if double quotes surrounds 1 or more alphanumeric characters anywhere in the query
+        boolean containsStrictSearch = normalizedQuery.matches("(.*)(\"\\w+\")+(.*)");
         if (containsStrictSearch) {
+            String[] searchQuerySplitOnQuotes = searchQuery.split("\"");
             Collection<String> searchMustContain = findMustContainStrings(searchQuerySplitOnQuotes);
             return data.stream().filter(dataPiece -> filter(dataPiece, normalizedQuery, searchMustContain)).collect(Collectors.toSet());
         }
