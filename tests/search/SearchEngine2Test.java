@@ -6,8 +6,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 class SearchEngine2Test {
 
@@ -16,7 +18,19 @@ class SearchEngine2Test {
 
     @BeforeAll
     static void setUp(){
-        fakeData = new FakeData();
+        List<String> testData = new ArrayList<>();
+        testData.add("House of the Rising Sun");
+        testData.add("The Forgotten");
+        testData.add("Emperor's Cassock");
+        testData.add("Industrialism at it's Finest");
+        testData.add("What We Seek, We Find");
+        testData.add("Cloud Above");
+        testData.add("Cloud Below");
+        testData.add("As Above, So Below");
+        testData.add("Equality is a Tough Concept to Implement Fairly");
+        testData.add("Art Thou Whom I Seek");
+        testData.add("Eragon");
+        fakeData = new FakeData(testData);
         searchEngine = new SearchEngine2(fakeData.get());
     }
 
