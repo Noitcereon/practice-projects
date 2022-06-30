@@ -9,7 +9,7 @@ public class SearchEngine2 extends BaseSearchEngine<String> {
     }
 
     @Override
-    public Set<String> search(String searchQuery) {
+    public List<String> search(String searchQuery) {
         String normalizedQuery = searchQuery.toLowerCase(Locale.ROOT);
         // regex: (.*)("\w+")+(.*)
         // Checks if double quotes surrounds 1 or more alphanumeric characters anywhere in the query
@@ -18,10 +18,10 @@ public class SearchEngine2 extends BaseSearchEngine<String> {
             String[] searchQuerySplitOnQuotes = searchQuery.split("\"");
             Collection<String> searchMustContain = findMustContainStrings(searchQuerySplitOnQuotes);
             System.out.println("Strict filter");
-            return data.stream().filter(dataPiece -> filter(dataPiece, normalizedQuery, searchMustContain)).collect(Collectors.toSet());
+            return data.stream().filter(dataPiece -> filter(dataPiece, normalizedQuery, searchMustContain)).collect(Collectors.toList());
         }
         System.out.println("Loose filter");
-        return data.stream().filter(dataPiece -> filter(dataPiece, normalizedQuery)).collect(Collectors.toSet());
+        return data.stream().filter(dataPiece -> filter(dataPiece, normalizedQuery)).collect(Collectors.toList());
     }
 
     private Collection<String> findMustContainStrings(String[] searchQuerySplitOnQuotes) {
