@@ -1,10 +1,13 @@
 package data;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class FakeData implements IData<String>{
-    public List<String> get(){
+    private Collection<String> fakeData;
+
+    public FakeData(){
         List<String> fakeData = new ArrayList<>();
         fakeData.add("House of the Rising Sun");
         fakeData.add("The Forgotten");
@@ -16,6 +19,17 @@ public class FakeData implements IData<String>{
         fakeData.add("As Above, So Below");
         fakeData.add("Equality is a Tough Concept to Implement Fairly");
         fakeData.add("Art Thou Whom I Seek");
+        setFakeData(fakeData);
+    }
+    public FakeData(Collection<String> fakeData){
+        setFakeData(fakeData);
+    }
+
+    public Collection<String> get() {
         return fakeData;
+    }
+
+    public void setFakeData(Collection<String> fakeData) {
+        this.fakeData = fakeData;
     }
 }

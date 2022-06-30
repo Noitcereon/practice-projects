@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class SearchEngine2 extends BaseSearchEngine<String>{
-    public SearchEngine2(List<String> data) {
+    public SearchEngine2(Collection<String> data) {
         super(data);
     }
 

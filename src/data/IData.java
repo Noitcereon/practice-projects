@@ -1,7 +1,7 @@
 package data;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface IData<T> {
-    public List<T> get();
+    Collection<T> get();
 }
