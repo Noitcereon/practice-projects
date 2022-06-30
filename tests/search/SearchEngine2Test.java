@@ -30,6 +30,8 @@ class SearchEngine2Test {
         testData.add("Equality is a Tough Concept to Implement Fairly");
         testData.add("Art Thou Whom I Seek");
         testData.add("Eragon");
+        testData.add("Eradication of the Cheese: A Blasphemous Event");
+        testData.add("Dawn of a New Era");
         fakeData = new FakeData(testData);
         searchEngine = new SearchEngine2(fakeData.get());
     }
@@ -51,10 +53,12 @@ class SearchEngine2Test {
         Assertions.assertEquals(expected.toString(), result2.toString());
     }
     @Test
-    void givenLooseSearchQuery_whenSearching_thenShowResultsContainingCharsFromQueryCaseInsensitive(){
-        String searchQuery = "Era?";
+    void givenLooseSearchQuery_whenSearching_thenShowResultsContainingPartialMatchesCaseInsensitive(){
+        String searchQuery = "era?";
         Collection<String> expected = new ArrayList<>(1);
         expected.add("Eragon");
+        expected.add("Eradication of the Cheese: A Blasphemous Event");
+        expected.add("Dawn of a New Era");
 
         Collection<String> result = searchEngine.search(searchQuery);
 
