@@ -55,7 +55,7 @@ class SearchEngine2Test {
     @Test
     void givenLooseSearchQuery_whenSearching_thenShowResultsContainingPartialMatchesCaseInsensitive(){
         String searchQuery = "era?";
-        Collection<String> expected = new ArrayList<>(1);
+        Collection<String> expected = new ArrayList<>();
         expected.add("Eragon");
         expected.add("Eradication of the Cheese: A Blasphemous Event");
         expected.add("Dawn of a New Era");
