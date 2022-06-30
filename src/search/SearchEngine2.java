@@ -58,7 +58,7 @@ public class SearchEngine2 extends BaseSearchEngine<String> {
         char[] dataChars = normalizedData.toCharArray();
         char[] searchWordChars = searchWord.toCharArray();
 
-        // if 3 or more chars (more having higher priority) in a row are the same, return true
+        // if 3 chars in a row are the same, return true
         for (int searchIndex = 0; searchIndex < searchWord.length() - 2; searchIndex++) {
             for (int dataCharIndex = 0; dataCharIndex < normalizedData.length()-2; dataCharIndex++) {
                 if (dataChars[dataCharIndex] == searchWordChars[searchIndex]
