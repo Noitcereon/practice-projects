@@ -19,6 +19,9 @@ public class FakeData implements IData<String>{
         fakeData.add("As Above, So Below");
         fakeData.add("Equality is a Tough Concept to Implement Fairly");
         fakeData.add("Art Thou Whom I Seek");
+        fakeData.add("Eragon");
+        fakeData.add("Eradication of the Cheese: A Blasphemous Event");
+        fakeData.add("Dawn of a New Era");
         setFakeData(fakeData);
     }
     public FakeData(Collection<String> fakeData){
