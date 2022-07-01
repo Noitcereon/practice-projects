@@ -17,7 +17,7 @@ class SearchEngine2Test {
     private static ISearchEngine<String> searchEngine;
 
     @BeforeAll
-    static void setUp(){
+    static void setUp() {
         List<String> testData = new ArrayList<>();
         testData.add("House of the Rising Sun");
         testData.add("The Forgotten");
@@ -52,8 +52,9 @@ class SearchEngine2Test {
         Assertions.assertEquals(expected.toString(), result.toString());
         Assertions.assertEquals(expected.toString(), result2.toString());
     }
+
     @Test
-    void givenLooseSearchQuery_whenSearching_thenShowResultsContainingPartialMatchesCaseInsensitive(){
+    void givenLooseSearchQuery_whenSearching_thenShowResultsContainingPartialMatchesCaseInsensitive() {
         String searchQuery = "era?";
         Collection<String> expected = new ArrayList<>();
         expected.add("Eragon");
@@ -64,12 +65,26 @@ class SearchEngine2Test {
 
         Assertions.assertEquals(expected.toString(), result.toString());
     }
+
     @Test
-    void givenEmptySearchQuery_whenSearching_thenGetAll(){
+    void givenEmptySearchQuery_whenSearching_thenGetAll() {
         String searchQuery = "";
         Integer expectedSize = fakeData.get().size();
         Collection<String> result = searchEngine.search(searchQuery);
 
         Assertions.assertEquals(expectedSize, result.size());
+    }
+
+    @Test
+    void givenLooseSearchQuery_whenSearching_thenItCompletesInLessThan5ms() {
+        String searchQuery = "Erag";
+        int msLimit = 5;
+        int msAsNanoSecond = 1000000;
+        long time = System.nanoTime();
+        searchEngine.search(searchQuery);
+        long timeStop = System.nanoTime();
+        long timeTaken = timeStop - time;
+        System.out.println("timeTaken: " + timeTaken + "ns");
+        Assertions.assertTrue(timeTaken < msLimit * msAsNanoSecond);
     }
 }
