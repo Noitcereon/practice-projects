@@ -29,6 +29,10 @@ class SearchEngine2Test {
         testData.add("As Above, So Below");
         testData.add("Equality is a Tough Concept to Implement Fairly");
         testData.add("Art Thou Whom I Seek");
+        // Uncomment this when testing performance (it causes other tests to fail)
+//         for (int i = 0; i < 999999; i++) {
+//            testData.add("Dawn of a New Era");
+//        }
         testData.add("Eragon");
         testData.add("Eradication of the Cheese: A Blasphemous Event");
         testData.add("Dawn of a New Era");
@@ -76,15 +80,27 @@ class SearchEngine2Test {
     }
 
     @Test
-    void givenLooseSearchQuery_whenSearching_thenItCompletesInLessThan5ms() {
+    void givenLooseSearchQuery_whenSearching_thenItCompletesInLessThan250ms() {
         String searchQuery = "Erag";
-        int msLimit = 5;
-        int msAsNanoSecond = 1000000;
+        int msLimit = 250;
+        double msAsNanoSecond = 1000000.0;
         long time = System.nanoTime();
         searchEngine.search(searchQuery);
         long timeStop = System.nanoTime();
         long timeTaken = timeStop - time;
-        System.out.println("timeTaken: " + timeTaken + "ns");
+        System.out.println("Loose search time taken: " + (timeTaken / msAsNanoSecond) + "ms");
+        Assertions.assertTrue(timeTaken < msLimit * msAsNanoSecond);
+    }
+    @Test
+    void givenStrictSearchQuery_whenSearching_thenItCompletesInLessThan250ms() {
+        String searchQuery = "\"Erag\"";
+        int msLimit = 250;
+        double msAsNanoSecond = 1000000.0;
+        long time = System.nanoTime();
+        searchEngine.search(searchQuery);
+        long timeStop = System.nanoTime();
+        long timeTaken = timeStop - time;
+        System.out.println("Strict search time taken: " + (timeTaken / msAsNanoSecond) + "ms");
         Assertions.assertTrue(timeTaken < msLimit * msAsNanoSecond);
     }
 }

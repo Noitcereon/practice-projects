@@ -47,7 +47,7 @@ public class SearchEngine2 extends BaseSearchEngine<String> {
             if (normalizedData.contains(searchWord)) return true;  // return true
             if (containsPartialMatch(normalizedData, searchWord)) return true;
             // if the count of the individual chars matches words (optional)
-            // return true
+                // return true
         }
 
         return false;
@@ -59,26 +59,30 @@ public class SearchEngine2 extends BaseSearchEngine<String> {
         char[] searchWordChars = searchWord.toCharArray();
 
         // if 3 chars in a row are the same, return true
-        for (int searchIndex = 0; searchIndex < searchWord.length() - 2; searchIndex++) {
-            for (int dataCharIndex = 0; dataCharIndex < normalizedData.length()-2; dataCharIndex++) {
-                if (dataChars[dataCharIndex] == searchWordChars[searchIndex]
-                        && dataChars[dataCharIndex + 1] == searchWordChars[searchIndex + 1]
-                        && dataChars[dataCharIndex + 2] == searchWordChars[searchIndex + 2]) {
-                    return true;
+        int matchesInARow = 0;
+        for (int searchCharIndex = 0; searchCharIndex < searchWord.length(); searchCharIndex++) {
+            // Check the whole data string for a partial match with the searchWord
+            for (char dataChar : dataChars) {
+                int searchCharIndexPlusMatches = searchCharIndex + matchesInARow;
+                if (matchesInARow >= 3) return true;
+                if (searchCharIndexPlusMatches >= searchWordChars.length) return false;
+                if (dataChar == searchWordChars[searchCharIndexPlusMatches]) {
+                    matchesInARow++;
+                    continue;
                 }
+                matchesInARow = 0;
             }
         }
         return false;
     }
 
     private Boolean filter(String dataPiece, String searchQuery, Collection<String> searchMustContain) {
-        // Perform strict search
+        // Strict search
         String normalizedData = dataPiece.toLowerCase(Locale.ROOT);
         for (String mustContainThis : searchMustContain) {
             if (!normalizedData.contains(mustContainThis.toLowerCase(Locale.ROOT))) return false;
         }
-        // TODO: search further with the searchQuery parameter
-        // TODO: Write test for combined strict + loose scenario
+        // TODO: if a search ranking system is implement: use remaining searchQuery to rank search more accurately
         return true;
     }
 }
