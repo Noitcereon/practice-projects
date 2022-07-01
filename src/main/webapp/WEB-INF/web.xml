@@ -11,4 +11,12 @@
         <servlet-name>addServlet</servlet-name>
         <url-pattern>/add</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>memeServlet</servlet-name>
+        <servlet-class>com.noitcereon.memeservletdemo.MemeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>memeServlet</servlet-name>
+        <url-pattern>/meme</url-pattern>
+    </servlet-mapping>
 </web-app>
