@@ -1,6 +1,7 @@
 package models;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
 public class TimeRange {
@@ -31,5 +32,11 @@ public class TimeRange {
                 "start=" + start.format(DateTimeFormatter.ofPattern("EEEE HH:mm")) +
                 ", end=" + end.format(DateTimeFormatter.ofPattern("EEEE HH:mm")) +
                 '}';
+    }
+
+    public int getHoursBetweenStartAndEnd(){
+        long epochSecondsBetweenStartAndEnd = end.toEpochSecond(ZoneOffset.UTC) - start.toEpochSecond(ZoneOffset.UTC);
+        int hoursBetweenStartAndEnd = (int)Math.floor((epochSecondsBetweenStartAndEnd / 60.0 / 60.0));
+        return hoursBetweenStartAndEnd;
     }
 }
