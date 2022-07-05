@@ -9,8 +9,10 @@ import java.util.Map;
 public class Curriculum {
     // Integer = hours allocated to a specific subject
     private final Map<Subject, Integer> allotedTimePerSubject;
+    private final TimeRange timePeriod;
 
-    public Curriculum(){
+    public Curriculum(TimeRange timePeriod){
+        this.timePeriod = timePeriod;
         allotedTimePerSubject = new HashMap<>();
     }
 
@@ -21,5 +23,9 @@ public class Curriculum {
 
     public Map<Subject, Integer> getAllotedTimePerSubject() {
         return allotedTimePerSubject;
+    }
+
+    public TimeRange getTimePeriod() {
+        return timePeriod;
     }
 }
