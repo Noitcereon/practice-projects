@@ -3,6 +3,7 @@ package services;
 import enums.Role;
 import models.*;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class HardcodedData {
@@ -16,7 +17,11 @@ public class HardcodedData {
         Subject subject6 = new Subject("Software Design");
         Subject subject7 = new Subject("Business Analysis");
 
-        Curriculum curriculum = new Curriculum();
+        LocalDateTime startOfCurriculumPeriod = LocalDateTime.of(2022, 8, 1, 8, 0);
+        LocalDateTime endOfCurriculumPeriod = LocalDateTime.of(2022, 12, 15, 15, 30);
+        TimeRange curriculumTimePeriod = new TimeRange(startOfCurriculumPeriod, endOfCurriculumPeriod);
+
+        Curriculum curriculum = new Curriculum(curriculumTimePeriod);
         curriculum
                 .addSubject(math1, 420)
                 .addSubject(math2, 390)
@@ -31,8 +36,6 @@ public class HardcodedData {
 
     public static Set<Person> CreateListOfPeople() {
         Set<Person> teachers = new HashSet<>();
-
-
         teachers.add(new Teacher("Abigail", Role.TEACHER));
         teachers.add(new Teacher("Donald", Role.TEACHER));
         teachers.add(new Teacher("Donald Twice", Role.TEACHER));
