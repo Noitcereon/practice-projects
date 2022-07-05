@@ -4,9 +4,9 @@ public class ScheduleItemInfo {
     private String roomId;
     private String activityTitle;
     private Person host;
-    private TimeSlot duration;
+    private TimeRange duration;
 
-    public ScheduleItemInfo(String roomId, String activityTitle, Person host, TimeSlot duration) {
+    public ScheduleItemInfo(String roomId, String activityTitle, Person host, TimeRange duration) {
         this.roomId = roomId;
         this.activityTitle = activityTitle;
         this.host = host;
@@ -37,11 +37,11 @@ public class ScheduleItemInfo {
         this.host = host;
     }
 
-    public TimeSlot getDuration() {
+    public TimeRange getDuration() {
         return duration;
     }
 
-    public void setDuration(TimeSlot duration) {
+    public void setDuration(TimeRange duration) {
         this.duration = duration;
     }
 

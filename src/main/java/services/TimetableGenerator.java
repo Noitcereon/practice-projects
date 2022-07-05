@@ -13,7 +13,7 @@ public class TimetableGenerator {
         // TODO: implement TimetableGenerator
         Collection<ScheduleItemInfo> scheduleItems = new ArrayList<>();
 
-        TimeSlot timeSlot = new TimeSlot(LocalDateTime.now(), LocalDateTime.now().plusHours(2));
+        TimeRange timeSlot = new TimeRange(LocalDateTime.now(), LocalDateTime.now().plusHours(2));
 
         scheduleItems.add(new ScheduleItemInfo("101", "Math", teachers.stream().findFirst().get(), timeSlot));
 

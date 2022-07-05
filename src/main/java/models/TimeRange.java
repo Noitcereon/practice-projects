@@ -3,11 +3,11 @@ package models;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class TimeSlot {
+public class TimeRange {
     private LocalDateTime start;
     private LocalDateTime end;
 
-    public TimeSlot(LocalDateTime start, LocalDateTime end){
+    public TimeRange(LocalDateTime start, LocalDateTime end){
         this.start = start;
         this.end = end;
     }
