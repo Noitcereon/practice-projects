@@ -34,8 +34,8 @@ public class HardcodedData {
         return curriculum;
     }
 
-    public static Set<Person> CreateListOfPeople() {
-        Set<Person> teachers = new HashSet<>();
+    public static Set<Teacher> CreateSetOfTeachers() {
+        Set<Teacher> teachers = new HashSet<>();
         teachers.add(new Teacher("Abigail", Role.TEACHER));
         teachers.add(new Teacher("Donald", Role.TEACHER));
         teachers.add(new Teacher("Donald Twice", Role.TEACHER));
