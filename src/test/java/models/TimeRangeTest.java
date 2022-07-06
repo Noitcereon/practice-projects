@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 class TimeRangeTest {
-
-
     private static Collection<DayOfWeek> weekDays;
 
     @BeforeAll
@@ -46,5 +44,21 @@ class TimeRangeTest {
         int actualHours = timeRange.getHoursBetweenStartAndEnd(weekDays, hoursUsedPerDay);
 
         Assertions.assertEquals(expectedHours, actualHours);
+    }
+    @Test
+    void givenStartAndEndDateTwoYearsFromEachOtherWithRestrictions_whenGettingHoursBetweenStartAndEnd_thenCompleteWithin300ms() {
+        LocalDateTime firstDayOf2022 = LocalDateTime.of(2022, 1, 1, 0, 0);
+        LocalDateTime twoYearsAfterFirstDayOf2022 = firstDayOf2022.plusYears(2);
+        int hoursUsedPerDay = 6;
+        int maxTimeTakenMs = 300;
+        double nanoSecondsPerMs = 1000000.0;
+        TimeRange timeRange = new TimeRange(firstDayOf2022, twoYearsAfterFirstDayOf2022);
+
+        long startTime = System.nanoTime();
+        timeRange.getHoursBetweenStartAndEnd(weekDays, hoursUsedPerDay);
+        long endTime = System.nanoTime();
+        int timeTakenMs = (int)Math.floor((endTime - startTime)/nanoSecondsPerMs);
+
+        Assertions.assertTrue(maxTimeTakenMs > timeTakenMs);
     }
 }
