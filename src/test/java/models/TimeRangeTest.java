@@ -46,6 +46,20 @@ class TimeRangeTest {
         Assertions.assertEquals(expectedHours, actualHours);
     }
     @Test
+    void givenStartAndEndDateOneYearFromEachOtherWithRestrictions_whenGettingHoursBetweenStartAndEnd_thenReturn30Hours() {
+        LocalDateTime firstDayOf2022 = LocalDateTime.of(2022, 1, 1, 0, 0);
+        LocalDateTime eighthDayOf2022 = firstDayOf2022.plusYears(1);
+        int weeksInAYear = 52;
+        int hoursInAWeek = 30;
+        int expectedHours = hoursInAWeek*weeksInAYear;
+        int hoursUsedPerDay = 6;
+        TimeRange timeRange = new TimeRange(firstDayOf2022, eighthDayOf2022);
+
+        int actualHours = timeRange.getHoursBetweenStartAndEnd(weekDays, hoursUsedPerDay);
+
+        Assertions.assertEquals(expectedHours, actualHours);
+    }
+    @Test
     void givenStartAndEndDateTwoYearsFromEachOtherWithRestrictions_whenGettingHoursBetweenStartAndEnd_thenCompleteWithin300ms() {
         LocalDateTime firstDayOf2022 = LocalDateTime.of(2022, 1, 1, 0, 0);
         LocalDateTime twoYearsAfterFirstDayOf2022 = firstDayOf2022.plusYears(2);
