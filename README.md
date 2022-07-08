@@ -26,4 +26,4 @@ The purpose of this repo is:
 So just clone this repo and look at the code (and potentially try and run it).
 
 ## Maintainer
-@Noitcereon
+- [Noitcereon](https://github.com/Noitcereon)
