@@ -1,5 +1,6 @@
 {
+  "type": "module",
   "dependencies": {
-    "npm-publish-package-demo": "^0.0.1"
+    "npm-publish-package-demo": "^0.1.0"
   }
 }
