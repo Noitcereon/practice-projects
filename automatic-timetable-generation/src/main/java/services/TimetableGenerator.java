@@ -42,9 +42,14 @@ public class TimetableGenerator {
                 TimeRange nextEntryDuration = createTimeRange(nextEntryStart, hoursLeft, HardcodedData.CreateCollectionOfWeekDays(), workHoursPerDay);
 
                 int nextEntryDurationHours = nextEntryDuration.getHoursBetweenStartAndEnd();
+                curriculumEntry.setValue(curriculumEntry.getValue()-nextEntryDurationHours);
                 if(nextEntryDurationHours < workHoursPerDay){
                     // TODO: Use different subject for remaining time period (make method that does this)
                     System.out.println("Simulating making edge-case entry");
+
+                    // Find curriculumEntry that has time left
+                        // If none are found, break the loop;
+                    // Make an entry that fills the remaining time (workHoursPerDay - nextEntryDurationHours)
                 }
                 ScheduleItemInfo nextEntry;
                 nextEntry = new ScheduleItemInfo(rooms.get(roomIndex).getId(), subject.getName(), teachersArray.get(teachersIndex), nextEntryDuration);
@@ -54,10 +59,10 @@ public class TimetableGenerator {
                 // Avoid IndexOutOfBounds error (next 2 lines)
                 if(roomIndex >= rooms.size()) roomIndex = 0;
                 if(teachersIndex >= teachersArray.size()) teachersIndex = 0;
-                System.out.println("Adding itinerary entry");
+//                System.out.println("Adding itinerary entry");
                 itinerary.add(nextEntry);
-                totalHoursInCurriculum -= 6;
-                curriculumEntry.setValue(curriculumEntry.getValue()-nextEntryDurationHours);
+                totalHoursInCurriculum -= workHoursPerDay;
+
             }
         }
 
