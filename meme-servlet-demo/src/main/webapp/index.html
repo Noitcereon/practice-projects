@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Meme Servlet Demo</title>
+</head>
+<body>
+<h1>Meme Servlet Demo</h1>
+<!-- Goal:
+    Make a small web app using basic servlets.
+    - In the web app you should be able to pick a number.
+    - Based on the number selected it displays a different meme.
+    - If a number is selected that does not have meme associated with it,
+      display a default meme.
+ -->
+<h2>Add (from tutorial demo)</h2>
+<form action="add">
+    <div>
+        <label for="numberInput1">Enter number</label>
+        <input type="number" id="numberInput1" name="numberInput1"/>
+    </div>
+    <div>
+        <label for="numberInput2">Enter number</label>
+        <input type="number" id="numberInput2" name="numberInput2"/>
+    </div>
+    <button type="submit">Add numbers together</button>
+</form>
+<div>
+    <h2>Available meme ids</h2>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>9001</li>
+        <li>404</li>
+    </ul>
+</div>
+
+<form action="meme">
+    <div>
+        <label for="memeId">Enter meme id</label>
+        <input type="number" id="memeId" name="memeId"/>
+    </div>
+    <button type="submit">Show Meme</button>
+</form>
+</body>
+</html>
