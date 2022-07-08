@@ -6,8 +6,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Type;
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Set;
 
 class TimetableGeneratorTest {
@@ -56,17 +58,29 @@ class TimetableGeneratorTest {
     @Test
     void givenValidInput_whenGeneratingTimetable_thenGeneratedTimetableItineraryIsLargerOrEqualTheAmountOfCurriculumSubjects(){
         Timetable timetable = _generator.generateTimetable(_school, _teachers, _curriculum);
-        int curriculumSubjects = _curriculum.getAllotedTimePerSubject().size();
+        int curriculumSubjectsSize = _curriculum.getAllotedTimePerSubject().size();
         int itinerarySize = timetable.getItinerary().size();
         boolean expected = true;
-        boolean actual = itinerarySize >= curriculumSubjects;
+        boolean actual = itinerarySize >= curriculumSubjectsSize;
+        System.out.printf("\nitinerarySize: %s, curriculumSubjectSize: %s%n", itinerarySize, curriculumSubjectsSize);
         Assertions.assertEquals(expected, actual);
+    }
+    @Test
+    void givenValidInput_whenGeneratingTimetable_thenItineraryDoesNotContainInvalidDayOfWeek(){
+        Timetable timetable = _generator.generateTimetable(_school, _teachers, _curriculum);
+        Collection<DayOfWeek> weekDays = HardcodedData.CreateCollectionOfWeekDays();
+        boolean containsInvalidDayOfWeek = false;
+        timetable.getItinerary().forEach(itineraryEntry -> {
+            boolean isWeekendDay = !weekDays.contains(itineraryEntry.getDuration().getStart().getDayOfWeek());
+            Assertions.assertEquals(containsInvalidDayOfWeek, isWeekendDay);
+        });
     }
 
     private void assertItineraryDoesNotOverlap(int itineraryIndex, LocalDateTime start1, LocalDateTime end1, int itineraryCompareIndex, LocalDateTime start2, LocalDateTime end2) {
         int isEarlier = -1;
         int isSameTime = 0;
         int isLater = 1;
+        System.out.printf("\nitenaryIndex: %s, itineraryCompareIndex %s, start1 %s, end1 %s, start2 %s, end2 %s%n", itineraryIndex, itineraryCompareIndex, start1, end1, start2, end2);
         if (start1.compareTo(start2) == isSameTime && itineraryIndex != itineraryCompareIndex) {
             Assertions.fail("Overlap occurred");
         } else if (start1.compareTo(start2) == isLater) {

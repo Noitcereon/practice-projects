@@ -3,6 +3,7 @@ package services;
 import enums.Role;
 import models.*;
 
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -23,13 +24,13 @@ public class HardcodedData {
 
         Curriculum curriculum = new Curriculum(curriculumTimePeriod);
         curriculum
-                .addSubject(math1, 420)
-                .addSubject(math2, 390)
+                .addSubject(math1, 100)
+                .addSubject(math2, 80)
                 .addSubject(subject3, 40)
-                .addSubject(subject4, 210)
-                .addSubject(subject5, 245)
-                .addSubject(subject6, 320)
-                .addSubject(subject7, 135);
+                .addSubject(subject4, 65)
+                .addSubject(subject5, 55)
+                .addSubject(subject6, 180)
+                .addSubject(subject7, 55);
 
         return curriculum;
     }
@@ -70,5 +71,14 @@ public class HardcodedData {
         rooms.add(room9);
 
         return new School(rooms);
+    }
+    public static Collection<DayOfWeek> CreateCollectionOfWeekDays(){
+        Collection<DayOfWeek> weekDays = new ArrayList<>();
+        weekDays.add(DayOfWeek.MONDAY);
+        weekDays.add(DayOfWeek.TUESDAY);
+        weekDays.add(DayOfWeek.WEDNESDAY);
+        weekDays.add(DayOfWeek.THURSDAY);
+        weekDays.add(DayOfWeek.FRIDAY);
+        return weekDays;
     }
 }

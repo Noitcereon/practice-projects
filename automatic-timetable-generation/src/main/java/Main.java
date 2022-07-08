@@ -1,3 +1,4 @@
+import models.ScheduleItemInfo;
 import models.Timetable;
 import services.HardcodedData;
 import services.TimetableGenerator;
@@ -8,6 +9,8 @@ public class Main {
 
         Timetable timetable = generator.generateTimetable(HardcodedData.CreateSchool(), HardcodedData.CreateSetOfTeachers(), HardcodedData.CreateCurriculum());
 
-        System.out.println(timetable.getItinerary());
+        for (ScheduleItemInfo entry : timetable.getItinerary()) {
+            System.out.println(entry.getDuration());
+        }
     }
 }
