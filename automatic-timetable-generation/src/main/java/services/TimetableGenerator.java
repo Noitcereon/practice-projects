@@ -6,6 +6,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class TimetableGenerator {
     /**
@@ -39,17 +40,15 @@ public class TimetableGenerator {
                 Subject subject = curriculumEntry.getKey();
                 Integer hoursLeft = curriculumEntry.getValue();
                 if (hoursLeft <= 0) continue;
-                TimeRange nextEntryDuration = createTimeRange(nextEntryStart, hoursLeft, HardcodedData.CreateCollectionOfWeekDays(), workHoursPerDay);
+                TimeRange nextEntryDuration = createTimeRangeForItineraryEntry(nextEntryStart, hoursLeft, HardcodedData.CreateCollectionOfWeekDays(), workHoursPerDay);
 
                 int nextEntryDurationHours = nextEntryDuration.getHoursBetweenStartAndEnd();
                 curriculumEntry.setValue(curriculumEntry.getValue()-nextEntryDurationHours);
                 if(nextEntryDurationHours < workHoursPerDay){
                     // TODO: Use different subject for remaining time period (make method that does this)
                     System.out.println("Simulating making edge-case entry");
+                    useDifferentSubjectToFillRemainingTime(workHoursPerDay, subjectsAndAssociatedHours, nextEntryDurationHours);
 
-                    // Find curriculumEntry that has time left
-                        // If none are found, break the loop;
-                    // Make an entry that fills the remaining time (workHoursPerDay - nextEntryDurationHours)
                 }
                 ScheduleItemInfo nextEntry;
                 nextEntry = new ScheduleItemInfo(rooms.get(roomIndex).getId(), subject.getName(), teachersArray.get(teachersIndex), nextEntryDuration);
@@ -75,6 +74,38 @@ public class TimetableGenerator {
         return new Timetable(itinerary);
     }
 
+    private void useDifferentSubjectToFillRemainingTime(int workHoursPerDay, Map<Subject, Integer> subjectsAndAssociatedHours, int nextEntryDurationHours) {
+        Stack<Map.Entry<Subject, Integer>> stackEntriesWithTimeLeft = new Stack<>();
+        List<Map.Entry<Subject, Integer>> entriesWithTimeLeft = subjectsAndAssociatedHours.entrySet()
+                .stream().filter((curriculumEntry2) -> curriculumEntry2.getValue() > 0)
+                .collect(Collectors.toList());
+        stackEntriesWithTimeLeft.addAll(entriesWithTimeLeft);
+
+        if(entriesWithTimeLeft.size() == 0){
+            return;
+        }
+
+        Map.Entry<Subject, Integer> entryWithTimeLeft = stackEntriesWithTimeLeft.pop();
+        int timeLeftToFill = workHoursPerDay - nextEntryDurationHours;
+        if(entryWithTimeLeft.getValue() >= timeLeftToFill){
+            // Make an entry that fills the remaining time (workHoursPerDay - nextEntryDurationHours)
+//            createTimeRangeForItineraryEntry();
+            return;
+        }
+        // If there are any entries with time left
+        if(stackEntriesWithTimeLeft.size() > 0){
+            // Make an entry that fill part of the remaining time
+            //createTimeRangeForItineraryEntry();
+            // Update timeLeftToFill with the time used by the entry
+            timeLeftToFill -= 1;
+            useDifferentSubjectToFillRemainingTime(workHoursPerDay, subjectsAndAssociatedHours, timeLeftToFill);
+        }
+        else{
+            // Make an entry that fill part of the remaining time
+            //createTimeRangeForItineraryEntry();
+        }
+    }
+
     /**
      *
      * @param nextEntryStart The LocalDateTime on which this entry starts.
@@ -82,7 +113,7 @@ public class TimetableGenerator {
      * @param daysToUse The specific days of the week that should be used when making the itinerary.
      * @return A TimeRange of 6 hours
      */
-    private TimeRange createTimeRange(LocalDateTime nextEntryStart, Integer hoursLeft, Collection<DayOfWeek> daysToUse, int workHoursPerDay) {
+    private TimeRange createTimeRangeForItineraryEntry(LocalDateTime nextEntryStart, Integer hoursLeft, Collection<DayOfWeek> daysToUse, int workHoursPerDay) {
         TimeRange nextEntryDuration;
         if(hoursLeft < workHoursPerDay){
             nextEntryDuration = new TimeRange(nextEntryStart, nextEntryStart.plusHours(hoursLeft));
@@ -90,7 +121,7 @@ public class TimetableGenerator {
              nextEntryDuration = new TimeRange(nextEntryStart, nextEntryStart.plusHours(6));
         }
         if(!daysToUse.contains(nextEntryDuration.getStart().getDayOfWeek())) {
-            nextEntryDuration = createTimeRange(nextEntryDuration.getStart().plusDays(1), hoursLeft, daysToUse, workHoursPerDay);
+            nextEntryDuration = createTimeRangeForItineraryEntry(nextEntryDuration.getStart().plusDays(1), hoursLeft, daysToUse, workHoursPerDay);
         }
         return nextEntryDuration;
     }
