@@ -1,10 +1,10 @@
 # Renewing Java API Knowledge
 This repository holds a Java API, which I made to refresh my knowledge on the topic of Java REST APIs with Spring Boot, Hibernate, PostgresSql and Docker. It is purely practice.
-
+The original repository can be found [on Gitlab](https://gitlab.com/Noitcereon/renewing-java-api-knowledge), which contains 2 branches: main (no keycloak) and tba-keycloak.
 
 ## A few things to note:
 
-- The Actor repository contains a custom JPQL to avoid a big performance issue using a JOIN FETCH (not implmeneted elsewhere)
+- The Actor repository contains a custom JPQL to avoid a big performance issue using a JOIN FETCH (not implemented elsewhere)
 - I've tried to implement basic DTOs (Data Transfer Objects) for Actors (more models, to make it easier for client to use and obfuscating internal structure from consumers)
 - DatabaseConfig is in this case used to configure the connection string to the database for use with Heroku
 - When you setup a new container of keycloak, you need to configure it's instance, such as adding a new realm, new clients and setup role/group mapping
