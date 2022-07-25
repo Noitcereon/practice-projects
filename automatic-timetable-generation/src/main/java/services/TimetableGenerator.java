@@ -66,7 +66,7 @@ public class TimetableGenerator {
                         itinerary.add(nextEntry);
                     }
                 }
-                // TODO: Handle when workHoursPerDay is NOT added to the curriculum (in case the edge case handling does not have enough time to fill a work day)
+                // workHoursPerDay is not necessarily added to the itinerary (edge-case), but in most cases it is.
                 totalHoursInCurriculum -= workHoursPerDay;
             }
         }
@@ -92,16 +92,19 @@ public class TimetableGenerator {
     }
 
     private ScheduleItemInfo createEntryToFillRemainingWorkday(Map.Entry<Subject, Integer> subjectWithTimeLeft, TimeRange previousEntryDuration, int hoursLeftToFill, IPerson host, String roomId, int workHoursPerDay) {
+        TimeRange newEntryTimeRange;
+        ScheduleItemInfo newEntry;
         if (subjectWithTimeLeft.getValue() >= hoursLeftToFill) {
             // Make a ScheduleItemInfo that fills the remaining time (workHoursPerDay - nextEntryDurationHours)
-            TimeRange newEntryTimeRange = createTimeRangeForItineraryEntry(previousEntryDuration.getEnd().plusSeconds(1), hoursLeftToFill, HardcodedData.CreateCollectionOfWeekDays(), workHoursPerDay);
-            ScheduleItemInfo newEntry = new ScheduleItemInfo(roomId, subjectWithTimeLeft.getKey().getName(), (Person) host, newEntryTimeRange);
-            // TODO: subtract the new Entry's time used from timeLeftToFill
+            newEntryTimeRange = createTimeRangeForItineraryEntry(previousEntryDuration.getEnd().plusSeconds(1), hoursLeftToFill, HardcodedData.CreateCollectionOfWeekDays(), workHoursPerDay);
+            newEntry = new ScheduleItemInfo(roomId, subjectWithTimeLeft.getKey().getName(), (Person) host, newEntryTimeRange);
 
             return newEntry;
         }
-        // This exception is here to show that something is wrong with the code, if this point is reached.
-        throw new IllegalArgumentException("Failed to create entry, because subject with time left did not have sufficient time.");
+
+        newEntryTimeRange = createTimeRangeForItineraryEntry(previousEntryDuration.getEnd().plusSeconds(1), subjectWithTimeLeft.getValue(), HardcodedData.CreateCollectionOfWeekDays(), workHoursPerDay);
+        newEntry = new ScheduleItemInfo(roomId, subjectWithTimeLeft.getKey().getName(), (Person) host, newEntryTimeRange);
+        return newEntry;
     }
 
     /**
