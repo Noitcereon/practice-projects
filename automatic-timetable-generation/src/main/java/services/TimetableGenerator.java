@@ -38,30 +38,37 @@ public class TimetableGenerator {
 
             for (Map.Entry<Subject, Integer> curriculumEntry : subjectsAndAssociatedHours.entrySet()) {
                 Subject subject = curriculumEntry.getKey();
-                Integer hoursLeft = curriculumEntry.getValue();
-                if (hoursLeft <= 0) continue;
-                TimeRange nextEntryDuration = createTimeRangeForItineraryEntry(nextEntryStart, hoursLeft, HardcodedData.CreateCollectionOfWeekDays(), workHoursPerDay);
+                Integer hoursLeftInSubject = curriculumEntry.getValue();
+                if (hoursLeftInSubject <= 0) continue;
+                TimeRange nextEntryDuration = createTimeRangeForItineraryEntry(nextEntryStart, hoursLeftInSubject, HardcodedData.CreateCollectionOfWeekDays(), workHoursPerDay);
 
                 int nextEntryDurationHours = nextEntryDuration.getHoursBetweenStartAndEnd();
                 curriculumEntry.setValue(curriculumEntry.getValue() - nextEntryDurationHours);
-                if (nextEntryDurationHours < workHoursPerDay) {
-                    // TODO: Use different subject for remaining time period (make method that does this)
-                    System.out.println("Simulating making edge-case entry");
-                    useDifferentSubjectToFillRemainingTime(workHoursPerDay, subjectsAndAssociatedHours, nextEntryDurationHours);
 
-                }
                 ScheduleItemInfo nextEntry;
                 nextEntry = new ScheduleItemInfo(rooms.get(roomIndex).getId(), subject.getName(), teachersArray.get(teachersIndex), nextEntryDuration);
+
+
+                nextEntryStart = nextEntryDuration.getStart().plusDays(1);
                 roomIndex++;
                 teachersIndex++;
-                nextEntryStart = nextEntryDuration.getStart().plusDays(1);
                 // Avoid IndexOutOfBounds error (next 2 lines)
                 if (roomIndex >= rooms.size()) roomIndex = 0;
                 if (teachersIndex >= teachersArray.size()) teachersIndex = 0;
 //                System.out.println("Adding itinerary entry");
                 itinerary.add(nextEntry);
-                totalHoursInCurriculum -= workHoursPerDay;
 
+                if (nextEntryDurationHours < workHoursPerDay) {
+                    System.out.println("Simulating making edge-case entry");
+                    Optional<Map.Entry<Subject, Integer>> subjectWithTimeLeftOptional = findSubjectWithTimeLeft(subjectsAndAssociatedHours);
+                    if (subjectWithTimeLeftOptional.isPresent()) {
+                        int timeLeftToFill = workHoursPerDay - nextEntryDurationHours;
+                        nextEntry = createEntryToFillRemainingWorkday(subjectWithTimeLeftOptional.get(), nextEntryDuration, timeLeftToFill, teachersArray.get(teachersIndex), rooms.get(roomIndex).getId(), workHoursPerDay);
+                        itinerary.add(nextEntry);
+                    }
+                }
+                // TODO: Handle when workHoursPerDay is NOT added to the curriculum (in case the edge case handling does not have enough time to fill a work day)
+                totalHoursInCurriculum -= workHoursPerDay;
             }
         }
 
@@ -74,33 +81,27 @@ public class TimetableGenerator {
         return new Timetable(itinerary);
     }
 
-    private void useDifferentSubjectToFillRemainingTime(int workHoursPerDay, Map<Subject, Integer> subjectsAndAssociatedHours, int nextEntryDurationHours) {
-        Stack<Map.Entry<Subject, Integer>> stackEntriesWithTimeLeft = new Stack<>();
-        List<Map.Entry<Subject, Integer>> entriesWithTimeLeft = subjectsAndAssociatedHours.entrySet()
+    private Optional<Map.Entry<Subject, Integer>> findSubjectWithTimeLeft(Map<Subject, Integer> subjectsAndAssociatedHours) {
+        List<Map.Entry<Subject, Integer>> subjectsWithTimeLeft = subjectsAndAssociatedHours.entrySet()
                 .stream().filter((curriculumEntry2) -> curriculumEntry2.getValue() > 0)
                 .collect(Collectors.toList());
-        stackEntriesWithTimeLeft.addAll(entriesWithTimeLeft);
 
-        if (entriesWithTimeLeft.size() == 0) return;
+        if (subjectsWithTimeLeft.size() == 0) return Optional.empty();
 
-        Map.Entry<Subject, Integer> entryWithTimeLeft = stackEntriesWithTimeLeft.pop();
-        int timeLeftToFill = workHoursPerDay - nextEntryDurationHours;
-        if (entryWithTimeLeft.getValue() >= timeLeftToFill) {
-            // Make an entry that fills the remaining time (workHoursPerDay - nextEntryDurationHours)
-//            createTimeRangeForItineraryEntry();
-            return;
+        Map.Entry<Subject, Integer> subjectWithTimeLeft = subjectsWithTimeLeft.get(0);
+        return Optional.of(subjectWithTimeLeft);
+    }
+
+    private ScheduleItemInfo createEntryToFillRemainingWorkday(Map.Entry<Subject, Integer> subjectWithTimeLeft, TimeRange previousEntryDuration, int hoursLeftToFill, IPerson host, String roomId, int workHoursPerDay) {
+        if (subjectWithTimeLeft.getValue() >= hoursLeftToFill) {
+            // Make a ScheduleItemInfo that fills the remaining time (workHoursPerDay - nextEntryDurationHours)
+            TimeRange newEntryTimeRange = createTimeRangeForItineraryEntry(previousEntryDuration.getEnd().plusSeconds(1), hoursLeftToFill, HardcodedData.CreateCollectionOfWeekDays(), workHoursPerDay);
+            ScheduleItemInfo newEntry = new ScheduleItemInfo(roomId, subjectWithTimeLeft.getKey().getName(), (Person) host, newEntryTimeRange);
+            // TODO: subtract the new Entry's time used from timeLeftToFill
+            return newEntry;
         }
-        // If there are any entries with time left
-        if (stackEntriesWithTimeLeft.size() > 0) {
-            // Make an entry that fill part of the remaining time
-            //createTimeRangeForItineraryEntry();
-            // Update timeLeftToFill with the time used by the entry
-            timeLeftToFill -= 1;
-            useDifferentSubjectToFillRemainingTime(workHoursPerDay, subjectsAndAssociatedHours, timeLeftToFill);
-        } else {
-            // Make an entry that fill part of the remaining time
-            //createTimeRangeForItineraryEntry();
-        }
+        System.out.println("Edge case handling fallback 2");
+        return null; // TODO: use Optional instead?
     }
 
     /**
@@ -114,7 +115,7 @@ public class TimetableGenerator {
         if (hoursLeft < workHoursPerDay) {
             nextEntryDuration = new TimeRange(nextEntryStart, nextEntryStart.plusHours(hoursLeft));
         } else {
-            nextEntryDuration = new TimeRange(nextEntryStart, nextEntryStart.plusHours(6));
+            nextEntryDuration = new TimeRange(nextEntryStart, nextEntryStart.plusHours(workHoursPerDay));
         }
         if (!daysToUse.contains(nextEntryDuration.getStart().getDayOfWeek())) {
             nextEntryDuration = createTimeRangeForItineraryEntry(nextEntryDuration.getStart().plusDays(1), hoursLeft, daysToUse, workHoursPerDay);
