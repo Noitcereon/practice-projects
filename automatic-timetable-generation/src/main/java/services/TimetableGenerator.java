@@ -43,8 +43,8 @@ public class TimetableGenerator {
                 TimeRange nextEntryDuration = createTimeRangeForItineraryEntry(nextEntryStart, hoursLeft, HardcodedData.CreateCollectionOfWeekDays(), workHoursPerDay);
 
                 int nextEntryDurationHours = nextEntryDuration.getHoursBetweenStartAndEnd();
-                curriculumEntry.setValue(curriculumEntry.getValue()-nextEntryDurationHours);
-                if(nextEntryDurationHours < workHoursPerDay){
+                curriculumEntry.setValue(curriculumEntry.getValue() - nextEntryDurationHours);
+                if (nextEntryDurationHours < workHoursPerDay) {
                     // TODO: Use different subject for remaining time period (make method that does this)
                     System.out.println("Simulating making edge-case entry");
                     useDifferentSubjectToFillRemainingTime(workHoursPerDay, subjectsAndAssociatedHours, nextEntryDurationHours);
@@ -56,8 +56,8 @@ public class TimetableGenerator {
                 teachersIndex++;
                 nextEntryStart = nextEntryDuration.getStart().plusDays(1);
                 // Avoid IndexOutOfBounds error (next 2 lines)
-                if(roomIndex >= rooms.size()) roomIndex = 0;
-                if(teachersIndex >= teachersArray.size()) teachersIndex = 0;
+                if (roomIndex >= rooms.size()) roomIndex = 0;
+                if (teachersIndex >= teachersArray.size()) teachersIndex = 0;
 //                System.out.println("Adding itinerary entry");
                 itinerary.add(nextEntry);
                 totalHoursInCurriculum -= workHoursPerDay;
@@ -81,46 +81,42 @@ public class TimetableGenerator {
                 .collect(Collectors.toList());
         stackEntriesWithTimeLeft.addAll(entriesWithTimeLeft);
 
-        if(entriesWithTimeLeft.size() == 0){
-            return;
-        }
+        if (entriesWithTimeLeft.size() == 0) return;
 
         Map.Entry<Subject, Integer> entryWithTimeLeft = stackEntriesWithTimeLeft.pop();
         int timeLeftToFill = workHoursPerDay - nextEntryDurationHours;
-        if(entryWithTimeLeft.getValue() >= timeLeftToFill){
+        if (entryWithTimeLeft.getValue() >= timeLeftToFill) {
             // Make an entry that fills the remaining time (workHoursPerDay - nextEntryDurationHours)
 //            createTimeRangeForItineraryEntry();
             return;
         }
         // If there are any entries with time left
-        if(stackEntriesWithTimeLeft.size() > 0){
+        if (stackEntriesWithTimeLeft.size() > 0) {
             // Make an entry that fill part of the remaining time
             //createTimeRangeForItineraryEntry();
             // Update timeLeftToFill with the time used by the entry
             timeLeftToFill -= 1;
             useDifferentSubjectToFillRemainingTime(workHoursPerDay, subjectsAndAssociatedHours, timeLeftToFill);
-        }
-        else{
+        } else {
             // Make an entry that fill part of the remaining time
             //createTimeRangeForItineraryEntry();
         }
     }
 
     /**
-     *
      * @param nextEntryStart The LocalDateTime on which this entry starts.
-     * @param hoursLeft The hours left in the curriculum for a specific subject.
-     * @param daysToUse The specific days of the week that should be used when making the itinerary.
+     * @param hoursLeft      The hours left in the curriculum for a specific subject.
+     * @param daysToUse      The specific days of the week that should be used when making the itinerary.
      * @return A TimeRange of 6 hours
      */
     private TimeRange createTimeRangeForItineraryEntry(LocalDateTime nextEntryStart, Integer hoursLeft, Collection<DayOfWeek> daysToUse, int workHoursPerDay) {
         TimeRange nextEntryDuration;
-        if(hoursLeft < workHoursPerDay){
+        if (hoursLeft < workHoursPerDay) {
             nextEntryDuration = new TimeRange(nextEntryStart, nextEntryStart.plusHours(hoursLeft));
-        }else{
-             nextEntryDuration = new TimeRange(nextEntryStart, nextEntryStart.plusHours(6));
+        } else {
+            nextEntryDuration = new TimeRange(nextEntryStart, nextEntryStart.plusHours(6));
         }
-        if(!daysToUse.contains(nextEntryDuration.getStart().getDayOfWeek())) {
+        if (!daysToUse.contains(nextEntryDuration.getStart().getDayOfWeek())) {
             nextEntryDuration = createTimeRangeForItineraryEntry(nextEntryDuration.getStart().plusDays(1), hoursLeft, daysToUse, workHoursPerDay);
         }
         return nextEntryDuration;
