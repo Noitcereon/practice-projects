@@ -58,11 +58,11 @@ public class TimetableGenerator {
                 itinerary.add(nextEntry);
 
                 if (nextEntryDurationHours < workHoursPerDay) {
-                    System.out.println("Simulating making edge-case entry");
-                    Optional<Map.Entry<Subject, Integer>> subjectWithTimeLeftOptional = findSubjectWithTimeLeft(subjectsAndAssociatedHours);
-                    if (subjectWithTimeLeftOptional.isPresent()) {
+                    // Handle edge case, where a subject does not have enough time to fill a work day.
+                    Optional<Map.Entry<Subject, Integer>> subjectWithTimeLeft = findSubjectWithTimeLeft(subjectsAndAssociatedHours);
+                    if (subjectWithTimeLeft.isPresent()) {
                         int timeLeftToFill = workHoursPerDay - nextEntryDurationHours;
-                        nextEntry = createEntryToFillRemainingWorkday(subjectWithTimeLeftOptional.get(), nextEntryDuration, timeLeftToFill, teachersArray.get(teachersIndex), rooms.get(roomIndex).getId(), workHoursPerDay);
+                        nextEntry = createEntryToFillRemainingWorkday(subjectWithTimeLeft.get(), nextEntryDuration, timeLeftToFill, teachersArray.get(teachersIndex), rooms.get(roomIndex).getId(), workHoursPerDay);
                         itinerary.add(nextEntry);
                     }
                 }
