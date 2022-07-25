@@ -55,7 +55,6 @@ public class TimetableGenerator {
                 // Avoid IndexOutOfBounds error (next 2 lines)
                 if (roomIndex >= rooms.size()) roomIndex = 0;
                 if (teachersIndex >= teachersArray.size()) teachersIndex = 0;
-//                System.out.println("Adding itinerary entry");
                 itinerary.add(nextEntry);
 
                 if (nextEntryDurationHours < workHoursPerDay) {
