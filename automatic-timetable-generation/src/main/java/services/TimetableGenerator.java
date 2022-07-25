@@ -98,10 +98,11 @@ public class TimetableGenerator {
             TimeRange newEntryTimeRange = createTimeRangeForItineraryEntry(previousEntryDuration.getEnd().plusSeconds(1), hoursLeftToFill, HardcodedData.CreateCollectionOfWeekDays(), workHoursPerDay);
             ScheduleItemInfo newEntry = new ScheduleItemInfo(roomId, subjectWithTimeLeft.getKey().getName(), (Person) host, newEntryTimeRange);
             // TODO: subtract the new Entry's time used from timeLeftToFill
+
             return newEntry;
         }
-        System.out.println("Edge case handling fallback 2");
-        return null; // TODO: use Optional instead?
+        // This exception is here to show that something is wrong with the code, if this point is reached.
+        throw new IllegalArgumentException("Failed to create entry, because subject with time left did not have sufficient time.");
     }
 
     /**
