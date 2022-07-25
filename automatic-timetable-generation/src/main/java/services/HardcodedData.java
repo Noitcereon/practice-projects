@@ -25,7 +25,7 @@ public class HardcodedData {
         Curriculum curriculum = new Curriculum(curriculumTimePeriod);
         curriculum
                 .addSubject(math1, 100)
-                .addSubject(math2, 80)
+                .addSubject(math2, 2)
                 .addSubject(subject3, 40)
                 .addSubject(subject4, 65)
                 .addSubject(subject5, 55)
