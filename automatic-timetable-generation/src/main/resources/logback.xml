@@ -1,3 +1,4 @@
+<!-- Logback documentation: https://logback.qos.ch/documentation.html -->
 <configuration>
     <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
