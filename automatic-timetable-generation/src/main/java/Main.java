@@ -8,6 +8,7 @@ import services.TimetableGenerator;
 
 public class Main {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
+
     public static void main(String... args){
         TimetableGenerator generator = new TimetableGenerator();
 
@@ -17,6 +18,6 @@ public class Main {
         for (ScheduleItemInfo entry : timetable.getItinerary()) {
             System.out.println(entry.getDuration());
         }
-        logger.info("Finished printing timetable entries");
+        logger.info("Printing timetable entries completed");
     }
 }
