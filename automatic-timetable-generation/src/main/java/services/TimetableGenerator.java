@@ -1,5 +1,6 @@
 package services;
 
+import enums.CustomDayOfWeek;
 import models.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +9,6 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class TimetableGenerator {
 
@@ -34,7 +34,7 @@ public class TimetableGenerator {
             totalHoursInCurriculum += allottedToSubject;
         }
         int totalHoursAvailable = timetableDateRange.getHoursBetweenStartAndEnd(HardcodedData.CreateCollectionOfWeekDays(), workHoursPerDay);
-        if (totalHoursInCurriculum > totalHoursAvailable){
+        if (totalHoursInCurriculum > totalHoursAvailable) {
             logger.error("IllegalArgumentException was thrown: insufficient time available.");
             throw new IllegalArgumentException("Insufficient time available. " + String.format("Hours available: %s Hours in Curriculum: %s", totalHoursAvailable, totalHoursInCurriculum));
         }
@@ -93,8 +93,8 @@ public class TimetableGenerator {
 
     private Map.Entry<Subject, Integer> findSubjectWithTimeLeft(Map<Subject, Integer> subjectsAndAssociatedHours) {
         List<Map.Entry<Subject, Integer>> subjectsWithTimeLeft = new ArrayList<>();
-        for (Map.Entry<Subject,Integer> entry : subjectsAndAssociatedHours.entrySet()) {
-            if(entry.getValue() > 0){
+        for (Map.Entry<Subject, Integer> entry : subjectsAndAssociatedHours.entrySet()) {
+            if (entry.getValue() > 0) {
                 subjectsWithTimeLeft.add(entry);
             }
         }
@@ -127,15 +127,19 @@ public class TimetableGenerator {
      * @param daysToUse      The specific days of the week that should be used when making the itinerary.
      * @return A TimeRange of 6 hours
      */
-    private TimeRange createTimeRangeForItineraryEntry(LocalDateTime nextEntryStart, Integer hoursLeft, Collection<DayOfWeek> daysToUse, int workHoursPerDay) {
+    private TimeRange createTimeRangeForItineraryEntry(Date nextEntryStart, Integer hoursLeft, Collection<CustomDayOfWeek> daysToUse, int workHoursPerDay) {
         TimeRange nextEntryDuration;
+        Date nextEntryEnd;
         if (hoursLeft < workHoursPerDay) {
-            nextEntryDuration = new TimeRange(nextEntryStart, nextEntryStart.plusHours(hoursLeft));
+            nextEntryEnd = new Date(nextEntryStart.getTime() + TimeHelper.dayInMs() * hoursLeft);
+            nextEntryDuration = new TimeRange(nextEntryStart, nextEntryEnd);
         } else {
-            nextEntryDuration = new TimeRange(nextEntryStart, nextEntryStart.plusHours(workHoursPerDay));
+            nextEntryEnd = new Date(nextEntryStart.getTime() + TimeHelper.dayInMs() * workHoursPerDay);
+            nextEntryDuration = new TimeRange(nextEntryStart, nextEntryEnd);
         }
-        if (!daysToUse.contains(nextEntryDuration.getStart().getDayOfWeek())) {
-            nextEntryDuration = createTimeRangeForItineraryEntry(nextEntryDuration.getStart().plusDays(1), hoursLeft, daysToUse, workHoursPerDay);
+        if (!daysToUse.contains(TimeHelper.getDayOfTheWeek(nextEntryDuration.getStart()))) {
+            Date nextEntryStartPlusOneDay = new Date(nextEntryStart.getTime() + TimeHelper.dayInMs());
+            nextEntryDuration = createTimeRangeForItineraryEntry(nextEntryStartPlusOneDay, hoursLeft, daysToUse, workHoursPerDay);
         }
         return nextEntryDuration;
     }
@@ -149,7 +153,7 @@ public class TimetableGenerator {
      * @param daysToUse  The days of the week used when generating the itinerary of the timetable.
      * @return A <code>Timetable</code>
      */
-    public Timetable generateTimetable(School school, Set<Teacher> teachers, Curriculum curriculum, Collection<DayOfWeek> daysToUse) {
+    public Timetable generateTimetable(School school, Set<Teacher> teachers, Curriculum curriculum, Collection<CustomDayOfWeek> daysToUse) {
         // TODO: implement TimetableGenerator
         throw new NotImplementedException();
     }
@@ -164,7 +168,7 @@ public class TimetableGenerator {
      * @param hoursPerDay The amount of hours used per day in the itinerary.
      * @return A <code>Timetable</code>
      */
-    public Timetable generateTimetable(School school, Set<Teacher> teachers, Curriculum curriculum, Collection<DayOfWeek> daysToUse, int hoursPerDay) {
+    public Timetable generateTimetable(School school, Set<Teacher> teachers, Curriculum curriculum, Collection<CustomDayOfWeek> daysToUse, int hoursPerDay) {
         // TODO: implement TimetableGenerator
         throw new NotImplementedException();
     }
