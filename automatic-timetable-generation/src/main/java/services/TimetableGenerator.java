@@ -23,7 +23,7 @@ public class TimetableGenerator {
      * @return A <code>Timetable</code>
      */
     public Timetable generateTimetable(School school, Set<Teacher> teachers, Curriculum curriculum) {
-        logger.debug("Generating timetable");
+        logger.info("Generating timetable");
         TimeRange timetableDateRange = curriculum.getTimePeriod();
         Collection<ScheduleItemInfo> itinerary = new ArrayList<>();
         int workHoursPerDay = 6;
@@ -81,12 +81,9 @@ public class TimetableGenerator {
             }
         }
 
-        // Generate ScheduleItemInfo
-        // If nextDate is a part of the weekdays
-        // Use one of the subjects with time left (Extra: prioritise having subjects on the same day)
-        // Fill day with subject
-        // If subject hours allotted runs out, fill remaining with next subject or stop early if no hours left
-        logger.debug("Timetable has been generated.");
+        // TODO (extra): prioritise having subjects on the same day, so it is predictable)
+
+        logger.info("Timetable has been generated.");
         return new Timetable(itinerary);
     }
 
