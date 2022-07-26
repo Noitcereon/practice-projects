@@ -1,21 +1,15 @@
 package models;
 
 import enums.CustomDayOfWeek;
+import services.TimeInMs;
 
-import java.time.DayOfWeek;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 
 
 public class TimeRange {
-    // The 3 "timeUnit_InMs" variables are here to avoid double code in case of needing the value multiple times.
-    private final long dayInMs = 8640000;
-    private final long hourInMs = 360000;
-    private final long minuteInMs = 6000;
+
     private Date start;
     private Date end;
 
@@ -72,7 +66,7 @@ public class TimeRange {
             else{
                 totalHoursToRemove += 24;
             }
-            dateBetweenStartAndEnd.setTime(dateBetweenStartAndEnd.getTime() + dayInMs);
+            dateBetweenStartAndEnd.setTime(dateBetweenStartAndEnd.getTime() + TimeInMs.day());
         }
         return totalHoursToRemove;
     }
