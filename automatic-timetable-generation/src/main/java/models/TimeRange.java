@@ -65,7 +65,7 @@ public class TimeRange {
             else{
                 totalHoursToRemove += 24;
             }
-            dateBetweenStartAndEnd.setTime(dateBetweenStartAndEnd.getTime() + TimeHelper.day());
+            dateBetweenStartAndEnd.setTime(dateBetweenStartAndEnd.getTime() + TimeHelper.dayInMs());
         }
         return totalHoursToRemove;
     }

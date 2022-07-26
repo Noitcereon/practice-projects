@@ -12,15 +12,15 @@ public class TimeHelper {
     private static final long hourInMs = 360000;
     private static final long minuteInMs = 6000;
 
-    public static long day() {
+    public static long dayInMs() {
         return dayInMs;
     }
 
-    public static long hour() {
+    public static long hourInMs() {
         return hourInMs;
     }
 
-    public static long minute() {
+    public static long minuteInMs() {
         return minuteInMs;
     }
 
