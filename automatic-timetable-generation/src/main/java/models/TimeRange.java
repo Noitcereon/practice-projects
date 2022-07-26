@@ -12,6 +12,7 @@ import java.util.Date;
 
 
 public class TimeRange {
+    // The 3 "timeUnit_InMs" variables are here to avoid double code in case of needing the value multiple times.
     private final long dayInMs = 8640000;
     private final long hourInMs = 360000;
     private final long minuteInMs = 6000;
