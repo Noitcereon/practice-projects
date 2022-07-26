@@ -36,3 +36,4 @@ build/
 
 ### Mac OS ###
 .DS_Store
+/automatic-timetable-generation.log
