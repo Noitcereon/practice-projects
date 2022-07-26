@@ -5,9 +5,12 @@ import org.slf4j.LoggerFactory;
 import services.HardcodedData;
 import services.TimetableGenerator;
 
+import java.util.Scanner;
+
 
 public class Main {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
+
     public static void main(String... args){
         TimetableGenerator generator = new TimetableGenerator();
 
@@ -17,6 +20,17 @@ public class Main {
         for (ScheduleItemInfo entry : timetable.getItinerary()) {
             System.out.println(entry.getDuration());
         }
-        logger.info("Finished printing timetable entries");
+        logger.info("Printing timetable entries completed");
+        Scanner scanner = new Scanner(System.in);
+        while(true){
+            System.out.println("Enter 'y' to generate timetable. Anything else will exit the application.");
+            String input = scanner.nextLine();
+            if(input.equals("y")){
+                generator.generateTimetable(HardcodedData.CreateSchool(), HardcodedData.CreateSetOfTeachers(), HardcodedData.CreateCurriculum());
+            }
+            else{
+                break;
+            }
+        }
     }
 }

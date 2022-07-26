@@ -1,6 +1,8 @@
 package services;
 
 import models.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.time.DayOfWeek;
@@ -9,6 +11,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class TimetableGenerator {
+
+    private final Logger logger = LoggerFactory.getLogger(TimetableGenerator.class);
+
     /**
      * Generates a timetable with an itinerary. Defaults to monday-friday, 6 hours a day.
      *
@@ -18,14 +23,17 @@ public class TimetableGenerator {
      * @return A <code>Timetable</code>
      */
     public Timetable generateTimetable(School school, Set<Teacher> teachers, Curriculum curriculum) {
+        logger.info("Generating timetable");
         TimeRange timetableDateRange = curriculum.getTimePeriod();
         Collection<ScheduleItemInfo> itinerary = new ArrayList<>();
         int workHoursPerDay = 6;
         Map<Subject, Integer> subjectsAndAssociatedHours = curriculum.getAllotedTimePerSubject();
         int totalHoursInCurriculum = subjectsAndAssociatedHours.values().stream().mapToInt(hoursAllottedToSubject -> hoursAllottedToSubject).sum();
         int totalHoursAvailable = timetableDateRange.getHoursBetweenStartAndEnd(HardcodedData.CreateCollectionOfWeekDays(), workHoursPerDay);
-        if (totalHoursInCurriculum > totalHoursAvailable)
+        if (totalHoursInCurriculum > totalHoursAvailable){
+            logger.error("IllegalArgumentException was thrown: insufficient time available.");
             throw new IllegalArgumentException("Insufficient time available. " + String.format("Hours available: %s Hours in Curriculum: %s", totalHoursAvailable, totalHoursInCurriculum));
+        }
 
         int teachersIndex = 0;
         int roomIndex = 0;
@@ -58,11 +66,13 @@ public class TimetableGenerator {
                 itinerary.add(nextEntry);
 
                 if (nextEntryDurationHours < workHoursPerDay) {
+                    logger.debug("Handling edge-case part 1: {}", nextEntry);
                     // Handle edge case, where a subject does not have enough time to fill a work day.
                     Optional<Map.Entry<Subject, Integer>> subjectWithTimeLeft = findSubjectWithTimeLeft(subjectsAndAssociatedHours);
                     if (subjectWithTimeLeft.isPresent()) {
                         int timeLeftToFill = workHoursPerDay - nextEntryDurationHours;
                         nextEntry = createEntryToFillRemainingWorkday(subjectWithTimeLeft.get(), nextEntryDuration, timeLeftToFill, teachersArray.get(teachersIndex), rooms.get(roomIndex).getId(), workHoursPerDay);
+                        logger.debug("Handling edge-case part 2:  {}", nextEntry);
                         itinerary.add(nextEntry);
                     }
                 }
@@ -71,12 +81,9 @@ public class TimetableGenerator {
             }
         }
 
-        // Generate ScheduleItemInfo
-        // If nextDate is a part of the weekdays
-        // Use one of the subjects with time left (Extra: prioritise having subjects on the same day)
-        // Fill day with subject
-        // If subject hours allotted runs out, fill remaining with next subject or stop early if no hours left
+        // TODO (extra): prioritise having subjects on the same day, so it is predictable)
 
+        logger.info("Timetable has been generated.");
         return new Timetable(itinerary);
     }
 
