@@ -70,10 +70,10 @@ class TimetableGeneratorTest {
         Timetable timetable = _generator.generateTimetable(_school, _teachers, _curriculum);
         Collection<DayOfWeek> weekDays = HardcodedData.CreateCollectionOfWeekDays();
         boolean containsInvalidDayOfWeek = false;
-        timetable.getItinerary().forEach(itineraryEntry -> {
+        for (ScheduleItemInfo itineraryEntry: timetable.getItinerary()) {
             boolean isWeekendDay = !weekDays.contains(itineraryEntry.getDuration().getStart().getDayOfWeek());
             Assertions.assertEquals(containsInvalidDayOfWeek, isWeekendDay);
-        });
+        }
     }
 
     private void assertItineraryDoesNotOverlap(int itineraryIndex, LocalDateTime start1, LocalDateTime end1, int itineraryCompareIndex, LocalDateTime start2, LocalDateTime end2) {
