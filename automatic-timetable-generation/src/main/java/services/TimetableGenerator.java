@@ -28,7 +28,11 @@ public class TimetableGenerator {
         Collection<ScheduleItemInfo> itinerary = new ArrayList<>();
         int workHoursPerDay = 6;
         Map<Subject, Integer> subjectsAndAssociatedHours = curriculum.getAllotedTimePerSubject();
-        int totalHoursInCurriculum = subjectsAndAssociatedHours.values().stream().mapToInt(hoursAllottedToSubject -> hoursAllottedToSubject).sum();
+        int totalHoursInCurriculum = 0;
+        for (Integer hoursAllottedToSubject : subjectsAndAssociatedHours.values()) {
+            int allottedToSubject = hoursAllottedToSubject;
+            totalHoursInCurriculum += allottedToSubject;
+        }
         int totalHoursAvailable = timetableDateRange.getHoursBetweenStartAndEnd(HardcodedData.CreateCollectionOfWeekDays(), workHoursPerDay);
         if (totalHoursInCurriculum > totalHoursAvailable){
             logger.error("IllegalArgumentException was thrown: insufficient time available.");
