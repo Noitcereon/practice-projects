@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import services.HardcodedData;
 import services.TimetableGenerator;
 
+import java.util.Scanner;
+
 
 public class Main {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
@@ -19,5 +21,16 @@ public class Main {
             System.out.println(entry.getDuration());
         }
         logger.info("Printing timetable entries completed");
+        Scanner scanner = new Scanner(System.in);
+        while(true){
+            System.out.println("Enter 'y' to generate timetable. Anything else will exit the application.");
+            String input = scanner.nextLine();
+            if(input.equals("y")){
+                generator.generateTimetable(HardcodedData.CreateSchool(), HardcodedData.CreateSetOfTeachers(), HardcodedData.CreateCurriculum());
+            }
+            else{
+                break;
+            }
+        }
     }
 }
