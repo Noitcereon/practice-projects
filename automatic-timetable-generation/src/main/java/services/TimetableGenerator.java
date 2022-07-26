@@ -91,15 +91,18 @@ public class TimetableGenerator {
         return new Timetable(itinerary);
     }
 
-    private Optional<Map.Entry<Subject, Integer>> findSubjectWithTimeLeft(Map<Subject, Integer> subjectsAndAssociatedHours) {
-        List<Map.Entry<Subject, Integer>> subjectsWithTimeLeft = subjectsAndAssociatedHours.entrySet()
-                .stream().filter((curriculumEntry2) -> curriculumEntry2.getValue() > 0)
-                .collect(Collectors.toList());
+    private Map.Entry<Subject, Integer> findSubjectWithTimeLeft(Map<Subject, Integer> subjectsAndAssociatedHours) {
+        List<Map.Entry<Subject, Integer>> subjectsWithTimeLeft = new ArrayList<>();
+        for (Map.Entry<Subject,Integer> entry : subjectsAndAssociatedHours.entrySet()) {
+            if(entry.getValue() > 0){
+                subjectsWithTimeLeft.add(entry);
+            }
+        }
 
-        if (subjectsWithTimeLeft.size() == 0) return Optional.empty();
+        if (subjectsWithTimeLeft.size() == 0) return null;
 
         Map.Entry<Subject, Integer> subjectWithTimeLeft = subjectsWithTimeLeft.get(0);
-        return Optional.of(subjectWithTimeLeft);
+        return subjectWithTimeLeft;
     }
 
     private ScheduleItemInfo createEntryToFillRemainingWorkday(Map.Entry<Subject, Integer> subjectWithTimeLeft, TimeRange previousEntryDuration, int hoursLeftToFill, IPerson host, String roomId, int workHoursPerDay) {
