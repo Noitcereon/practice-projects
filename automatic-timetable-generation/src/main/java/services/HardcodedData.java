@@ -1,5 +1,6 @@
 package services;
 
+import enums.CustomDayOfWeek;
 import enums.Role;
 import models.*;
 
@@ -18,8 +19,13 @@ public class HardcodedData {
         Subject subject6 = new Subject("Software Design");
         Subject subject7 = new Subject("Business Analysis");
 
-        LocalDateTime startOfCurriculumPeriod = LocalDateTime.of(2022, 8, 1, 8, 0);
-        LocalDateTime endOfCurriculumPeriod = LocalDateTime.of(2022, 12, 15, 15, 30);
+        Calendar cal = Calendar.getInstance();
+        cal.set(2022, Calendar.AUGUST, 1, 8, 0);
+        Date startOfCurriculumPeriod = cal.getTime();
+        cal.clear();
+        cal.set(2022, Calendar.DECEMBER, 15, 15, 30);
+        Date endOfCurriculumPeriod = cal.getTime();
+
         TimeRange curriculumTimePeriod = new TimeRange(startOfCurriculumPeriod, endOfCurriculumPeriod);
 
         Curriculum curriculum = new Curriculum(curriculumTimePeriod);
@@ -72,13 +78,13 @@ public class HardcodedData {
 
         return new School(rooms);
     }
-    public static Collection<DayOfWeek> CreateCollectionOfWeekDays(){
-        Collection<DayOfWeek> weekDays = new ArrayList<>();
-        weekDays.add(DayOfWeek.MONDAY);
-        weekDays.add(DayOfWeek.TUESDAY);
-        weekDays.add(DayOfWeek.WEDNESDAY);
-        weekDays.add(DayOfWeek.THURSDAY);
-        weekDays.add(DayOfWeek.FRIDAY);
+    public static Collection<CustomDayOfWeek> CreateCollectionOfWeekDays(){
+        Collection<CustomDayOfWeek> weekDays = new ArrayList<>();
+        weekDays.add(CustomDayOfWeek.MONDAY);
+        weekDays.add(CustomDayOfWeek.TUESDAY);
+        weekDays.add(CustomDayOfWeek.WEDNESDAY);
+        weekDays.add(CustomDayOfWeek.THURSDAY);
+        weekDays.add(CustomDayOfWeek.FRIDAY);
         return weekDays;
     }
 }
