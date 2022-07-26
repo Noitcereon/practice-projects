@@ -43,7 +43,7 @@ public class TimetableGenerator {
         int roomIndex = 0;
         ArrayList<Room> rooms = new ArrayList<>(school.getRooms());
         ArrayList<Teacher> teachersArray = new ArrayList<>(teachers);
-        LocalDateTime nextEntryStart = timetableDateRange.getStart();
+        Date nextEntryStart = timetableDateRange.getStart();
         // Generate itinerary
         while (totalHoursInCurriculum > 0) {
             // While there are hours left in any subject
@@ -61,7 +61,7 @@ public class TimetableGenerator {
                 nextEntry = new ScheduleItemInfo(rooms.get(roomIndex).getId(), subject.getName(), teachersArray.get(teachersIndex), nextEntryDuration);
 
 
-                nextEntryStart = nextEntryDuration.getStart().plusDays(1);
+                nextEntryStart = new Date(nextEntryDuration.getStart().getTime() + TimeHelper.dayInMs());
                 roomIndex++;
                 teachersIndex++;
                 // Avoid IndexOutOfBounds error (next 2 lines)
@@ -110,13 +110,14 @@ public class TimetableGenerator {
         ScheduleItemInfo newEntry;
         if (subjectWithTimeLeft.getValue() >= hoursLeftToFill) {
             // Make a ScheduleItemInfo that fills the remaining time (workHoursPerDay - nextEntryDurationHours)
-            newEntryTimeRange = createTimeRangeForItineraryEntry(previousEntryDuration.getEnd().plusSeconds(1), hoursLeftToFill, HardcodedData.CreateCollectionOfWeekDays(), workHoursPerDay);
+            Date previousEntryDurationEndPlusOneMinute = new Date(previousEntryDuration.getEnd().getTime() + TimeHelper.minuteInMs());
+            newEntryTimeRange = createTimeRangeForItineraryEntry(previousEntryDurationEndPlusOneMinute, hoursLeftToFill, HardcodedData.CreateCollectionOfWeekDays(), workHoursPerDay);
             newEntry = new ScheduleItemInfo(roomId, subjectWithTimeLeft.getKey().getName(), (Person) host, newEntryTimeRange);
 
             return newEntry;
         }
-
-        newEntryTimeRange = createTimeRangeForItineraryEntry(previousEntryDuration.getEnd().plusSeconds(1), subjectWithTimeLeft.getValue(), HardcodedData.CreateCollectionOfWeekDays(), workHoursPerDay);
+        Date previousEntryDurationEndPlusOneMinute = new Date(previousEntryDuration.getEnd().getTime() + TimeHelper.minuteInMs());
+        newEntryTimeRange = createTimeRangeForItineraryEntry(previousEntryDurationEndPlusOneMinute, subjectWithTimeLeft.getValue(), HardcodedData.CreateCollectionOfWeekDays(), workHoursPerDay);
         newEntry = new ScheduleItemInfo(roomId, subjectWithTimeLeft.getKey().getName(), (Person) host, newEntryTimeRange);
         return newEntry;
     }
