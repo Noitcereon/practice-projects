@@ -94,6 +94,12 @@ public class TimeHelper {
         cal.add(Calendar.DAY_OF_YEAR, days);
         return cal.getTime();
     }
+    public static Date addHoursToDate(Date date, int hours){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.HOUR, hours);
+        return cal.getTime();
+    }
     public static Date addMinutesToDate(Date date, int minutes){
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
