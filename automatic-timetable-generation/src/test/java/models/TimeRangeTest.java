@@ -39,8 +39,8 @@ class TimeRangeTest {
 
     @Test
     void givenStartAndEndDateOneWeekFromEachOtherWithRestrictions_whenGettingHoursBetweenStartAndEnd_thenReturn30Hours() {
-        LocalDateTime firstDayOf2022 = LocalDateTime.of(2022, 1, 1, 0, 0);
-        LocalDateTime eighthDayOf2022 = firstDayOf2022.plusDays(7);
+        Date firstDayOf2022 = TimeHelper.createDate(2022, 1, 1, 0, 0);
+        Date eighthDayOf2022 = new Date(firstDayOf2022.getTime() + TimeHelper.dayInMs() * 7);
         int expectedHours = 30;
         int hoursUsedPerDay = 6;
         TimeRange timeRange = new TimeRange(firstDayOf2022, eighthDayOf2022);
@@ -52,13 +52,13 @@ class TimeRangeTest {
 
     @Test
     void givenStartAndEndDateOneYearFromEachOtherWithRestrictions_whenGettingHoursBetweenStartAndEnd_thenReturn30Hours() {
-        LocalDateTime firstDayOf2022 = LocalDateTime.of(2022, 1, 1, 0, 0);
-        LocalDateTime eighthDayOf2022 = firstDayOf2022.plusYears(1);
+        Date firstDayOf2022 = TimeHelper.createDate(2022, 1, 1, 0, 0);
+        Date firstDayOf2023 = TimeHelper.addYearsToDate(firstDayOf2022, 1);
         int weeksInAYear = 52;
         int hoursInAWeek = 30;
         int expectedHours = hoursInAWeek * weeksInAYear;
         int hoursUsedPerDay = 6;
-        TimeRange timeRange = new TimeRange(firstDayOf2022, eighthDayOf2022);
+        TimeRange timeRange = new TimeRange(firstDayOf2022, firstDayOf2023);
 
         int actualHours = timeRange.getHoursBetweenStartAndEnd(weekDays, hoursUsedPerDay);
 
@@ -67,8 +67,8 @@ class TimeRangeTest {
 
     @Test
     void givenStartAndEndDateTwoYearsFromEachOtherWithRestrictions_whenGettingHoursBetweenStartAndEnd_thenCompleteWithin300ms() {
-        LocalDateTime firstDayOf2022 = LocalDateTime.of(2022, 1, 1, 0, 0);
-        LocalDateTime twoYearsAfterFirstDayOf2022 = firstDayOf2022.plusYears(2);
+        Date firstDayOf2022 = TimeHelper.createDate(2022, 1, 1, 0, 0);
+        Date twoYearsAfterFirstDayOf2022 = TimeHelper.addYearsToDate(firstDayOf2022, 2);
         int hoursUsedPerDay = 6;
         int maxTimeTakenMs = 300;
         double nanoSecondsPerMs = 1000000.0;
