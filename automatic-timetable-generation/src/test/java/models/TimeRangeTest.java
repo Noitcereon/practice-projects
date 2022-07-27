@@ -28,7 +28,7 @@ class TimeRangeTest {
     @Test
     void givenStartAndEndDateOneDayFromEachOther_whenGettingHoursBetweenStartAndEnd_thenReturn24Hours() {
         Date firstDayOf2022 = TimeHelper.createDate(2022, 1, 1, 0, 0);
-        Date secondDayOf2022 = new Date(firstDayOf2022.getTime() + TimeHelper.dayInMs());
+        Date secondDayOf2022 = TimeHelper.addDaysToDate(firstDayOf2022, 1);
         int expectedHours = 24;
         TimeRange timeRange = new TimeRange(firstDayOf2022, secondDayOf2022);
 
