@@ -1,5 +1,6 @@
 package services;
 
+import enums.CustomDayOfWeek;
 import models.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +11,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Set;
 
 class TimetableGeneratorTest {
@@ -44,12 +46,12 @@ class TimetableGeneratorTest {
         ArrayList<ScheduleItemInfo> itinerary = new ArrayList<>(timetable.getItinerary());
         for (int itineraryIndex = 0; itineraryIndex < itinerary.size(); itineraryIndex++) {
             ScheduleItemInfo item = itinerary.get(itineraryIndex);
-            LocalDateTime start1 = item.getDuration().getStart();
-            LocalDateTime end1 = item.getDuration().getEnd();
+            Date start1 = item.getDuration().getStart();
+            Date end1 = item.getDuration().getEnd();
             for (int itineraryIndexCompare = 0; itineraryIndexCompare < itinerary.size(); itineraryIndexCompare++) {
                 ScheduleItemInfo comparisonItem = itinerary.get(itineraryIndexCompare);
-                LocalDateTime start2 = comparisonItem.getDuration().getStart();
-                LocalDateTime end2 = comparisonItem.getDuration().getEnd();
+                Date start2 = comparisonItem.getDuration().getStart();
+                Date end2 = comparisonItem.getDuration().getEnd();
 
                 assertItineraryDoesNotOverlap(itineraryIndex, start1, end1, itineraryIndexCompare, start2, end2);
             }
@@ -68,27 +70,27 @@ class TimetableGeneratorTest {
     @Test
     void givenValidInput_whenGeneratingTimetable_thenItineraryDoesNotContainInvalidDayOfWeek(){
         Timetable timetable = _generator.generateTimetable(_school, _teachers, _curriculum);
-        Collection<DayOfWeek> weekDays = HardcodedData.CreateCollectionOfWeekDays();
+        Collection<CustomDayOfWeek> weekDays = HardcodedData.CreateCollectionOfWeekDays();
         boolean containsInvalidDayOfWeek = false;
         for (ScheduleItemInfo itineraryEntry: timetable.getItinerary()) {
-            boolean isWeekendDay = !weekDays.contains(itineraryEntry.getDuration().getStart().getDayOfWeek());
+            boolean isWeekendDay = !weekDays.contains(TimeHelper.getDayOfTheWeek(itineraryEntry.getDuration().getStart()));
             Assertions.assertEquals(containsInvalidDayOfWeek, isWeekendDay);
         }
     }
 
-    private void assertItineraryDoesNotOverlap(int itineraryIndex, LocalDateTime start1, LocalDateTime end1, int itineraryCompareIndex, LocalDateTime start2, LocalDateTime end2) {
+    private void assertItineraryDoesNotOverlap(int itineraryIndex, Date start1, Date end1, int itineraryCompareIndex, Date start2, Date end2) {
         int isEarlier = -1;
         int isSameTime = 0;
         int isLater = 1;
-        System.out.printf("\nitenaryIndex: %s, itineraryCompareIndex %s, start1 %s, end1 %s, start2 %s, end2 %s%n", itineraryIndex, itineraryCompareIndex, start1, end1, start2, end2);
+        System.out.printf("\nitineraryIndex: %s, itineraryCompareIndex %s, start1 %s, end1 %s, start2 %s, end2 %s%n", itineraryIndex, itineraryCompareIndex, start1, end1, start2, end2);
         if (start1.compareTo(start2) == isSameTime && itineraryIndex != itineraryCompareIndex) {
             Assertions.fail("Overlap occurred");
         } else if (start1.compareTo(start2) == isLater) {
-            Assertions.assertTrue(end1.isAfter(start2));
-            Assertions.assertTrue(end1.isAfter(end2));
+            Assertions.assertTrue(end1.after(start2));
+            Assertions.assertTrue(end1.after(end2));
         } else if (start1.compareTo(start2) == isEarlier) {
-            Assertions.assertTrue(end1.isBefore(start2));
-            Assertions.assertTrue(end1.isBefore(end2));
+            Assertions.assertTrue(end1.before(start2));
+            Assertions.assertTrue(end1.before(end2));
         }
     }
 }
