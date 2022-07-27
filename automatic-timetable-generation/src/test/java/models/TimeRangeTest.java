@@ -51,7 +51,7 @@ class TimeRangeTest {
     }
 
     @Test
-    void givenStartAndEndDateOneYearFromEachOtherWithRestrictions_whenGettingHoursBetweenStartAndEnd_thenReturn30Hours() {
+    void givenStartAndEndDateOneYearFromEachOtherWithRestrictions_whenGettingHoursBetweenStartAndEndWeekdaysOnly_thenReturn1560Hours() {
         Date firstDayOf2022 = TimeHelper.createDate(2022, 1, 1, 0, 0);
         Date firstDayOf2023 = TimeHelper.addYearsToDate(firstDayOf2022, 1);
         int weeksInAYear = 52;
