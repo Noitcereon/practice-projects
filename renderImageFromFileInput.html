@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Files in Web</title>
+</head>
+<body>
+    <h1>File Input test</h1>
+    
+    <label for="theFileInput">File input</label>
+    <input type="file" multiple id="theFileInput" name="fileInput"/>
+    <button type="submit" id="submitFileBtn">Submit</button>
+
+    <h2>Output</h2>
+    <div id="fileOutput">
+
+    </div>
+    <script>
+        const idOfInput = "theFileInput"
+        const inputElement = document.getElementById(idOfInput);
+        const submitFileBtn = document.getElementById("submitFileBtn");
+        const fileOutput = document.getElementById("fileOutput");
+
+        submitFileBtn.addEventListener("click", (e) => {
+            showFileContents(e);
+        })
+
+        function showFileContents(event){
+            console.info("showFileContents triggered");
+            const fileList = inputElement.files;
+            for (const file of fileList) {
+                const reader = new FileReader(file);
+                // const temp : File = new File();
+                console.log(file);
+                
+                if(file.name.length > 4){
+                    // TODO: check if it is an image
+
+                    // if yes, render it.
+                    reader.onload = (e) => {
+                        const newImg = document.createElement("img");
+                        newImg.src = e.target.result;
+                        newImg.style.maxWidth = "500px";
+                        fileOutput.append(newImg);
+                    };
+                    // reader.readAs... Seems to trigger the onload function.
+                   reader.readAsDataURL(file);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
