@@ -8,7 +8,7 @@ import java.util.Date;
 public class TimeHelper {
 
     // The 3 "timeUnit_InMs" variables are here to avoid double code in case of needing the value multiple times.
-    private static final long dayInMs = 8640000;
+    private static final long dayInMs = 86400000;
     private static final long hourInMs = 360000;
     private static final long minuteInMs = 6000;
 
