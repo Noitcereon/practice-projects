@@ -132,7 +132,7 @@ public class TimetableGenerator {
             nextEntryEnd = TimeHelper.addHoursToDate(nextEntryStart, hoursLeft);
             nextEntryDuration = new TimeRange(nextEntryStart, nextEntryEnd);
         } else {
-            nextEntryEnd = new Date(nextEntryStart.getTime() + TimeHelper.dayInMs() * workHoursPerDay);
+            nextEntryEnd = new Date(nextEntryStart.getTime() + TimeHelper.hourInMs() * workHoursPerDay);
             nextEntryDuration = new TimeRange(nextEntryStart, nextEntryEnd);
         }
         if (!daysToUse.contains(TimeHelper.getDayOfTheWeek(nextEntryDuration.getStart()))) {
