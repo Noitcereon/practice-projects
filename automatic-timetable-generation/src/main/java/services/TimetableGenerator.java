@@ -4,10 +4,7 @@ import enums.CustomDayOfWeek;
 import models.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.time.DayOfWeek;
-import java.time.LocalDateTime;
 import java.util.*;
 
 public class TimetableGenerator {
@@ -145,32 +142,32 @@ public class TimetableGenerator {
         return nextEntryDuration;
     }
 
-    /**
-     * Generates a timetable with an itinerary. Defaults to hoursPerDay = 6
-     *
-     * @param school     A representation of a school, which contains rooms to use in timetable generation.
-     * @param teachers   The teachers to be used in the itinerary.
-     * @param curriculum The subjects taught, allotted time per subject & the time period the generator has available.
-     * @param daysToUse  The days of the week used when generating the itinerary of the timetable.
-     * @return A <code>Timetable</code>
-     */
-    public Timetable generateTimetable(School school, Set<Teacher> teachers, Curriculum curriculum, Collection<CustomDayOfWeek> daysToUse) {
-        // TODO: implement TimetableGenerator
-        throw new NotImplementedException();
-    }
-
-    /**
-     * Generates a timetable, which contains an itinerary with configurable daysToUse & hoursPerDay
-     *
-     * @param school      A representation of a school, which contains rooms to use in timetable generation.
-     * @param teachers    The teachers to be used in the itinerary.
-     * @param curriculum  The subjects taught, allotted time per subject & the time period the generator has available.
-     * @param daysToUse   The days of the week used when generating the itinerary of the timetable.
-     * @param hoursPerDay The amount of hours used per day in the itinerary.
-     * @return A <code>Timetable</code>
-     */
-    public Timetable generateTimetable(School school, Set<Teacher> teachers, Curriculum curriculum, Collection<CustomDayOfWeek> daysToUse, int hoursPerDay) {
-        // TODO: implement TimetableGenerator
-        throw new NotImplementedException();
-    }
+//    /**
+//     * Generates a timetable with an itinerary. Defaults to hoursPerDay = 6
+//     *
+//     * @param school     A representation of a school, which contains rooms to use in timetable generation.
+//     * @param teachers   The teachers to be used in the itinerary.
+//     * @param curriculum The subjects taught, allotted time per subject & the time period the generator has available.
+//     * @param daysToUse  The days of the week used when generating the itinerary of the timetable.
+//     * @return A <code>Timetable</code>
+//     */
+//    public Timetable generateTimetable(School school, Set<Teacher> teachers, Curriculum curriculum, Collection<CustomDayOfWeek> daysToUse) {
+//        // TODO: implement TimetableGenerator
+//        throw new NotImplementedException();
+//    }
+//
+//    /**
+//     * Generates a timetable, which contains an itinerary with configurable daysToUse & hoursPerDay
+//     *
+//     * @param school      A representation of a school, which contains rooms to use in timetable generation.
+//     * @param teachers    The teachers to be used in the itinerary.
+//     * @param curriculum  The subjects taught, allotted time per subject & the time period the generator has available.
+//     * @param daysToUse   The days of the week used when generating the itinerary of the timetable.
+//     * @param hoursPerDay The amount of hours used per day in the itinerary.
+//     * @return A <code>Timetable</code>
+//     */
+//    public Timetable generateTimetable(School school, Set<Teacher> teachers, Curriculum curriculum, Collection<CustomDayOfWeek> daysToUse, int hoursPerDay) {
+//        // TODO: implement TimetableGenerator
+//        throw new NotImplementedException();
+//    }
 }
