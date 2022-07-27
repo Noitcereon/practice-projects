@@ -36,11 +36,10 @@ public class TimeRange {
 
     @Override
     public String toString() {
-//        return "TimeSlot{" +
-//                "start=" + start.format(DateTimeFormatter.ofPattern("dd-MM-yyyy EEEE HH:mm")) +
-//                ", end=" + end.format(DateTimeFormatter.ofPattern("dd-MM-yyyy EEEE HH:mm")) +
-//                '}';
-        return super.toString();
+        return "TimeRange{" +
+                "start=" + start +
+                ", end=" + end +
+                '}';
     }
 
     public int getHoursBetweenStartAndEnd() {
