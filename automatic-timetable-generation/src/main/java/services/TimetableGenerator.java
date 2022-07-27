@@ -132,7 +132,7 @@ public class TimetableGenerator {
         TimeRange nextEntryDuration;
         Date nextEntryEnd;
         if (hoursLeft < workHoursPerDay) {
-            nextEntryEnd = new Date(nextEntryStart.getTime() + TimeHelper.dayInMs() * hoursLeft);
+            nextEntryEnd = TimeHelper.addHoursToDate(nextEntryStart, hoursLeft);
             nextEntryDuration = new TimeRange(nextEntryStart, nextEntryEnd);
         } else {
             nextEntryEnd = new Date(nextEntryStart.getTime() + TimeHelper.dayInMs() * workHoursPerDay);
