@@ -76,31 +76,31 @@ public class TimeHelper {
         Date output = calendar.getTime();
         return output;
     }
-    public Date addYearsToDate(Date date, int years){
+    public static Date addYearsToDate(Date date, int years){
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.add(Calendar.YEAR, years);
         return cal.getTime();
     }
-    public Date addMonthsToDate(Date date, int months){
+    public static Date addMonthsToDate(Date date, int months){
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.add(Calendar.MONTH, months);
         return cal.getTime();
     }
-    public Date addDaysToDate(Date date, int days){
+    public static Date addDaysToDate(Date date, int days){
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.add(Calendar.DAY_OF_YEAR, days);
         return cal.getTime();
     }
-    public Date addMinutesToDate(Date date, int minutes){
+    public static Date addMinutesToDate(Date date, int minutes){
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.add(Calendar.MINUTE, minutes);
         return cal.getTime();
     }
-    public Date addSecondsToDate(Date date, int seconds){
+    public static Date addSecondsToDate(Date date, int seconds){
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.add(Calendar.SECOND, seconds);
