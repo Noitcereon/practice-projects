@@ -5,13 +5,14 @@ import org.slf4j.LoggerFactory;
 import services.HardcodedData;
 import services.TimetableGenerator;
 
-import java.util.Scanner;
+import java.util.*;
 
 
 public class Main {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String... args){
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
         TimetableGenerator generator = new TimetableGenerator();
 
         Timetable timetable = generator.generateTimetable(HardcodedData.CreateSchool(), HardcodedData.CreateSetOfTeachers(), HardcodedData.CreateCurriculum());
