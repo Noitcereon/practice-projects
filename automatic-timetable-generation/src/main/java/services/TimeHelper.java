@@ -46,4 +46,34 @@ public class TimeHelper {
                 throw new IllegalArgumentException("Date does not have a valid DAY_OF_WEEK");
         }
     }
+    public static Date createDate(int year, int month, int dayOfMonth, int hourOfDay, int minute){
+        Calendar calendar = Calendar.getInstance();
+        if(month > 12) throw new IllegalArgumentException("Month invalid. Select month between 1-12");
+        if(month == 0) throw new IllegalArgumentException("Month invalid. Select month between 1-12");
+        int calendarMonth;
+        switch (month){
+            case 1: calendarMonth = Calendar.JANUARY; break;
+            case 2: calendarMonth = Calendar.FEBRUARY; break;
+            case 3: calendarMonth = Calendar.MARCH; break;
+            case 4: calendarMonth = Calendar.APRIL; break;
+            case 5: calendarMonth = Calendar.MAY; break;
+            case 6: calendarMonth = Calendar.JUNE; break;
+            case 7: calendarMonth = Calendar.JULY; break;
+            case 8: calendarMonth = Calendar.AUGUST;break;
+            case 9: calendarMonth = Calendar.SEPTEMBER; break;
+            case 10: calendarMonth = Calendar.OCTOBER; break;
+            case 11: calendarMonth = Calendar.NOVEMBER; break;
+            case 12: calendarMonth = Calendar.DECEMBER; break;
+            default:
+                try {
+                    throw new Exception("Something went wrong in TimeHelper.createDate()");
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+        }
+
+        calendar.set(year, calendarMonth, dayOfMonth, hourOfDay, minute);
+        Date output = calendar.getTime();
+        return output;
+    }
 }
