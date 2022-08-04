@@ -21,6 +21,9 @@ public class ItemStack {
     }
 
     public void setAmount(int amount) {
+        if (amount > item.getMaxStackSize()) {
+            throw new IllegalArgumentException("Attempted to set stack size to " + amount + " while the limit is " + item.getMaxStackSize());
+        }
         this.amount = amount;
     }
 
