@@ -38,4 +38,11 @@ class ChestFactoryTest {
         boolean actual = chest.getInventoryMap().isEmpty();
         assertEquals(expected, actual);
     }
+    @Test
+    void givenAChestWith4StacksOf32DirtNeedsToBeCreated_whenCreatingSaidChest_thenItContains4Stacks(){
+        Chest chest = ChestFactory.createChest(false, 4, ItemFactory.createDirt(), 32);
+        int expected = 4;
+        int actual = chest.getInventoryMap().size();
+        assertEquals(expected, actual);
+    }
 }
