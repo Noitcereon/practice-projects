@@ -17,4 +17,7 @@ public class ItemStackFactory {
         Item item = availableItems.get(index);
         return new ItemStack(item);
     }
+    public static ItemStack createItemStack(int amount, Item item){
+        return new ItemStack(amount, item);
+    }
 }
