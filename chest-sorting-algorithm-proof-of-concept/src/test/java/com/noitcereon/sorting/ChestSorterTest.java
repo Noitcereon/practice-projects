@@ -2,6 +2,7 @@ package com.noitcereon.sorting;
 
 import com.noitcereon.helpers.ChestFactory;
 import com.noitcereon.helpers.ItemFactory;
+import com.noitcereon.helpers.ItemStackFactory;
 import com.noitcereon.minecraft.mock.Chest;
 import com.noitcereon.minecraft.mock.ItemStack;
 import org.junit.jupiter.api.BeforeEach;
@@ -58,6 +59,21 @@ class ChestSorterTest {
 
         assertEquals(expectedStackSize, actualStackSize1);
         assertEquals(expectedStackSize, actualStackSize2);
+    }
+    @Test
+    void givenChestWith4DirtStacks2EggStacksAnd2Pickaxes_whenSortingChest_thenChestContains5Stacks() {
+        Chest chest = ChestFactory.createChest(false, 4, ItemFactory.createDirt(), 32);
+        chest.addToStorage(5, ItemStackFactory.createItemStack(8, ItemFactory.createEgg()));
+        chest.addToStorage(6, ItemStackFactory.createItemStack(8, ItemFactory.createEgg()));
+        chest.addToStorage(7, ItemStackFactory.createItemStack(1, ItemFactory.createPickaxe()));
+        chest.addToStorage(8, ItemStackFactory.createItemStack(1, ItemFactory.createPickaxe()));
+
+        Chest sortedChest = chestSorter.sort(chest);
+        var inventory = sortedChest.getInventoryMap();
+        int expected = 5;
+        int actual = inventory.size();
+
+        assertEquals(expected, actual);
     }
 
     private void assertChestContentIsInAscendingOrder(Chest sortedChest) {
