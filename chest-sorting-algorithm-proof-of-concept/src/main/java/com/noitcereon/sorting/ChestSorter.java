@@ -22,12 +22,18 @@ public class ChestSorter {
             return Integer.compare(itemId, itemId2);
         }).toList();
 
-        Map<Integer, ItemStack> sortedInventoryMap = new HashMap<>();
+        Map<Integer, ItemStack> sortedInventoryMap = createSortedInventory(entriesWithValueSorted);
 
+        output.setInventoryMap(sortedInventoryMap);
+        return output;
+    }
+
+    private  Map<Integer, ItemStack> createSortedInventory(List<Map.Entry<Integer, ItemStack>> entriesWithValueSorted) {
+        Map<Integer, ItemStack> sortedInventoryMap = new HashMap<>();
         int nextSpot = 1;
-        ArrayList<Integer> entryKeysMarkedForRemoval = new ArrayList<>();
+        ArrayList<Integer> entryKeysMarkedForSkipping = new ArrayList<>();
         for (var entry : entriesWithValueSorted) {
-            if (entryKeysMarkedForRemoval.contains(entry.getKey())) continue;
+            if (entryKeysMarkedForSkipping.contains(entry.getKey())) continue;
             ItemStack stack = entry.getValue();
             if (itemStacksOfTheSameItemExists(entriesWithValueSorted, stack.getItem()) && stack.getItem().getMaxStackSize() != 1) {
                 // Find all items with the same id
@@ -38,8 +44,8 @@ public class ChestSorter {
 
                 // Combine them and...
                 Collection<ItemStack> combinedStacks = combineStacksOfTheSameItem(stacksOfTheSameItem);
-                // ... Add mark entries used during combination for removal
-                stacksOfTheSameItem.forEach(x -> entryKeysMarkedForRemoval.add(x.getKey()));
+                // ... Mark entries used during combination for skipping
+                stacksOfTheSameItem.forEach(x -> entryKeysMarkedForSkipping.add(x.getKey()));
                 // Add the combined stacks to chest inventory
                 for (ItemStack combinedStack : combinedStacks) {
                     sortedInventoryMap.put(nextSpot, combinedStack);
@@ -50,8 +56,7 @@ public class ChestSorter {
             }
             nextSpot++;
         }
-        output.setInventoryMap(sortedInventoryMap);
-        return output;
+        return sortedInventoryMap;
     }
 
     private boolean itemStacksOfTheSameItemExists(List<Map.Entry<Integer, ItemStack>> entriesWithValueSorted, Item item) {
