@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class ItemFactory {
     public static Item createPickaxe(){
-        return new Item(1, "Stone Pickaxe");
+        return new Item(1, "Stone Pickaxe", 1);
     }
     public static Item createWoodBlock(){
         return new Item(2, "Oak Wood");
@@ -18,7 +18,7 @@ public class ItemFactory {
         return new Item(4, "Stone");
     }
     public static Item createEgg(){
-        return new Item(5, "Egg");
+        return new Item(5, "Egg", 16);
     }
 
     public static ArrayList<Item> getItems(){
