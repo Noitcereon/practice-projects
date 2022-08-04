@@ -39,5 +39,11 @@ public class Item {
         return String.format("Item: { id: %d, name: %s}", getItemId(), getName());
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Item item)) return false;
 
+        return getItemId().equals(item.getItemId());
+    }
 }
