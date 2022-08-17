@@ -9,12 +9,10 @@ const tempCurrentPage = "CurrentPage";
 </script>
 
 <template>
-  <header class="absolute inset-x-0 top-0 lg:max-w-3xl lg:mx-auto">
     <slot name="header">
       <!-- Defaults to this, if header slot is not given -->
       <DefaultHeader :current-page="tempCurrentPage" />
     </slot>
-  </header>
 
   <main
     class="flex flex-col items-center px-4 mx-auto lg:max-w-6xl min-h-screen"
