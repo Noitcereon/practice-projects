@@ -5,7 +5,7 @@ const currentPage = "Home";
 <template>
   <MainLayout :current-page="currentPage">
     <div>
-      <h1 class="pb-4 text-6xl text-center text-gray-800 transition-colors">
+      <h1 class="pb-4 text-6xl text-center text-customPink-900 transition-colors">
         Home
       </h1>
       <p class="text-gray-600">
