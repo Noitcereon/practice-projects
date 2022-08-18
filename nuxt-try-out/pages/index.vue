@@ -2,7 +2,7 @@
 const currentPage = "Home";
 </script>
 
-<template #default>
+<template>
   <MainLayout :current-page="currentPage">
     <div>
       <h1 class="pb-4 text-6xl text-center text-gray-800 transition-colors">
