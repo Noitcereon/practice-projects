@@ -5,6 +5,9 @@ const props = defineProps({
     required: true,
   },
 });
+useHead({
+  title: props.currentPage,
+});
 </script>
 
 <template>

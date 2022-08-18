@@ -1,9 +1,5 @@
 <script lang="ts" setup>
 const currentPage = "Home";
-
-useHead({
-  title: currentPage,
-});
 </script>
 
 <template #default>
