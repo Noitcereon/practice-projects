@@ -1,17 +1,16 @@
 <script setup lang="ts">
-// const props = defineProps({
-//   currentPage: {
-//     type: String,
-//     required: true,
-//   },
-// });
-const tempCurrentPage = "CurrentPage";
+const props = defineProps({
+  currentPage: {
+    type: String,
+    required: true,
+  },
+});
 </script>
 
 <template>
     <slot name="header">
       <!-- Defaults to this, if header slot is not given -->
-      <DefaultHeader :current-page="tempCurrentPage" />
+      <DefaultHeader :current-page="props.currentPage" />
     </slot>
 
   <main
@@ -21,7 +20,7 @@ const tempCurrentPage = "CurrentPage";
       <!-- Defaults to this, if main slot is not given -->
       <p>
         <!-- The below escaped characters (&#139 and &#155) are '<' and '>' respectively. -->
-        This is the fallback &#139;main&#155; content of MainLayout.vue. It
+        This is the fallback &#139;main&#155; content of primaryLayout.vue. It
         should not be displayed.
       </p>
     </slot>

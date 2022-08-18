@@ -1,9 +1,11 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+const currentPage = "Prices";
+</script>
 
 <template>
-  <div>
+  <MainLayout :current-page="currentPage">
     Page: prices
-  </div>
+  </MainLayout>
 </template>
 
 <style scoped></style>

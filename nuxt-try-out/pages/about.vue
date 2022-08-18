@@ -1,9 +1,11 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+const currentPage = "About";
+</script>
 
 <template>
-  <div>
+  <MainLayout :current-page="currentPage">
     Page: about
-  </div>
+  </MainLayout>
 </template>
 
 <style scoped></style>

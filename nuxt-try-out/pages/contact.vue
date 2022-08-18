@@ -1,9 +1,11 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+const currentPage = "Contact"
+</script>
 
 <template>
-  <div>
+  <MainLayout :current-page="currentPage">
     Page: contact
-  </div>
+  </MainLayout>
 </template>
 
 <style scoped></style>
