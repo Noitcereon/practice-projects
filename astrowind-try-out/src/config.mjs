@@ -1,5 +1,5 @@
 export const SITE = {
-  name: "AstroWind",
+  name: "Noitcereon's AstroWind Test",
   domain: "https://astrowind.vercel.app",
   github: "https://github.com/onwidget/astrowind",
 
