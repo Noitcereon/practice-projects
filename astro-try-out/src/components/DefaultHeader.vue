@@ -23,17 +23,17 @@
             <li
               class="inline-block px-3 border-r-2 border-opacity-30 border-black"
             >
-              <a href="about">Who am I</a>
+              <a href="/about">Who am I</a>
             </li>
             <li
               class="inline-block px-3 border-r-2 border-opacity-30 border-black"
             >
-              <a href="prices">Prices</a>
+              <a href="/prices">Prices</a>
             </li>
             <li
               class="inline-block px-3 border-r-2 border-opacity-30 border-black"
             >
-              <a href="contact">Contact</a>
+              <a href="/contact">Contact</a>
             </li>
           </ul>
         </nav>
