@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
-import MenuLink from './MenuLink.vue';
+import { ref } from "vue";
+import MenuLink from "./MenuLink.vue";
 
 const props = defineProps({
   currentPage: {
@@ -9,8 +9,7 @@ const props = defineProps({
   },
 });
 let mobileNavIsHidden = ref(true);
-function toggleMobileNav(){
-  console.log("toggle triggered")
+function toggleMobileNav() {
   mobileNavIsHidden.value = !mobileNavIsHidden.value;
 }
 </script>
@@ -21,8 +20,9 @@ function toggleMobileNav(){
       <div class="container flex justify-start items-center lg:hidden">
         <h1 class="text-2xl">{{ props.currentPage }}</h1>
       </div>
-      <nav class="hidden md:block">
-        <ul>
+      <nav class="w-full">
+        <!-- Desktop navigation -->
+        <ul class="hidden md:block">
           <li
             class="inline-block px-3 border-r-2 border-opacity-30 border-black"
           >
@@ -44,19 +44,20 @@ function toggleMobileNav(){
             <a href="/contact">Contact</a>
           </li>
         </ul>
-      </nav>
-      <nav :class="{ hidden: mobileNavIsHidden }" class="bg-yellow-600 absolute top-20 right-0 w-52" @click="toggleMobileNav">
-        <ul>
+        <!-- Mobile navigation -->
+        <ul
+          :class="{ hidden: mobileNavIsHidden }"
+          class="bg-yellow-600 absolute top-20 right-0 w-full z-10"
+          @click="toggleMobileNav"
+        >
           <MenuLink text="Home" href="/"></MenuLink>
           <MenuLink text="About" href="/about"></MenuLink>
           <MenuLink text="Prices" href="/prices"></MenuLink>
           <MenuLink text="Contact" href="/contact"></MenuLink>
         </ul>
       </nav>
-      <div
-        class="container flex justify-end flex-1"
-        @click="toggleMobileNav"
-      >
+
+      <div class="container flex justify-end flex-1" @click="toggleMobileNav">
         <span class="text-orange-400 font-bold">Menu Button</span>
       </div>
     </div>
