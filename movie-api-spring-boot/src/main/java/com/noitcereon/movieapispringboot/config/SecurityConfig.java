@@ -1,4 +1,4 @@
-package com.noitcereon.config;
+package com.noitcereon.movieapispringboot.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
