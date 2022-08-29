@@ -15,19 +15,29 @@ public class MovieEntity {
         this.actors = actors;
     }
 
-    public long id() {
+    public long getId() {
         return id;
     }
 
-    public String title() {
+    public String getTitle() {
         return title;
     }
 
-    public int releaseYear() {
+    public int getReleaseYear() {
         return releaseYear;
     }
 
-    public ArrayList<ActorEntity> actors() {
+    public ArrayList<ActorEntity> getActors() {
         return actors;
+    }
+
+    @Override
+    public String toString() {
+        return "MovieEntity{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", releaseYear=" + releaseYear +
+                ", actors=" + actors +
+                '}';
     }
 }
