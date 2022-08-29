@@ -7,14 +7,19 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class ActorRepository implements ICrudRepository<ActorEntity, ActorCreate> {
+public class ActorRepository implements ICrudRepository<ActorEntity, Long, ActorCreate> {
     @Override
     public ActorEntity create(ActorCreate model) {
         return null;
     }
 
     @Override
-    public List<ActorEntity> read() {
+    public List<ActorEntity> getAll() {
+        return null;
+    }
+
+    @Override
+    public Long getById() {
         return null;
     }
 
@@ -24,7 +29,8 @@ public class ActorRepository implements ICrudRepository<ActorEntity, ActorCreate
     }
 
     @Override
-    public boolean delete(ActorEntity entity) {
+    public boolean delete(Long entityId) {
         return false;
     }
+
 }
