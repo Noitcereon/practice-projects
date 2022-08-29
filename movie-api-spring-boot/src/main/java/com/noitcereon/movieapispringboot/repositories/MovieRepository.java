@@ -1,5 +1,6 @@
 package com.noitcereon.movieapispringboot.repositories;
 
+import com.noitcereon.movieapispringboot.models.ActorEntity;
 import com.noitcereon.movieapispringboot.models.MovieCreate;
 import com.noitcereon.movieapispringboot.models.MovieEntity;
 import org.slf4j.Logger;
@@ -35,18 +36,27 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
     @Override
     public ArrayList<MovieEntity> getAll() {
         try {
-            String sql = "SELECT * FROM Movies";
+            String sql = "SELECT * FROM Movie";
             PreparedStatement query = connection.prepareStatement(sql);
             ResultSet result = query.executeQuery();
-
-            while(result.next()){
-                System.out.println("I'm in the result set");
+            ArrayList<MovieEntity> movies = new ArrayList<>();
+            while (result.next()) {
+                MovieEntity movie = movieEntityMapping(result);
+                movies.add(movie);
             }
-
+            return movies;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
+    }
+
+    private MovieEntity movieEntityMapping(ResultSet result) throws SQLException {
+        return new MovieEntity(
+                result.getLong("id"),
+                result.getString("title"),
+                result.getInt("releaseYear"),
+                new ArrayList<ActorEntity>()
+        );
     }
 
     @Override

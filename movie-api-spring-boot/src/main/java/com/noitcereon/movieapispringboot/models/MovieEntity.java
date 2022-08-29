@@ -1,5 +1,7 @@
 package com.noitcereon.movieapispringboot.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 
 public class MovieEntity {
@@ -27,6 +29,7 @@ public class MovieEntity {
         return releaseYear;
     }
 
+    @JsonIgnore
     public ArrayList<ActorEntity> getActors() {
         return actors;
     }
