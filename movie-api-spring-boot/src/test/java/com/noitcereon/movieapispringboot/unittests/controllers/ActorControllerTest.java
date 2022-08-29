@@ -1,9 +1,9 @@
-package com.noitcereon.movieapispringboot.controllers;
+package com.noitcereon.movieapispringboot.unittests.controllers;
 
-import com.noitcereon.movieapispringboot.factories.ActorMockFactory;
-import com.noitcereon.movieapispringboot.models.ActorCreate;
+import com.noitcereon.movieapispringboot.controllers.ActorController;
+import com.noitcereon.movieapispringboot.unittests.factories.ActorMockFactory;
 import com.noitcereon.movieapispringboot.models.ActorEntity;
-import com.noitcereon.movieapispringboot.services.ActorRepository;
+import com.noitcereon.movieapispringboot.repositories.ActorRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

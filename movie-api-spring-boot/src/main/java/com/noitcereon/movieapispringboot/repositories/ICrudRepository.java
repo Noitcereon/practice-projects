@@ -1,4 +1,4 @@
-package com.noitcereon.movieapispringboot.services;
+package com.noitcereon.movieapispringboot.repositories;
 
 import java.util.ArrayList;
 

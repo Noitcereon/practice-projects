@@ -1,4 +1,4 @@
-package com.noitcereon.movieapispringboot.services;
+package com.noitcereon.movieapispringboot.repositories;
 
 import com.noitcereon.movieapispringboot.models.MovieCreate;
 import com.noitcereon.movieapispringboot.models.MovieEntity;

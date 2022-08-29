@@ -1,4 +1,4 @@
-package com.noitcereon.movieapispringboot.factories;
+package com.noitcereon.movieapispringboot.unittests.factories;
 
 import com.noitcereon.movieapispringboot.models.MovieCreate;
 import com.noitcereon.movieapispringboot.models.MovieEntity;
