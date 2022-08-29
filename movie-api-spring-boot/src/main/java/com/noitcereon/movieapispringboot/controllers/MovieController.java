@@ -14,12 +14,17 @@ import java.util.ArrayList;
 @RequestMapping("/api/movie")
 public class MovieController implements ICrudController<MovieEntity, Long, MovieCreate> {
     private final MovieRepository movieRepo;
-    public MovieController(MovieRepository movieRepo){
+
+    public MovieController(MovieRepository movieRepo) {
         this.movieRepo = movieRepo;
     }
+
     @GetMapping
-    public ResponseEntity<ArrayList<MovieEntity>> getAll(){
-       return null;
+    public ResponseEntity<ArrayList<MovieEntity>> getAll() {
+        ArrayList<MovieEntity> movies = movieRepo.getAll();
+        if(movies.isEmpty())
+            return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(movies);
     }
 
     @Override

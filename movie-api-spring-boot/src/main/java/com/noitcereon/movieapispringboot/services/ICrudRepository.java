@@ -1,6 +1,6 @@
 package com.noitcereon.movieapispringboot.services;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
@@ -11,7 +11,7 @@ public interface ICrudRepository<T, ID, DTOCreate> {
     // Creation
     T create(DTOCreate model);
     // Read
-    List<T> getAll();
+    ArrayList<T> getAll();
 
     ID getById();
 

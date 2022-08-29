@@ -8,8 +8,10 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.ArrayList;
 
 @Repository
 public class MovieRepository implements ICrudRepository<MovieEntity, Long, MovieCreate> {
@@ -31,7 +33,19 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
     }
 
     @Override
-    public List<MovieEntity> getAll() {
+    public ArrayList<MovieEntity> getAll() {
+        try {
+            String sql = "SELECT * FROM Movies";
+            PreparedStatement query = connection.prepareStatement(sql);
+            ResultSet result = query.executeQuery();
+
+            while(result.next()){
+                System.out.println("I'm in the result set");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return null;
     }
 

@@ -4,7 +4,7 @@ import com.noitcereon.movieapispringboot.models.ActorCreate;
 import com.noitcereon.movieapispringboot.models.ActorEntity;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.ArrayList;
 
 @Repository
 public class ActorRepository implements ICrudRepository<ActorEntity, Long, ActorCreate> {
@@ -14,7 +14,7 @@ public class ActorRepository implements ICrudRepository<ActorEntity, Long, Actor
     }
 
     @Override
-    public List<ActorEntity> getAll() {
+    public ArrayList<ActorEntity> getAll() {
         return null;
     }
 
