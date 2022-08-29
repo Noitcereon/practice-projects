@@ -2,7 +2,7 @@ package com.noitcereon.movieapispringboot.controllers;
 
 import com.noitcereon.movieapispringboot.models.MovieCreate;
 import com.noitcereon.movieapispringboot.models.MovieEntity;
-import com.noitcereon.movieapispringboot.services.MovieRepository;
+import com.noitcereon.movieapispringboot.repositories.MovieRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

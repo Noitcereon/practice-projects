@@ -2,7 +2,7 @@ package com.noitcereon.movieapispringboot.controllers;
 
 import com.noitcereon.movieapispringboot.models.ActorCreate;
 import com.noitcereon.movieapispringboot.models.ActorEntity;
-import com.noitcereon.movieapispringboot.services.ActorRepository;
+import com.noitcereon.movieapispringboot.repositories.ActorRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
