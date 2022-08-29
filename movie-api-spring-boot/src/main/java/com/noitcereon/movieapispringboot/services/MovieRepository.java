@@ -23,15 +23,14 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long,  Movi
         return null;
     }
 
-
     @Override
     public MovieEntity update(MovieEntity entity) {
         return null;
     }
 
     @Override
-    public boolean delete(Long entityId) {
-        return false;
+    public MovieEntity delete(Long entityId) {
+        return null;
     }
 
 

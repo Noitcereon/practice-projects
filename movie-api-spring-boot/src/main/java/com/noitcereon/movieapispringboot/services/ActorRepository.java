@@ -29,8 +29,8 @@ public class ActorRepository implements ICrudRepository<ActorEntity, Long, Actor
     }
 
     @Override
-    public boolean delete(Long entityId) {
-        return false;
+    public ActorEntity delete(Long entityId) {
+        return null;
     }
 
 }

@@ -23,5 +23,5 @@ public interface ICrudRepository<T, ID, DTOCreate> {
      */
     T update(T entity);
     // Delete
-    boolean delete(ID entityId);
+    T delete(ID entityId);
 }
