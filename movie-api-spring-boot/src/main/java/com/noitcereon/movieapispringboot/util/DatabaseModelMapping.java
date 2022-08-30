@@ -18,4 +18,13 @@ public class DatabaseModelMapping {
         );
     }
 
+    public static ActorEntity actorEntityMapping(ResultSet result) throws SQLException {
+        return new ActorEntity(
+                result.getLong("id"),
+                result.getString("firstName"),
+                result.getString("lastName"),
+                result.getInt("birthYear"),
+                new ArrayList<>()
+        );
+    }
 }

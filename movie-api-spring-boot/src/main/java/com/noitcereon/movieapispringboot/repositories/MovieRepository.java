@@ -50,9 +50,8 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
         } catch (SQLException e) {
             logger.error("Something went wrong during the retrieval of all movies.");
             throw new RuntimeException(e);
-        }
-        finally {
-            try{
+        } finally {
+            try {
                 connection.close();
             } catch (SQLException e) {
                 logger.error("Error during closing of connection");
@@ -61,16 +60,37 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
     }
 
 
-
     @Override
     public MovieEntity getById(Long id) {
-        try{
-            String sql = "";
-            PreparedStatement query = connection.prepareStatement(sql);
-        }
-        catch (SQLException e){
+        try {
+            // Get the specific movie
+            String sql = "SELECT title, releaseYear FROM Movie WHERE Movie.id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, id);
+            ResultSet result = preparedStatement.executeQuery();
+            MovieEntity movie;
+            if (result.next()) {
+                movie = DatabaseModelMapping.movieEntityMapping(result);
+                // Get the actors for that movie
+                String getActorsSql =
+                        "SELECT fkActorId, firstName, lastName, birthYear " +
+                                "FROM MovieActor " +
+                                "INNER JOIN Actor A on MovieActor.fkActorId = A.id " +
+                                "WHERE fkMovieId = ?";
+                PreparedStatement preparedStatementActors = connection.prepareStatement(getActorsSql);
+                preparedStatementActors.setLong(1, id);
+                ResultSet resultActors = preparedStatementActors.executeQuery();
+                while(resultActors.next()){
+                    movie.getActors().add(
+                            DatabaseModelMapping.actorEntityMapping(result)
+                    );
+                }
+                return movie;
+            }
+        } catch (SQLException e) {
             logger.error("Something went wrong during movie getById()");
         }
+        // It shouldn't make it here (unless there is no data associated with the id)
         return null;
     }
 
