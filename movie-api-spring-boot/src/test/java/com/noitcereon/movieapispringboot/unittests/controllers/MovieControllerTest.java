@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 
@@ -17,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class MovieControllerTest {
 
     private MovieController movieController;
-    private final MovieMockFactory mocksFactory = new MovieMockFactory();
     private final MovieRepository mockedMovieRepo = Mockito.mock(MovieRepository.class);
 
     @BeforeEach
@@ -61,9 +61,13 @@ class MovieControllerTest {
 
     @Test
     void add() {
-        Mockito.when(mockedMovieRepo.create(Mockito.mock(MovieCreate.class))).thenReturn(Mockito.mock(MovieEntity.class));
+        MovieEntity mockedMovie = Mockito.mock(MovieEntity.class);
+        MovieCreate mockedCreate = Mockito.mock(MovieCreate.class);
+        Mockito.when(mockedMovieRepo.create(mockedCreate)).thenReturn(mockedMovie);
+        Mockito.when(mockedMovie.getId()).thenReturn(1L);
         HttpStatus expected = HttpStatus.CREATED;
-        HttpStatus statusCode = movieController.add(mocksFactory.createMinimalMovieCreate()).getStatusCode();
+        ResponseEntity<MovieEntity> response = movieController.add(mockedCreate);
+        HttpStatus statusCode = response.getStatusCode();
         assertEquals(expected, statusCode);
     }
 
