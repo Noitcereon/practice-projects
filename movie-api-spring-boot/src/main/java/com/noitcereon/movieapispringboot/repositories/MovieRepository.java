@@ -1,6 +1,5 @@
 package com.noitcereon.movieapispringboot.repositories;
 
-import com.noitcereon.movieapispringboot.models.ActorEntity;
 import com.noitcereon.movieapispringboot.models.MovieCreate;
 import com.noitcereon.movieapispringboot.models.MovieEntity;
 import com.noitcereon.movieapispringboot.util.DatabaseModelMapping;
@@ -26,6 +25,39 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
 
     @Override
     public MovieEntity create(MovieCreate model) {
+        try {
+            conn = dataSource.getConnection();
+            conn.setAutoCommit(false);
+            String sql = "INSERT INTO Movie(title, releaseYear) " +
+                    "VALUES (?, ?)";
+            PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, model.getTitle());
+            statement.setInt(2, model.getReleaseYear());
+            int rowsUpdated = statement.executeUpdate();
+            if (rowsUpdated != 1) return null; // error
+            ResultSet generatedKey = statement.getGeneratedKeys();
+            MovieEntity movie;
+            if (generatedKey.next()) {
+                movie = new MovieEntity(
+                        generatedKey.getLong(1),
+                        model.getTitle(),
+                        model.getReleaseYear(),
+                        model.getActors());
+                conn.commit();
+                return movie;
+            }
+
+        } catch (SQLException e) {
+            try {
+                logger.error("Failed during creation of movie, rolling back transaction. Error: {}", e.getMessage());
+                conn.rollback();
+            } catch (SQLException ex) {
+                logger.error("Failed to rollback transaction");
+                throw new RuntimeException(ex);
+            }
+        } finally {
+            JdbcUtils.closeConnection(conn);
+        }
         return null;
     }
 
@@ -45,8 +77,7 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
         } catch (SQLException e) {
             logger.error("Something went wrong during the retrieval of all movies.");
             throw new RuntimeException(e);
-        }
-        finally {
+        } finally {
             JdbcUtils.closeConnection(conn);
         }
     }
@@ -74,26 +105,25 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
                 PreparedStatement preparedStatementActors = conn.prepareStatement(getActorsSql);
                 preparedStatementActors.setLong(1, id);
                 ResultSet resultActors = preparedStatementActors.executeQuery();
-                while(resultActors.next()){
+                while (resultActors.next()) {
                     movie.getActors().add(
                             DatabaseModelMapping.actorEntityMapping(resultActors)
                     );
                 }
                 return movie;
-            }
-            else{
+            } else {
                 return new MovieEntity(-1L, "", 0, new ArrayList<>());
             }
         } catch (SQLException e) {
             logger.error("getById(): {}", e.getMessage());
-        }
-        finally {
+        } finally {
             JdbcUtils.closeConnection(conn);
         }
 
         // It shouldn't make it here
         return null;
     }
+
     @Override
     public MovieEntity update(MovieEntity entity) {
         return null;
