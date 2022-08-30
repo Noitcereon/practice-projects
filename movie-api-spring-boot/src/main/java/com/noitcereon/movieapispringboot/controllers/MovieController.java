@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 
 @RestController
-@RequestMapping("/api/movie")
+@RequestMapping("/api/movies")
 public class MovieController implements ICrudController<MovieEntity, Long, MovieCreate> {
     private final MovieRepository movieRepo;
 
@@ -23,6 +23,7 @@ public class MovieController implements ICrudController<MovieEntity, Long, Movie
 
     @Override
     @GetMapping
+    @Operation(summary = "Retrieves all movies with their id, title and release date")
     public ResponseEntity<ArrayList<MovieEntity>> getAll() {
         ArrayList<MovieEntity> movies = movieRepo.getAll();
         if(movies.isEmpty())
