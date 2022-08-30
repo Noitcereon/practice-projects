@@ -1,5 +1,7 @@
 package com.noitcereon.movieapispringboot.models;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+
 import java.util.ArrayList;
 
 public class ActorEntity {
@@ -17,22 +19,23 @@ public class ActorEntity {
         this.relatedMovies = relatedMovies;
     }
 
-    public Long id(){
+    public long getId() {
         return id;
     }
-    public String firstName() {
+
+    public String getFirstName() {
         return firstName;
     }
 
-    public String lastName() {
+    public String getLastName() {
         return lastName;
     }
 
-    public int birthYear() {
+    public int getBirthYear() {
         return birthYear;
     }
 
-    public ArrayList<MovieEntity> relatedMovies() {
+    public ArrayList<MovieEntity> getRelatedMovies() {
         return relatedMovies;
     }
 }
