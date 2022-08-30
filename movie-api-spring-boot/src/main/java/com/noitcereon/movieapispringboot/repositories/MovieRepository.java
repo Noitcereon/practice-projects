@@ -64,7 +64,7 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
     public MovieEntity getById(Long id) {
         try {
             // Get the specific movie
-            String sql = "SELECT title, releaseYear FROM Movie WHERE Movie.id = ?";
+            String sql = "SELECT id, title, releaseYear FROM Movie WHERE Movie.id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setLong(1, id);
             ResultSet result = preparedStatement.executeQuery();
@@ -82,15 +82,18 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
                 ResultSet resultActors = preparedStatementActors.executeQuery();
                 while(resultActors.next()){
                     movie.getActors().add(
-                            DatabaseModelMapping.actorEntityMapping(result)
+                            DatabaseModelMapping.actorEntityMapping(resultActors)
                     );
                 }
                 return movie;
             }
+            else{
+                return new MovieEntity(-1L, "", 0, new ArrayList<>());
+            }
         } catch (SQLException e) {
-            logger.error("Something went wrong during movie getById()");
+            logger.error("getById(): {}", e.getMessage());
         }
-        // It shouldn't make it here (unless there is no data associated with the id)
+        // It shouldn't make it here
         return null;
     }
 
