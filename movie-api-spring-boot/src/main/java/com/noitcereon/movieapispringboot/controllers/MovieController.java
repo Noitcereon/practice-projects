@@ -3,8 +3,10 @@ package com.noitcereon.movieapispringboot.controllers;
 import com.noitcereon.movieapispringboot.models.MovieCreate;
 import com.noitcereon.movieapispringboot.models.MovieEntity;
 import com.noitcereon.movieapispringboot.repositories.MovieRepository;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,6 +21,7 @@ public class MovieController implements ICrudController<MovieEntity, Long, Movie
         this.movieRepo = movieRepo;
     }
 
+    @Override
     @GetMapping
     public ResponseEntity<ArrayList<MovieEntity>> getAll() {
         ArrayList<MovieEntity> movies = movieRepo.getAll();
@@ -28,8 +31,10 @@ public class MovieController implements ICrudController<MovieEntity, Long, Movie
     }
 
     @Override
-    public ResponseEntity<MovieEntity> getById(Long id) {
-        return null;
+    @GetMapping("/{id}")
+    public ResponseEntity<MovieEntity> getById(@PathVariable Long id) {
+        MovieEntity movie = movieRepo.getById(id);
+        return ResponseEntity.ok(movie);
     }
 
     @Override

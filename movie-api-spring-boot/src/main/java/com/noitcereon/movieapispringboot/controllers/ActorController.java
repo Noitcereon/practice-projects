@@ -4,6 +4,7 @@ import com.noitcereon.movieapispringboot.models.ActorCreate;
 import com.noitcereon.movieapispringboot.models.ActorEntity;
 import com.noitcereon.movieapispringboot.repositories.ActorRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -19,9 +20,8 @@ public class ActorController implements ICrudController<ActorEntity, Long, Actor
     public ResponseEntity<ArrayList<ActorEntity>> getAll() {
         return ResponseEntity.ok(new ArrayList<>());
     }
-
     @Override
-    public ResponseEntity<ActorEntity> getById(Long id) {
+    public ResponseEntity<ActorEntity> getById(@PathVariable Long id){
         return null;
     }
 
