@@ -1,6 +1,7 @@
 package com.noitcereon.movieapispringboot.unittests.controllers;
 
 import com.noitcereon.movieapispringboot.controllers.MovieController;
+import com.noitcereon.movieapispringboot.models.MovieCreate;
 import com.noitcereon.movieapispringboot.unittests.factories.MovieMockFactory;
 import com.noitcereon.movieapispringboot.models.MovieEntity;
 import com.noitcereon.movieapispringboot.repositories.MovieRepository;
@@ -17,7 +18,8 @@ class MovieControllerTest {
 
     private MovieController movieController;
     private final MovieMockFactory mocksFactory = new MovieMockFactory();
-    private MovieRepository mockedMovieRepo = Mockito.mock(MovieRepository.class);
+    private final MovieRepository mockedMovieRepo = Mockito.mock(MovieRepository.class);
+
     @BeforeEach
     void setUp() {
         movieController = new MovieController(mockedMovieRepo);
@@ -33,6 +35,7 @@ class MovieControllerTest {
         HttpStatus statusCode = movieController.getAll().getStatusCode();
         assertEquals(expected, statusCode);
     }
+
     @Test
     void getAll_IfThereIsNoContent() {
         HttpStatus expected = HttpStatus.NO_CONTENT;
@@ -42,6 +45,8 @@ class MovieControllerTest {
 
     @Test
     void getById() {
+        MovieEntity movie = Mockito.mock(MovieEntity.class);
+        Mockito.when(mockedMovieRepo.getById(1L)).thenReturn(movie);
         HttpStatus expected = HttpStatus.OK;
         HttpStatus statusCode = movieController.getById(1L).getStatusCode();
         assertEquals(expected, statusCode);
@@ -50,12 +55,13 @@ class MovieControllerTest {
     @Test
     void update() {
         HttpStatus expected = HttpStatus.OK;
-        HttpStatus statusCode = movieController.update(mocksFactory.createMinimalMovieEntity()).getStatusCode();
+        HttpStatus statusCode = movieController.update(Mockito.mock(MovieEntity.class)).getStatusCode();
         assertEquals(expected, statusCode);
     }
 
     @Test
     void add() {
+        Mockito.when(mockedMovieRepo.create(Mockito.mock(MovieCreate.class))).thenReturn(Mockito.mock(MovieEntity.class));
         HttpStatus expected = HttpStatus.CREATED;
         HttpStatus statusCode = movieController.add(mocksFactory.createMinimalMovieCreate()).getStatusCode();
         assertEquals(expected, statusCode);
