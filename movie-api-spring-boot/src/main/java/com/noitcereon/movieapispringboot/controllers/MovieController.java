@@ -49,7 +49,10 @@ public class MovieController implements ICrudController<MovieEntity, Long, Movie
     @Override
     @Operation(summary = "Updates a movie in the database based on the passed in MovieEntity")
     public ResponseEntity<MovieEntity> update(@RequestBody MovieEntity updatedModel) {
-        return null;
+        MovieEntity movie = movieRepo.update(updatedModel);
+        if(movie == null) return ResponseEntity.internalServerError().build();
+
+        return ResponseEntity.ok(movie);
     }
 
     @Override
