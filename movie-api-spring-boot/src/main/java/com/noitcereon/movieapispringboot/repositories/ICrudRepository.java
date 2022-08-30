@@ -13,7 +13,7 @@ public interface ICrudRepository<T, ID, DTOCreate> {
     // Read
     ArrayList<T> getAll();
 
-    ID getById();
+    T getById(ID id);
 
     // Update
     /**

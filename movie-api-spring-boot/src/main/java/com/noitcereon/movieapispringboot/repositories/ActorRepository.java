@@ -19,7 +19,7 @@ public class ActorRepository implements ICrudRepository<ActorEntity, Long, Actor
     }
 
     @Override
-    public Long getById() {
+    public ActorEntity getById(Long id) {
         return null;
     }
 

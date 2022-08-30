@@ -3,6 +3,7 @@ package com.noitcereon.movieapispringboot.repositories;
 import com.noitcereon.movieapispringboot.models.ActorEntity;
 import com.noitcereon.movieapispringboot.models.MovieCreate;
 import com.noitcereon.movieapispringboot.models.MovieEntity;
+import com.noitcereon.movieapispringboot.util.DatabaseModelMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -24,6 +25,7 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
         try {
             this.connection = dataSource.getConnection();
         } catch (SQLException e) {
+            logger.error("Fatal error: couldn't connect to the database.");
             throw new RuntimeException(e);
         }
     }
@@ -41,26 +43,34 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
             ResultSet result = query.executeQuery();
             ArrayList<MovieEntity> movies = new ArrayList<>();
             while (result.next()) {
-                MovieEntity movie = movieEntityMapping(result);
+                MovieEntity movie = DatabaseModelMapping.movieEntityMapping(result);
                 movies.add(movie);
             }
             return movies;
         } catch (SQLException e) {
+            logger.error("Something went wrong during the retrieval of all movies.");
             throw new RuntimeException(e);
+        }
+        finally {
+            try{
+                connection.close();
+            } catch (SQLException e) {
+                logger.error("Error during closing of connection");
+            }
         }
     }
 
-    private MovieEntity movieEntityMapping(ResultSet result) throws SQLException {
-        return new MovieEntity(
-                result.getLong("id"),
-                result.getString("title"),
-                result.getInt("releaseYear"),
-                new ArrayList<ActorEntity>()
-        );
-    }
+
 
     @Override
-    public Long getById() {
+    public MovieEntity getById(Long id) {
+        try{
+            String sql = "";
+            PreparedStatement query = connection.prepareStatement(sql);
+        }
+        catch (SQLException e){
+            logger.error("Something went wrong during movie getById()");
+        }
         return null;
     }
 
