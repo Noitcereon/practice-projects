@@ -13,15 +13,15 @@ public class MovieCreate {
         this.actors = actors;
     }
 
-    public String title() {
+    public String getTitle() {
         return title;
     }
 
-    public int releaseYear() {
+    public int getReleaseYear() {
         return releaseYear;
     }
 
-    public ArrayList<ActorEntity> actors() {
+    public ArrayList<ActorEntity> getActors() {
         return actors;
     }
 }
