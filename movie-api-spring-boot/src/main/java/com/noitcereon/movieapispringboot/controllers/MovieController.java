@@ -33,8 +33,15 @@ public class MovieController implements ICrudController<MovieEntity, Long, Movie
 
     @Override
     @GetMapping("/{id}")
+    @Operation(summary = "Retrieves a movie with all its data, including actors in the movie.")
     public ResponseEntity<MovieEntity> getById(@PathVariable Long id) {
         MovieEntity movie = movieRepo.getById(id);
+        if(movie == null){
+            return ResponseEntity.internalServerError().build();
+        }
+        if(movie.getId() == -1){
+            return ResponseEntity.noContent().build();
+        }
         return ResponseEntity.ok(movie);
     }
 
