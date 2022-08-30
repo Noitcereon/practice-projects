@@ -6,28 +6,22 @@ import com.noitcereon.movieapispringboot.models.MovieEntity;
 import com.noitcereon.movieapispringboot.util.DatabaseModelMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.support.JdbcUtils;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 @Repository
 public class MovieRepository implements ICrudRepository<MovieEntity, Long, MovieCreate> {
 
     private final Logger logger = LoggerFactory.getLogger(MovieRepository.class);
-    private final Connection connection;
+    private final DataSource dataSource;
+    private Connection conn;
 
     public MovieRepository(DataSource dataSource) {
-        try {
-            this.connection = dataSource.getConnection();
-        } catch (SQLException e) {
-            logger.error("Fatal error: couldn't connect to the database.");
-            throw new RuntimeException(e);
-        }
+        this.dataSource = dataSource;
     }
 
     @Override
@@ -38,8 +32,9 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
     @Override
     public ArrayList<MovieEntity> getAll() {
         try {
+            conn = dataSource.getConnection();
             String sql = "SELECT * FROM Movie";
-            PreparedStatement query = connection.prepareStatement(sql);
+            PreparedStatement query = conn.prepareStatement(sql);
             ResultSet result = query.executeQuery();
             ArrayList<MovieEntity> movies = new ArrayList<>();
             while (result.next()) {
@@ -50,12 +45,9 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
         } catch (SQLException e) {
             logger.error("Something went wrong during the retrieval of all movies.");
             throw new RuntimeException(e);
-        } finally {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                logger.error("Error during closing of connection");
-            }
+        }
+        finally {
+            JdbcUtils.closeConnection(conn);
         }
     }
 
@@ -63,9 +55,11 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
     @Override
     public MovieEntity getById(Long id) {
         try {
+            conn = dataSource.getConnection();
             // Get the specific movie
             String sql = "SELECT id, title, releaseYear FROM Movie WHERE Movie.id = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setLong(1, id);
             ResultSet result = preparedStatement.executeQuery();
             MovieEntity movie;
@@ -77,7 +71,7 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
                                 "FROM MovieActor " +
                                 "INNER JOIN Actor A on MovieActor.fkActorId = A.id " +
                                 "WHERE fkMovieId = ?";
-                PreparedStatement preparedStatementActors = connection.prepareStatement(getActorsSql);
+                PreparedStatement preparedStatementActors = conn.prepareStatement(getActorsSql);
                 preparedStatementActors.setLong(1, id);
                 ResultSet resultActors = preparedStatementActors.executeQuery();
                 while(resultActors.next()){
@@ -93,10 +87,13 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
         } catch (SQLException e) {
             logger.error("getById(): {}", e.getMessage());
         }
+        finally {
+            JdbcUtils.closeConnection(conn);
+        }
+
         // It shouldn't make it here
         return null;
     }
-
     @Override
     public MovieEntity update(MovieEntity entity) {
         return null;
@@ -106,6 +103,4 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
     public MovieEntity delete(Long entityId) {
         return null;
     }
-
-
 }
