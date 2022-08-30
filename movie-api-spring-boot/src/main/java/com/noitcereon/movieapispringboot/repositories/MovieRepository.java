@@ -126,6 +126,38 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
 
     @Override
     public MovieEntity update(MovieEntity entity) {
+        try {
+            conn = dataSource.getConnection();
+            conn.setAutoCommit(false);
+
+            String sql = "UPDATE Movie " +
+                    "SET title = ?, releaseYear = ? " +
+                    "WHERE id = ?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, entity.getTitle());
+            statement.setInt(2, entity.getReleaseYear());
+            statement.setLong(3, entity.getId());
+
+            int rowsAffected = statement.executeUpdate();
+            if(rowsAffected != 1) return null;
+            conn.commit();
+            if(entity.getActors() == null){
+                MovieEntity uncomplicatedEntity = new MovieEntity(entity.getId(), entity.getTitle(), entity.getReleaseYear(), new ArrayList<>());
+                return uncomplicatedEntity;
+            }
+            return entity;
+
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            try {
+                conn.rollback();
+            } catch (SQLException ex) {
+                logger.error(ex.getMessage());
+                throw new RuntimeException(ex);
+            }
+        } finally {
+            JdbcUtils.closeConnection(conn);
+        }
         return null;
     }
 

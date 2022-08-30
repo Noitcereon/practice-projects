@@ -47,6 +47,7 @@ public class MovieController implements ICrudController<MovieEntity, Long, Movie
     }
 
     @Override
+    @PutMapping("/{id}")
     @Operation(summary = "Updates a movie in the database based on the passed in MovieEntity")
     public ResponseEntity<MovieEntity> update(@RequestBody MovieEntity updatedModel) {
         MovieEntity movie = movieRepo.update(updatedModel);
