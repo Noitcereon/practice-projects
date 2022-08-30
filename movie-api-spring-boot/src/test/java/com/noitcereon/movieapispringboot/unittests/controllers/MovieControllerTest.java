@@ -53,8 +53,10 @@ class MovieControllerTest {
 
     @Test
     void update() {
+        MovieEntity mockedMovieEntity = Mockito.mock(MovieEntity.class);
+        Mockito.when(mockedMovieRepo.update(mockedMovieEntity)).thenReturn(mockedMovieEntity);
         HttpStatus expected = HttpStatus.OK;
-        HttpStatus statusCode = movieController.update(Mockito.mock(MovieEntity.class)).getStatusCode();
+        HttpStatus statusCode = movieController.update(mockedMovieEntity).getStatusCode();
         assertEquals(expected, statusCode);
     }
 
