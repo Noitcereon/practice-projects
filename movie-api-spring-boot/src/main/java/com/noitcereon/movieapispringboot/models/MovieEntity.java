@@ -1,6 +1,11 @@
 package com.noitcereon.movieapispringboot.models;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class MovieEntity {
     private final long id;
@@ -27,8 +32,14 @@ public class MovieEntity {
         return releaseYear;
     }
 
+    @JsonIgnore
     public ArrayList<ActorEntity> getActors() {
         return actors;
+    }
+
+    @JsonGetter(value = "actors")
+    public Set<String> getActorEndpoints(){
+        return actors.stream().map(actor -> String.format("%s %s", actor.getFirstName(), actor.getLastName())).collect(Collectors.toSet());
     }
 
     @Override
