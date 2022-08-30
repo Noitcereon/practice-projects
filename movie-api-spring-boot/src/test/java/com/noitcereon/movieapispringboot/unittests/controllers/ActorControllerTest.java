@@ -2,7 +2,6 @@ package com.noitcereon.movieapispringboot.unittests.controllers;
 
 import com.noitcereon.movieapispringboot.controllers.ActorController;
 import com.noitcereon.movieapispringboot.models.ActorCreate;
-import com.noitcereon.movieapispringboot.unittests.factories.ActorMockFactory;
 import com.noitcereon.movieapispringboot.models.ActorEntity;
 import com.noitcereon.movieapispringboot.repositories.ActorRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class ActorControllerTest {
 
     ActorController actorController;
-    ActorMockFactory mockFactory = new ActorMockFactory();
     @BeforeEach
     void setUp() {
         actorController = new ActorController(Mockito.mock(ActorRepository.class));
