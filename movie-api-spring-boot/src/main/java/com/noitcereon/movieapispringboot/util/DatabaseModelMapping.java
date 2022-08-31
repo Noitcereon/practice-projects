@@ -31,11 +31,12 @@ public class DatabaseModelMapping {
 
     public static MovieEntity modelToEntity(MovieCreateUpdate model, Long id) {
         MovieEntity output;
-        if(model.getActors() == null){
+        if(model.getActorIds() == null){
             output = new MovieEntity(id, model.getTitle(), model.getReleaseYear(), new ArrayList<>());
             return output;
         }
-        output = new MovieEntity(id, model.getTitle(), model.getReleaseYear(), model.getActors());
+        // TODO: 31-08-2022 There is currently a quiet bug here (doesn't handle adding actors)
+        output = new MovieEntity(id, model.getTitle(), model.getReleaseYear(), new ArrayList<>());
         return output;
     }
 }

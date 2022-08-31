@@ -1,5 +1,6 @@
 package com.noitcereon.movieapispringboot.repositories;
 
+import com.noitcereon.movieapispringboot.models.ActorEntity;
 import com.noitcereon.movieapispringboot.models.MovieCreateUpdate;
 import com.noitcereon.movieapispringboot.models.MovieEntity;
 import com.noitcereon.movieapispringboot.util.DatabaseModelMapping;
@@ -34,18 +35,67 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
             statement.setString(1, model.getTitle());
             statement.setInt(2, model.getReleaseYear());
             int rowsUpdated = statement.executeUpdate();
-            if (rowsUpdated != 1) return null; // error
+            if (rowsUpdated != 1) return null; // return null indicates error
             ResultSet generatedKey = statement.getGeneratedKeys();
             MovieEntity movie;
+
             if (generatedKey.next()) {
-                movie = new MovieEntity(
-                        generatedKey.getLong(1),
-                        model.getTitle(),
-                        model.getReleaseYear(),
-                        model.getActors());
-                conn.commit();
+               long createdMovieId = generatedKey.getLong(1);
+                if(model.getActorIds().isEmpty())
+                {
+                    movie = new MovieEntity(createdMovieId, model.getTitle(), model.getReleaseYear(), new ArrayList<>());
+                    conn.commit();
+                }
+                else{
+                    String sql2 = "SELECT id, firstName, lastName, birthYear FROM Actor WHERE id = ?";
+                    StringBuilder sqlStringBuilder = new StringBuilder(sql2);
+                    ArrayList<Long> actorsIds = model.getActorIds();
+                    for (int index = 1; index < actorsIds.size(); index++) {
+                        sqlStringBuilder.append(" OR id = ?");
+                    }
+                    PreparedStatement getActorInfoQuery = conn.prepareStatement(sqlStringBuilder.toString());
+                    getActorInfoQuery.setLong(1, actorsIds.get(0));
+                    for (int actorIndex = 1; actorIndex < actorsIds.size(); actorIndex++) {
+                        int parameterIndex = actorIndex+1;
+                        getActorInfoQuery.setLong(parameterIndex, actorsIds.get(actorIndex));
+                    }
+                    ResultSet result = getActorInfoQuery.executeQuery();
+                    ArrayList<ActorEntity> actors = new ArrayList<>();
+                    while(result.next()){
+                        ActorEntity actor = new ActorEntity(
+                                result.getLong("id"),
+                                result.getString("firstName"),
+                                result.getString("lastName"),
+                                result.getInt("birthYear"),
+                                null
+                        );
+                        actors.add(actor);
+                    }
+                    movie = new MovieEntity(generatedKey.getLong(1), model.getTitle(), model.getReleaseYear(), actors);
+
+                    // Update MovieActor table
+                    StringBuilder updateMovieActorSql = new StringBuilder("INSERT INTO MovieActor (fkActorId, fkMovieId) " +
+                            "VALUES ");
+                    for (int i = 0; i < actorsIds.size(); i++) {
+                        updateMovieActorSql.append("(?, ?),");
+                    }
+                    updateMovieActorSql.deleteCharAt(updateMovieActorSql.length()-1);
+                    PreparedStatement updateMovieActorNonQuery = conn.prepareStatement(updateMovieActorSql.toString());
+                    int parameterIndex = 1;
+                    for (Long actorsId : actorsIds) {
+                        updateMovieActorNonQuery.setLong(parameterIndex, actorsId);
+                        updateMovieActorNonQuery.setLong(parameterIndex + 1, movie.getId());
+                        parameterIndex += 2;
+                    }
+                    int rowsUpdated2 = updateMovieActorNonQuery.executeUpdate();
+                    logger.info("Updated {} rows in MovieActor", rowsUpdated2);
+                    // if everything ran without error, commit it.
+                    conn.commit();
+                }
                 return movie;
             }
+
+            return null;
 
         } catch (SQLException e) {
             try {

@@ -6,7 +6,7 @@ public class ActorCreateUpdate {
     private final String firstName;
     private final String lastName;
     private final int birthYear;
-    private final ArrayList<Long> idsOfRelatedMovies;
+    private final ArrayList<ActorEntity> idsOfRelatedMovies;
 
     public ActorCreateUpdate(String firstName, String lastName, int birthYear) {
         this.firstName = firstName;
@@ -14,7 +14,7 @@ public class ActorCreateUpdate {
         this.birthYear = birthYear;
         this.idsOfRelatedMovies = new ArrayList<>();
     }
-    public ActorCreateUpdate(String firstName, String lastName, int birthYear, ArrayList<Long> idsOfRelatedMovies) {
+    public ActorCreateUpdate(String firstName, String lastName, int birthYear, ArrayList<ActorEntity> idsOfRelatedMovies) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthYear = birthYear;
@@ -33,7 +33,7 @@ public class ActorCreateUpdate {
         return birthYear;
     }
 
-    public ArrayList<Long> getIdsOfRelatedMovies() {
+    public ArrayList<ActorEntity> getIdsOfRelatedMovies() {
         return idsOfRelatedMovies;
     }
 }
