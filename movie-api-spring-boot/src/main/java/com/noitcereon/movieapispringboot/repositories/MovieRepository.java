@@ -156,6 +156,7 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
     @Override
     public MovieEntity update(MovieCreateUpdate model, Long id) {
         try {
+            // TODO: 31-08-2022 Make update also handle actors.
             conn = dataSource.getConnection();
             conn.setAutoCommit(false);
 
@@ -183,8 +184,33 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
     }
 
     @Override
-    public Long delete(Long entityId) {
+    public Long delete(Long movieId) {
+        try {
+            conn = dataSource.getConnection();
+            conn.setAutoCommit(false);
+            String sql = "DELETE FROM Movie WHERE id = ?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setLong(1, movieId);
+            int rowsDeleted = statement.executeUpdate();
 
-        return null;
+            if (rowsDeleted == 1) {
+                conn.commit();
+                return movieId;
+            }
+            if(rowsDeleted == 0){
+                return -1L; // indicating that no content was found.
+            }
+            if(rowsDeleted > 1){
+                logger.warn("Tried to delete more than one Movie entry during deletion of single entity.");
+                JdbcUtils.rollbackTransaction(conn);
+            }
+            return null;
+        } catch (SQLException e) {
+            logger.error("Failed to delete movie with id {}. Error: {}", movieId, e.getMessage());
+            JdbcUtils.rollbackTransaction(conn);
+            throw new RuntimeException(e);
+        } finally {
+            JdbcUtils.closeConnection(conn);
+        }
     }
 }

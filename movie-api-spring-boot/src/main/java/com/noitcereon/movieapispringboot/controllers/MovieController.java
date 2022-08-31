@@ -6,6 +6,8 @@ import com.noitcereon.movieapispringboot.repositories.ICrudRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +26,7 @@ public class MovieController implements ICrudController<MovieEntity, Long, Movie
     @Override
     @GetMapping
     @Operation(summary = "Retrieves all movies with their id, title and release date")
+    @Tags(value = {@Tag(name = "Movie Get")})
     public ResponseEntity<ArrayList<MovieEntity>> getAll() {
         ArrayList<MovieEntity> movies = movieRepo.getAll();
         if(movies.isEmpty())
@@ -33,6 +36,7 @@ public class MovieController implements ICrudController<MovieEntity, Long, Movie
 
     @Override
     @GetMapping("/{id}")
+    @Tags(value = {@Tag(name = "Movie Get")})
     @Operation(summary = "Retrieves a movie with all its data, including actors in the movie.")
     @ApiResponses(value = {@ApiResponse(responseCode = "200"), @ApiResponse(responseCode = "204")})
     public ResponseEntity<MovieEntity> getById(@PathVariable Long id) {
@@ -58,7 +62,8 @@ public class MovieController implements ICrudController<MovieEntity, Long, Movie
 
     @Override
     @PostMapping
-    @Operation(summary = "Adds a new movie to the database and returns the added movie")
+    @Operation(summary = "Adds a new movie to the database")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200"), @ApiResponse(responseCode = "204", description = "Tried to delete something that didn't exist")})
     public ResponseEntity<MovieEntity> add(@RequestBody MovieCreateUpdate creationModel) {
         MovieEntity movie = movieRepo.create(creationModel);
         if(movie == null) return ResponseEntity.internalServerError().build();
@@ -66,11 +71,13 @@ public class MovieController implements ICrudController<MovieEntity, Long, Movie
         return ResponseEntity.created(URI.create(String.format("api/movies/%s", movie.getId()))).build();
     }
 
-    @Operation(summary = "Deletes a movie from the database and returns the id of the deleted movie.")
     @Override
-    public ResponseEntity<Long> deleteById(@PathVariable Long aLong) {
-        return null;
+    @Operation(summary = "Deletes a movie from the database and returns the id of the deleted movie.")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Long> deleteById(@PathVariable Long id) {
+        Long deletedId = movieRepo.delete(id);
+        if(deletedId == null) return ResponseEntity.internalServerError().build();
+        if(deletedId == -1) return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(deletedId);
     }
-
-
 }

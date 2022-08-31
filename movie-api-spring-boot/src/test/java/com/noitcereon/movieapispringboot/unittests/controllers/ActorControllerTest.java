@@ -43,8 +43,8 @@ class ActorControllerTest {
     }
 
     @Test
-    void deletingAnActorShouldReturnAnActor() {
-        ActorEntity actor = actorController.deleteById(1L).getBody();
+    void deletingAnActorShouldReturnALongId() {
+        Long actor = actorController.deleteById(1L).getBody();
         assertNotNull(actor);
     }
 }
