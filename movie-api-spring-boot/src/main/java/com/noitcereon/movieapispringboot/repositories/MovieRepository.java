@@ -1,6 +1,6 @@
 package com.noitcereon.movieapispringboot.repositories;
 
-import com.noitcereon.movieapispringboot.models.MovieCreate;
+import com.noitcereon.movieapispringboot.models.MovieCreateUpdate;
 import com.noitcereon.movieapispringboot.models.MovieEntity;
 import com.noitcereon.movieapispringboot.util.DatabaseModelMapping;
 import org.slf4j.Logger;
@@ -13,7 +13,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 @Repository
-public class MovieRepository implements ICrudRepository<MovieEntity, Long, MovieCreate> {
+public class MovieRepository implements ICrudRepository<MovieEntity, Long, MovieCreateUpdate> {
 
     private final Logger logger = LoggerFactory.getLogger(MovieRepository.class);
     private final DataSource dataSource;
@@ -24,7 +24,7 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
     }
 
     @Override
-    public MovieEntity create(MovieCreate model) {
+    public MovieEntity create(MovieCreateUpdate model) {
         try {
             conn = dataSource.getConnection();
             conn.setAutoCommit(false);
@@ -125,7 +125,7 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
     }
 
     @Override
-    public MovieEntity update(MovieEntity entity) {
+    public MovieEntity update(MovieCreateUpdate model, Long id) {
         try {
             conn = dataSource.getConnection();
             conn.setAutoCommit(false);
@@ -134,18 +134,15 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
                     "SET title = ?, releaseYear = ? " +
                     "WHERE id = ?";
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1, entity.getTitle());
-            statement.setInt(2, entity.getReleaseYear());
-            statement.setLong(3, entity.getId());
+            statement.setString(1, model.getTitle());
+            statement.setInt(2, model.getReleaseYear());
+            statement.setLong(3, id);
 
             int rowsAffected = statement.executeUpdate();
             if(rowsAffected != 1) return null;
             conn.commit();
-            if(entity.getActors() == null){
-                MovieEntity uncomplicatedEntity = new MovieEntity(entity.getId(), entity.getTitle(), entity.getReleaseYear(), new ArrayList<>());
-                return uncomplicatedEntity;
-            }
-            return entity;
+
+            return DatabaseModelMapping.modelToEntity(model, id);
 
         } catch (SQLException e) {
             logger.error(e.getMessage());
@@ -162,7 +159,7 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
     }
 
     @Override
-    public MovieEntity delete(Long entityId) {
+    public Long delete(Long entityId) {
         return null;
     }
 }

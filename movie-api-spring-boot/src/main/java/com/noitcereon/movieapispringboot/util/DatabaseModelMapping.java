@@ -1,6 +1,7 @@
 package com.noitcereon.movieapispringboot.util;
 
 import com.noitcereon.movieapispringboot.models.ActorEntity;
+import com.noitcereon.movieapispringboot.models.MovieCreateUpdate;
 import com.noitcereon.movieapispringboot.models.MovieEntity;
 
 import java.sql.ResultSet;
@@ -26,5 +27,15 @@ public class DatabaseModelMapping {
                 result.getInt("birthYear"),
                 new ArrayList<>()
         );
+    }
+
+    public static MovieEntity modelToEntity(MovieCreateUpdate model, Long id) {
+        MovieEntity output;
+        if(model.getActors() == null){
+            output = new MovieEntity(id, model.getTitle(), model.getReleaseYear(), new ArrayList<>());
+            return output;
+        }
+        output = new MovieEntity(id, model.getTitle(), model.getReleaseYear(), model.getActors());
+        return output;
     }
 }

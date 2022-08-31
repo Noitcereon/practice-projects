@@ -4,15 +4,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
 
-public class MovieCreate {
+public class MovieCreateUpdate {
     private final String title;
     private final int releaseYear;
     private final ArrayList<ActorEntity> actors;
 
-    public MovieCreate(String title, int releaseYear) {
+    public MovieCreateUpdate(String title, int releaseYear) {
         this.title = title;
         this.releaseYear = releaseYear;
-        this.actors = new ArrayList<>(); // Actors are added post creation.
+        this.actors = new ArrayList<>();
     }
 
     public String getTitle() {
@@ -23,7 +23,6 @@ public class MovieCreate {
         return releaseYear;
     }
 
-    @JsonIgnore
     public ArrayList<ActorEntity> getActors() {
         return actors;
     }

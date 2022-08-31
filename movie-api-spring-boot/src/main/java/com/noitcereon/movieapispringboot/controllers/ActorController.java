@@ -1,6 +1,6 @@
 package com.noitcereon.movieapispringboot.controllers;
 
-import com.noitcereon.movieapispringboot.models.ActorCreate;
+import com.noitcereon.movieapispringboot.models.ActorCreateUpdate;
 import com.noitcereon.movieapispringboot.models.ActorEntity;
 import com.noitcereon.movieapispringboot.repositories.ActorRepository;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 
 @RestController
-public class ActorController implements ICrudController<ActorEntity, Long, ActorCreate> {
+public class ActorController implements ICrudController<ActorEntity, Long, ActorCreateUpdate> {
     private final ActorRepository actorRepo;
     public ActorController(ActorRepository actorRepo){
         this.actorRepo = actorRepo;
@@ -24,17 +24,17 @@ public class ActorController implements ICrudController<ActorEntity, Long, Actor
     }
 
     @Override
-    public ResponseEntity<ActorEntity> getById(@PathVariable Long aLong) {
+    public ResponseEntity<ActorEntity> getById(@PathVariable Long id) {
         return null;
     }
 
     @Override
-    public ResponseEntity<ActorEntity> update(@RequestBody ActorEntity updatedModel) {
+    public ResponseEntity<ActorEntity> add(@RequestBody ActorCreateUpdate creationModel) {
         return null;
     }
 
     @Override
-    public ResponseEntity<ActorEntity> add(@RequestBody ActorCreate creationModel) {
+    public ResponseEntity<ActorEntity> update(@RequestBody ActorCreateUpdate updatedModel, @PathVariable Long id) {
         return null;
     }
 

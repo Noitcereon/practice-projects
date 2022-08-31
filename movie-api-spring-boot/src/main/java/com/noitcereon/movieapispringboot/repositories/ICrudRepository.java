@@ -5,11 +5,11 @@ import java.util.ArrayList;
 /**
  *
  * @param <T> A Plain Old Java Object (POJO), which reflects how the object looks in the database.
- * @param <DTOCreate> Data Transfer Object for creation (for ease of creation for users)
+ * @param <DTOCreateUpdate> Data Transfer Object for creation or updating existing content (for ease of creation for users)
  */
-public interface ICrudRepository<T, ID, DTOCreate> {
+public interface ICrudRepository<T, ID, DTOCreateUpdate> {
     // Creation
-    T create(DTOCreate model);
+    T create(DTOCreateUpdate model);
     // Read
     ArrayList<T> getAll();
 
@@ -18,10 +18,10 @@ public interface ICrudRepository<T, ID, DTOCreate> {
     // Update
     /**
      *
-     * @param entity The updated entity
+     * @param model The updated model
      * @return If successful, return the updated entity.
      */
-    T update(T entity);
+    T update(DTOCreateUpdate model, ID id);
     // Delete
-    T delete(ID entityId);
+    ID delete(ID entityId);
 }

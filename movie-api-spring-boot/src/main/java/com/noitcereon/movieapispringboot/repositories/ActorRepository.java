@@ -1,6 +1,6 @@
 package com.noitcereon.movieapispringboot.repositories;
 
-import com.noitcereon.movieapispringboot.models.ActorCreate;
+import com.noitcereon.movieapispringboot.models.ActorCreateUpdate;
 import com.noitcereon.movieapispringboot.models.ActorEntity;
 import org.springframework.stereotype.Repository;
 
@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 @Repository
-public class ActorRepository implements ICrudRepository<ActorEntity, Long, ActorCreate> {
+public class ActorRepository implements ICrudRepository<ActorEntity, Long, ActorCreateUpdate> {
 
     private final DataSource dataSource;
     private Connection conn;
@@ -18,7 +18,7 @@ public class ActorRepository implements ICrudRepository<ActorEntity, Long, Actor
         this.dataSource = dataSource;
     }
     @Override
-    public ActorEntity create(ActorCreate model) {
+    public ActorEntity create(ActorCreateUpdate model) {
         return null;
     }
 
@@ -33,12 +33,12 @@ public class ActorRepository implements ICrudRepository<ActorEntity, Long, Actor
     }
 
     @Override
-    public ActorEntity update(ActorEntity entity) {
+    public ActorEntity update(ActorCreateUpdate entity, Long id) {
         return null;
     }
 
     @Override
-    public ActorEntity delete(Long entityId) {
+    public Long delete(Long entityId) {
         return null;
     }
 

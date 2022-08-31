@@ -1,6 +1,6 @@
 package com.noitcereon.movieapispringboot.controllers;
 
-import com.noitcereon.movieapispringboot.models.MovieCreate;
+import com.noitcereon.movieapispringboot.models.MovieCreateUpdate;
 import com.noitcereon.movieapispringboot.models.MovieEntity;
 import com.noitcereon.movieapispringboot.repositories.MovieRepository;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/api/movies")
-public class MovieController implements ICrudController<MovieEntity, Long, MovieCreate> {
+public class MovieController implements ICrudController<MovieEntity, Long, MovieCreateUpdate> {
     private final MovieRepository movieRepo;
 
     public MovieController(MovieRepository movieRepo) {
@@ -49,8 +49,8 @@ public class MovieController implements ICrudController<MovieEntity, Long, Movie
     @Override
     @PutMapping("/{id}")
     @Operation(summary = "Updates a movie in the database based on the passed in MovieEntity")
-    public ResponseEntity<MovieEntity> update(@RequestBody MovieEntity updatedModel) {
-        MovieEntity movie = movieRepo.update(updatedModel);
+    public ResponseEntity<MovieEntity> update(@RequestBody MovieCreateUpdate updatedModel, @PathVariable Long id) {
+        MovieEntity movie = movieRepo.update(updatedModel, id);
         if(movie == null) return ResponseEntity.internalServerError().build();
 
         return ResponseEntity.ok(movie);
@@ -59,7 +59,7 @@ public class MovieController implements ICrudController<MovieEntity, Long, Movie
     @Override
     @PostMapping
     @Operation(summary = "Adds a new movie to the database and returns the added movie")
-    public ResponseEntity<MovieEntity> add(@RequestBody MovieCreate creationModel) {
+    public ResponseEntity<MovieEntity> add(@RequestBody MovieCreateUpdate creationModel) {
         MovieEntity movie = movieRepo.create(creationModel);
         if(movie == null) return ResponseEntity.internalServerError().build();
 
