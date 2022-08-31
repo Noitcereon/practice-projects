@@ -4,15 +4,16 @@ import com.noitcereon.movieapispringboot.models.ActorEntity;
 import com.noitcereon.movieapispringboot.models.MovieCreateUpdate;
 import com.noitcereon.movieapispringboot.models.MovieEntity;
 import com.noitcereon.movieapispringboot.util.DatabaseModelMapping;
+import com.noitcereon.movieapispringboot.util.JdbcUtils;
 import com.noitcereon.movieapispringboot.util.ReusableQueries;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.jdbc.support.JdbcUtils;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
+
 
 @Repository
 public class MovieRepository implements ICrudRepository<MovieEntity, Long, MovieCreateUpdate> {
@@ -67,7 +68,7 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
 
                     // Update MovieActor table
                     // Prepare query
-                    try(PreparedStatement updateMovieActorStatement = ReusableQueries.insertIntoMovieActors(conn, movie, actorIds)){
+                    try (PreparedStatement updateMovieActorStatement = ReusableQueries.insertIntoMovieActors(conn, movie, actorIds)) {
                         // Execute query
                         int rowsUpdated2 = updateMovieActorStatement.executeUpdate();
                         logger.info("Updated {} rows in MovieActor", rowsUpdated2);
@@ -81,13 +82,8 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
             return null;
 
         } catch (SQLException e) {
-            try {
-                logger.error("Failed during creation of movie, rolling back transaction. Error: {}", e.getMessage());
-                conn.rollback();
-            } catch (SQLException ex) {
-                logger.error("Failed to rollback transaction");
-                throw new RuntimeException(ex);
-            }
+            logger.error("Failed during creation of movie, rolling back transaction. Error: {}", e.getMessage());
+            JdbcUtils.rollbackTransaction(conn);
         } finally {
             JdbcUtils.closeConnection(conn);
         }
@@ -179,12 +175,7 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
 
         } catch (SQLException e) {
             logger.error(e.getMessage());
-            try {
-                conn.rollback();
-            } catch (SQLException ex) {
-                logger.error(ex.getMessage());
-                throw new RuntimeException(ex);
-            }
+            JdbcUtils.rollbackTransaction(conn);
         } finally {
             JdbcUtils.closeConnection(conn);
         }
@@ -193,6 +184,7 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
 
     @Override
     public Long delete(Long entityId) {
+
         return null;
     }
 }
