@@ -3,7 +3,6 @@ package com.noitcereon.movieapispringboot.controllers;
 import com.noitcereon.movieapispringboot.models.MovieCreateUpdate;
 import com.noitcereon.movieapispringboot.models.MovieEntity;
 import com.noitcereon.movieapispringboot.repositories.ICrudRepository;
-import com.noitcereon.movieapispringboot.repositories.MovieRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -67,9 +66,9 @@ public class MovieController implements ICrudController<MovieEntity, Long, Movie
         return ResponseEntity.created(URI.create(String.format("api/movies/%s", movie.getId()))).build();
     }
 
-    @Operation(summary = "Deletes a movie from the database and returns the deleted movie.")
+    @Operation(summary = "Deletes a movie from the database and returns the id of the deleted movie.")
     @Override
-    public ResponseEntity<MovieEntity> deleteById(@PathVariable Long aLong) {
+    public ResponseEntity<Long> deleteById(@PathVariable Long aLong) {
         return null;
     }
 

@@ -11,5 +11,5 @@ public interface ICrudController<T, ID, TCreateUpdate> {
     ResponseEntity<T> getById(@PathVariable ID id);
     ResponseEntity<T> update(@RequestBody TCreateUpdate updatedModel, @PathVariable ID id);
     ResponseEntity<T> add(@RequestBody TCreateUpdate creationModel);
-    ResponseEntity<T> deleteById(@PathVariable ID id);
+    ResponseEntity<ID> deleteById(@PathVariable ID id);
 }

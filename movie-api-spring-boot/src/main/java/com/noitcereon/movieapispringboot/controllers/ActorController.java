@@ -39,7 +39,7 @@ public class ActorController implements ICrudController<ActorEntity, Long, Actor
     }
 
     @Override
-    public ResponseEntity<ActorEntity> deleteById(@PathVariable Long aLong) {
+    public ResponseEntity<Long> deleteById(@PathVariable Long aLong) {
         return null;
     }
 }
