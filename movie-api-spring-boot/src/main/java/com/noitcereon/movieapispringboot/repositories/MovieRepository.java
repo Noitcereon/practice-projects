@@ -4,6 +4,7 @@ import com.noitcereon.movieapispringboot.models.ActorEntity;
 import com.noitcereon.movieapispringboot.models.MovieCreateUpdate;
 import com.noitcereon.movieapispringboot.models.MovieEntity;
 import com.noitcereon.movieapispringboot.util.DatabaseModelMapping;
+import com.noitcereon.movieapispringboot.util.ReusableQueries;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.support.JdbcUtils;
@@ -26,6 +27,7 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
 
     @Override
     public MovieEntity create(MovieCreateUpdate model) {
+        // TODO: 31-08-2022 Refactor so the code is less messy
         try {
             conn = dataSource.getConnection();
             conn.setAutoCommit(false);
@@ -40,28 +42,18 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
             MovieEntity movie;
 
             if (generatedKey.next()) {
-               long createdMovieId = generatedKey.getLong(1);
-                if(model.getActorIds().isEmpty())
-                {
+                long createdMovieId = generatedKey.getLong(1);
+                ArrayList<Long> actorIds = model.getActorIds();
+                if (actorIds.isEmpty()) {
                     movie = new MovieEntity(createdMovieId, model.getTitle(), model.getReleaseYear(), new ArrayList<>());
                     conn.commit();
-                }
-                else{
-                    String sql2 = "SELECT id, firstName, lastName, birthYear FROM Actor WHERE id = ?";
-                    StringBuilder sqlStringBuilder = new StringBuilder(sql2);
-                    ArrayList<Long> actorsIds = model.getActorIds();
-                    for (int index = 1; index < actorsIds.size(); index++) {
-                        sqlStringBuilder.append(" OR id = ?");
-                    }
-                    PreparedStatement getActorInfoQuery = conn.prepareStatement(sqlStringBuilder.toString());
-                    getActorInfoQuery.setLong(1, actorsIds.get(0));
-                    for (int actorIndex = 1; actorIndex < actorsIds.size(); actorIndex++) {
-                        int parameterIndex = actorIndex+1;
-                        getActorInfoQuery.setLong(parameterIndex, actorsIds.get(actorIndex));
-                    }
+                } else {
+                    // Create query to get actors
+                    PreparedStatement getActorInfoQuery = ReusableQueries.getActorsByIdStatement(conn, actorIds);
+                    // Execute the query and use it in MovieEntity
                     ResultSet result = getActorInfoQuery.executeQuery();
                     ArrayList<ActorEntity> actors = new ArrayList<>();
-                    while(result.next()){
+                    while (result.next()) {
                         ActorEntity actor = new ActorEntity(
                                 result.getLong("id"),
                                 result.getString("firstName"),
@@ -74,23 +66,14 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
                     movie = new MovieEntity(generatedKey.getLong(1), model.getTitle(), model.getReleaseYear(), actors);
 
                     // Update MovieActor table
-                    StringBuilder updateMovieActorSql = new StringBuilder("INSERT INTO MovieActor (fkActorId, fkMovieId) " +
-                            "VALUES ");
-                    for (int i = 0; i < actorsIds.size(); i++) {
-                        updateMovieActorSql.append("(?, ?),");
+                    // Prepare query
+                    try(PreparedStatement updateMovieActorStatement = ReusableQueries.insertIntoMovieActors(conn, movie, actorIds)){
+                        // Execute query
+                        int rowsUpdated2 = updateMovieActorStatement.executeUpdate();
+                        logger.info("Updated {} rows in MovieActor", rowsUpdated2);
+                        // if everything ran without error, commit transaction.
+                        conn.commit();
                     }
-                    updateMovieActorSql.deleteCharAt(updateMovieActorSql.length()-1);
-                    PreparedStatement updateMovieActorNonQuery = conn.prepareStatement(updateMovieActorSql.toString());
-                    int parameterIndex = 1;
-                    for (Long actorsId : actorsIds) {
-                        updateMovieActorNonQuery.setLong(parameterIndex, actorsId);
-                        updateMovieActorNonQuery.setLong(parameterIndex + 1, movie.getId());
-                        parameterIndex += 2;
-                    }
-                    int rowsUpdated2 = updateMovieActorNonQuery.executeUpdate();
-                    logger.info("Updated {} rows in MovieActor", rowsUpdated2);
-                    // if everything ran without error, commit it.
-                    conn.commit();
                 }
                 return movie;
             }
@@ -189,7 +172,7 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
             statement.setLong(3, id);
 
             int rowsAffected = statement.executeUpdate();
-            if(rowsAffected != 1) return null;
+            if (rowsAffected != 1) return null;
             conn.commit();
 
             return DatabaseModelMapping.modelToEntity(model, id);

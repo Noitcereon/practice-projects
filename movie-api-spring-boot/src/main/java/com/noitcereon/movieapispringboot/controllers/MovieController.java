@@ -2,6 +2,7 @@ package com.noitcereon.movieapispringboot.controllers;
 
 import com.noitcereon.movieapispringboot.models.MovieCreateUpdate;
 import com.noitcereon.movieapispringboot.models.MovieEntity;
+import com.noitcereon.movieapispringboot.repositories.ICrudRepository;
 import com.noitcereon.movieapispringboot.repositories.MovieRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -15,9 +16,9 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping("/api/movies")
 public class MovieController implements ICrudController<MovieEntity, Long, MovieCreateUpdate> {
-    private final MovieRepository movieRepo;
+    private final ICrudRepository<MovieEntity, Long, MovieCreateUpdate> movieRepo;
 
-    public MovieController(MovieRepository movieRepo) {
+    public MovieController(ICrudRepository<MovieEntity, Long, MovieCreateUpdate> movieRepo) {
         this.movieRepo = movieRepo;
     }
 
