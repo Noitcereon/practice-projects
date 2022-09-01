@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/api/movies")
+@CrossOrigin
 public class MovieController implements ICrudController<MovieEntity, Long, MovieCreateUpdate> {
     private final ICrudRepository<MovieEntity, Long, MovieCreateUpdate> movieRepo;
 
@@ -72,8 +73,8 @@ public class MovieController implements ICrudController<MovieEntity, Long, Movie
     }
 
     @Override
-    @Operation(summary = "Deletes a movie from the database and returns the id of the deleted movie.")
     @DeleteMapping("/{id}")
+    @Operation(summary = "Deletes a movie from the database and returns the id of the deleted movie.")
     public ResponseEntity<Long> deleteById(@PathVariable Long id) {
         Long deletedId = movieRepo.delete(id);
         if(deletedId == null) return ResponseEntity.internalServerError().build();
