@@ -19,7 +19,7 @@ public class DatabaseModelMapping {
         );
     }
 
-    public static ActorEntity actorEntityMapping(ResultSet result) throws SQLException {
+    public static ActorEntity readActorEntityWithForeignKey(ResultSet result) throws SQLException {
         return new ActorEntity(
                 result.getLong("fkActorId"),
                 result.getString("firstName"),
@@ -28,15 +28,20 @@ public class DatabaseModelMapping {
                 new ArrayList<>()
         );
     }
+    public static ActorEntity readActorEntity(ResultSet result) throws SQLException {
+        return new ActorEntity(
+                result.getLong("id"),
+                result.getString("firstName"),
+                result.getString("lastName"),
+                result.getInt("birthYear"),
+                new ArrayList<>()
+        );
+    }
 
     public static MovieEntity modelToEntity(MovieCreateUpdate model, Long id) {
-        MovieEntity output;
-        if(model.getActorIds() == null){
-            output = new MovieEntity(id, model.getTitle(), model.getReleaseYear(), new ArrayList<>());
-            return output;
-        }
-        // TODO: 31-08-2022 There is currently a quiet bug here (doesn't handle adding actors)
-        output = new MovieEntity(id, model.getTitle(), model.getReleaseYear(), new ArrayList<>());
-        return output;
+        return new MovieEntity(id, model.getTitle(), model.getReleaseYear(), new ArrayList<ActorEntity>());
+    }
+    public static MovieEntity modelToEntity(MovieCreateUpdate model, Long id, ArrayList<ActorEntity> actors){
+        return new MovieEntity(id, model.getTitle(), model.getReleaseYear(), actors);
     }
 }

@@ -136,7 +136,7 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
                 ResultSet resultActors = preparedStatementActors.executeQuery();
                 while (resultActors.next()) {
                     movie.getActors().add(
-                            DatabaseModelMapping.actorEntityMapping(resultActors)
+                            DatabaseModelMapping.readActorEntityWithForeignKey(resultActors)
                     );
                 }
                 return movie;
@@ -169,11 +169,21 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
             statement.setLong(3, id);
 
             int rowsAffected = statement.executeUpdate();
-            if (rowsAffected != 1) return null;
-            conn.commit();
+            if (rowsAffected != 1) throw new SQLException("Statement affected too many rows during update.");
 
-            return DatabaseModelMapping.modelToEntity(model, id);
+            try(PreparedStatement getActorsStatement = ReusableQueries.getActorsByIdStatement(conn, model.getActorIds())){
+                ResultSet actorsResultSet = getActorsStatement.executeQuery();
+                ArrayList<ActorEntity> actors = new ArrayList<>();
+                while(actorsResultSet.next()){
+                    ActorEntity actor = DatabaseModelMapping.readActorEntity(actorsResultSet);
+                    actors.add(actor);
+                }
+                conn.commit();
 
+                if(actors.isEmpty())
+                    return DatabaseModelMapping.modelToEntity(model, id);
+                return DatabaseModelMapping.modelToEntity(model, id, actors);
+            }
         } catch (SQLException e) {
             logger.error(e.getMessage());
             JdbcUtils.rollbackTransaction(conn);
