@@ -171,18 +171,25 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
             int rowsAffected = statement.executeUpdate();
             if (rowsAffected != 1) throw new SQLException("Statement affected too many rows during update.");
 
-            try(PreparedStatement getActorsStatement = ReusableQueries.getActorsByIdStatement(conn, model.getActorIds())){
+            try (PreparedStatement getActorsStatement = ReusableQueries.getActorsByIdStatement(conn, model.getActorIds())) {
                 ResultSet actorsResultSet = getActorsStatement.executeQuery();
                 ArrayList<ActorEntity> actors = new ArrayList<>();
-                while(actorsResultSet.next()){
+                while (actorsResultSet.next()) {
                     ActorEntity actor = DatabaseModelMapping.readActorEntity(actorsResultSet);
                     actors.add(actor);
                 }
+                MovieEntity movie = DatabaseModelMapping.modelToEntity(model, id, actors);
+                // TODO: 01-09-2022 Fix bug: if an actor already exists on the movie it is added again.
+                // 1. Retrieve existing actors on the movie.
+                // 4. Delete MovieActors that are no longer present in actorIds
+                // 2. Remove existing actor ids from actorIds or create new list of actorIds with those removed.
+                // 3. Pass that to the insert sql statement.
+                PreparedStatement updateMovieActorStatement = ReusableQueries.insertIntoMovieActors(conn, movie, model.getActorIds());
+                int rowsAffectedMovieActor = updateMovieActorStatement.executeUpdate();
+                logger.info("Added {} rows to MovieActor", rowsAffectedMovieActor);
                 conn.commit();
 
-                if(actors.isEmpty())
-                    return DatabaseModelMapping.modelToEntity(model, id);
-                return DatabaseModelMapping.modelToEntity(model, id, actors);
+                return movie;
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
@@ -207,10 +214,10 @@ public class MovieRepository implements ICrudRepository<MovieEntity, Long, Movie
                 conn.commit();
                 return movieId;
             }
-            if(rowsDeleted == 0){
+            if (rowsDeleted == 0) {
                 return -1L; // indicating that no content was found.
             }
-            if(rowsDeleted > 1){
+            if (rowsDeleted > 1) {
                 logger.warn("Tried to delete more than one Movie entry during deletion of single entity.");
                 JdbcUtils.rollbackTransaction(conn);
             }
