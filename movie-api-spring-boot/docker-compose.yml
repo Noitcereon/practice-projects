@@ -14,9 +14,12 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
     ports:
       - "8081:3306"
-
+    volumes:
+      - mysql:/var/lib/mysql
   adminer:
     image: adminer
     restart: always
     ports:
       - "8080:8080"
+volumes:
+  mysql:
