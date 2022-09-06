@@ -7,12 +7,12 @@ services:
     environment:
       # The Connection String is slightly different depending on whether its on the host or in the container.
       # Note the host name. On host machine it is localhost. In the container it is db (which is the name of the database container in the Docker network)
-      DB_CONNECTION_STRING: jdbc:mysql://db:3306/MovieSpringDB
+      DB_CONNECTION_STRING: ${DB_CONNECTION_STRING}
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
-      APP_PORT: ${APP_PORT}
+      APP_PORT: ${PORT}
     ports:
-      - 8084:${APP_PORT}
+      - 8084:${PORT}
   db:
     image: mysql # https://hub.docker.com/_/mysql/
     # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
