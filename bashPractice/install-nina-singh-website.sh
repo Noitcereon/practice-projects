@@ -33,6 +33,7 @@ then
     dryRun "listDirectory"
     dryRun "cd nina-singh-website" || exit
     dryRun "npm run dev"
+    read -r -p "Press ENTER to exit..."
 fi
 if [[ $dry == false ]];
 then
