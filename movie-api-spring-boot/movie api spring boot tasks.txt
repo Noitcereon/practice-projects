@@ -1,0 +1,23 @@
+My Movie API
+
+Fetch all movies - Tjek
+
+Fetch movies by id - Tjek
+
+Create movie - Tjek
+
+Update movie - Tjek
+
+Delete movie - Tjek
+
+
+-- Extra
+
+Fetch movies by actor (actor should be in the movie)
+
+Fetch movies sorted by release date
+
+Fetch movies by loose name search
+
+Patch movie actors
+
