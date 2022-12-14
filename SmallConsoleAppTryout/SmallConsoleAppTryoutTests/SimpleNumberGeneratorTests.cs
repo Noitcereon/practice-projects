@@ -22,14 +22,17 @@ namespace SmallConsoleAppTryout.Tests
         {
             int countOfNumberOne = 0;
             int countOfNumberTwo = 0;
-            for (int i = 0; i < 100; i++)
+            int iterations = 10000;
+            int onePercent = iterations / 100;
+            for (int i = 0; i < iterations; i++)
             {
                 int nextNumber = SimpleNumberGenerator.GenerateRandomNumber(1, 2);
                 if (nextNumber == 1) countOfNumberOne++;
                 if(nextNumber == 2) countOfNumberTwo++;
             }
-            Assert.IsTrue(40 < countOfNumberOne);
-            Assert.IsTrue(40 < countOfNumberTwo);
+            int fourtyPercent = onePercent * 40;
+            Assert.IsTrue(fourtyPercent < countOfNumberOne);
+            Assert.IsTrue(fourtyPercent < countOfNumberTwo);
         }
 
         [TestMethod()]
