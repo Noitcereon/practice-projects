@@ -3,6 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+    <!-- addServlet -->
     <servlet>
         <servlet-name>addServlet</servlet-name>
         <servlet-class>com.noitcereon.memeservletdemo.AddServlet</servlet-class>
@@ -11,6 +12,8 @@
         <servlet-name>addServlet</servlet-name>
         <url-pattern>/add</url-pattern>
     </servlet-mapping>
+    <!-- addServlet END -->
+    <!-- memeServlet -->
     <servlet>
         <servlet-name>memeServlet</servlet-name>
         <servlet-class>com.noitcereon.memeservletdemo.MemeServlet</servlet-class>
@@ -19,4 +22,5 @@
         <servlet-name>memeServlet</servlet-name>
         <url-pattern>/meme</url-pattern>
     </servlet-mapping>
+    <!-- memeServlet END -->
 </web-app>
