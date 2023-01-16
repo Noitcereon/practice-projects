@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Spring Api Testing Ground</title>
+</head>
+
+<body>
+    
+
+    <div class="form-group">
+        <button id="fetchAllMoviesBtn" type="submit">Fetch all movies</button>
+    </div>
+    <div class="form-group">
+        <label for="movieIdInput">Movie Id</label>
+        <input type="number" id="movieIdInput">
+        <button id="fetchMovieByIdBtn" type="submit">Fetch movie by id</button>
+    </div>
+    <div class="form-group">
+        <label for="titleInput">Title</label>
+        <input id="titleInput" type="text">
+        <label>Release Year</label>
+        <input id="releaseYearInput" type="number">
+        <label for="actorIdsInput">Actor ids</label>
+        <input id="actorIdsInput" type="text">
+        <button id="postMovieBtn" type="submit">Post movie</button>
+    </div>
+    <script>
+        const baseApiUrl = "https://practice-projects-production.up.railway.app/api/movies"
+        async function fetchAllMoviesAsync() {
+            const response = await fetch(`${baseApiUrl}`);
+            console.info(response.status);
+            if (response.status.toString().startsWith("2")) {
+                const data = await response.json();
+                console.log(data);
+            }
+        }
+        async function fetchMovieByIdAsync(id) {
+            if(id == "") id = "1";
+            try {
+                const response = await fetch(`${baseApiUrl}/${id}`);
+                console.info(response.status);
+                if(response.status === 204){
+                    console.info("No Content");
+                    return;
+                }
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log(data);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+            
+        }
+        async function postMovieAsync(movie) {
+            const response = await fetch(`${baseApiUrl}`, {
+                method: "POST",
+                headers:{
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(movie)
+            });
+            console.info(response.status);
+            if(response.status === 201){
+                console.info("Movie created");
+            }
+        }
+
+        const fetchAllBtn = document.getElementById("fetchAllMoviesBtn");
+        const fetchByIdBtn = document.getElementById("fetchMovieByIdBtn");
+        const postMovieBtn = document.getElementById("postMovieBtn");
+
+        fetchAllBtn.addEventListener("click", () => fetchAllMoviesAsync());
+        fetchByIdBtn.addEventListener("click", () => fetchMovieByIdAsync(document.getElementById("movieIdInput").value));
+        postMovieBtn.addEventListener("click", () => {
+            const titleInput = document.getElementById("titleInput");
+            const releaseYearInput = document.getElementById("releaseYearInput");
+            const actorIdsInput = document.getElementById("actorIdsInput");
+            const actorIdsStr = ""+actorIdsInput.value;
+            let actorIdsArray = [];
+            if(actorIdsStr.length > 0){
+                actorIdsArray = actorIdsStr.split(",");
+            }
+            // console.log(titleInput.value, "title");
+            // console.log(releaseYearInput.value, "releaseYear");
+            // console.log(actorIdsArray);
+            const movie = {
+                title: titleInput.value == "" ? "Testing Frontend" : titleInput.value,
+                releaseYear: releaseYearInput.value == "" ? 0 : releaseYearInput.value,
+                actorIds: actorIdsArray
+            }
+
+            postMovieAsync(movie);
+        });
+    </script>
+</body>
+
+</html>
