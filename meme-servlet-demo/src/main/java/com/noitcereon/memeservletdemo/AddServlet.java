@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class AddServlet extends HttpServlet {
+
+    @Override
     public void service(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int number1 = Integer.parseInt(request.getParameter("numberInput1"));
         int number2 = Integer.parseInt(request.getParameter("numberInput2"));
