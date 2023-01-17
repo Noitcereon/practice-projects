@@ -36,6 +36,8 @@ This should generate a 'target' folder, which contains a `.war` file
 9. Run the new configuration.
 10. Done!
 
+![img.png](readme-assets/img.png)
+
 ## Usage
 How to run it and showcase of functionality.
 TODO: description of functionality with screenshots.
