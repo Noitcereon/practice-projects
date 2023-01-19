@@ -1,17 +1,21 @@
 package me.noitcereon.models;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  * @author Noitcereon
- * @version 1.0
+ * @version 1.1
  * @since 1.0
  * Handwritten Person POJO.
  */
-@XmlRootElement
+@XmlRootElement(name = "Person")
+@XmlType(name = "", propOrder = {"firstName", "lastName", "birthYear"})
 public class Person {
     private String firstName;
     private String lastName;
+    @XmlElement
     private final int birthYear;
 
     public Person(){
