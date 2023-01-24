@@ -5,10 +5,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
+ * Handwritten Person POJO.
  * @author Noitcereon
  * @version 1.1
  * @since 1.0
- * Handwritten Person POJO.
  */
 @XmlRootElement(name = "Person")
 @XmlType(name = "", propOrder = {"firstName", "lastName", "birthYear"})
