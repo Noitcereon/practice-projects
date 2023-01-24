@@ -1,2 +1,5 @@
  # this is to prevent OSM schemas to be published.
 *_v1.xsd
+
+
+pom.xml.versionsBackup
