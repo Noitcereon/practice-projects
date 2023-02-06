@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn">
+    <Properties>
+        <Property name="LOG_PATH">C:/temp/noitcereon-logs/</Property>
+        <Property name="LOG_PATTERN">[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="STANDARD_OUTPUT" target="SYSTEM_OUT">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+    <RollingFile
+            name="RootFileAppender"
+            fileName="${LOG_PATH}practice-root.log"
+            filePattern="${LOG_PATH}practice-root.log.%d{yyyy-MM-dd}.log">
+        <LevelRangeFilter minLevel="FATAL" maxLevel="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+        <PatternLayout pattern="${LOG_PATTERN}" />
+        <Policies>
+            <TimeBasedTriggeringPolicy />
+        </Policies>
+    </RollingFile>
+    <RollingFile
+            name="spring-framework-file-appender"
+            fileName="${LOG_PATH}/practice-spring.log"
+            filePattern="${LOG_PATH}practice-spring.log.%d{yyyy-MM-dd}.log">
+        <LevelRangeFilter minLevel="FATAL" maxLevel="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+        <PatternLayout pattern="${LOG_PATTERN}" />
+        <Policies>
+            <TimeBasedTriggeringPolicy />
+        </Policies>
+    </RollingFile>
+
+    </Appenders>
+    <Loggers>
+        <Logger name="org.springframework" additivity="false">
+            <appender-ref ref="spring-framework-file-appender"/>
+        </Logger>
+        <Root level="INFO">
+            <appender-ref ref="STANDARD_OUTPUT"/>
+            <appender-ref ref="RootFileAppender"/>
+        </Root>
+    </Loggers>
+</Configuration>
