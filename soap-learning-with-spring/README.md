@@ -27,7 +27,6 @@ The wsdl can be seen at `http://localhost:8080/ws/countries.wsdl`
 
 Requests should be sent to the endpoint following the request format as seen below:
 
-(I've still not gotten it to work successfully, because SoapUI needs a wsdl file that can be loaded.)
 ```
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
 xmlns:gs="http://spring.io/guides/gs-producing-web-service">
@@ -39,6 +38,10 @@ xmlns:gs="http://spring.io/guides/gs-producing-web-service">
     </soapenv:Body>
 </soapenv:Envelope>
 ```
+
+You can use the SoapUI Project at `soap-learning-with-spring/soap-ui/soap-learning-spring-soapui-project.xml`
+
+   Note: I copied the countries.wsdl from the running app for the SoapUI Project.
 
 ## Maintainer
 
