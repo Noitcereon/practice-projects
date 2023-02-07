@@ -2,6 +2,7 @@ package me.noitcereon.soaplearningwithspring.repositories;
 
 import jakarta.annotation.PostConstruct;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import io.spring.guides.gs_producing_web_service.Country;
@@ -42,6 +43,7 @@ public class CountryRepositoryStub implements CountryRepository {
 
     public Country findCountry(String name) {
         Assert.notNull(name, "The country's name must not be null");
-        return countries.get(name);
+        String capitalizedName = name.substring(0,1).toUpperCase(Locale.ROOT) + name.substring(1);
+        return countries.get(capitalizedName);
     }
 }
