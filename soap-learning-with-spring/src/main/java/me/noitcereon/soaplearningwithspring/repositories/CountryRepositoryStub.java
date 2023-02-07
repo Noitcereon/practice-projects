@@ -7,6 +7,7 @@ import java.util.Map;
 
 import io.spring.guides.gs_producing_web_service.Country;
 import io.spring.guides.gs_producing_web_service.Currency;
+import me.noitcereon.soaplearningwithspring.exceptions.CountryNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -44,6 +45,7 @@ public class CountryRepositoryStub implements CountryRepository {
     public Country findCountry(String name) {
         Assert.notNull(name, "The country's name must not be null");
         String capitalizedName = name.substring(0,1).toUpperCase(Locale.ROOT) + name.substring(1);
-        return countries.get(capitalizedName);
+        if(countries.containsKey(capitalizedName)) return countries.get(capitalizedName);
+        throw new CountryNotFoundException("Could not find the country " + capitalizedName + " in our data. Perhaps casing is wrong?");
     }
 }
