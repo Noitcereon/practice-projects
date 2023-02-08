@@ -7,7 +7,7 @@
     <xs:element name="addRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="numberInputs" type="tns:numberInputs"/>
+                <xs:element name="numberInputs" type="tns:numberInputs"/> <!-- The tns prefix is a namespace reference. It points to xmlns:tns="http://noitcereon.com/calculator" -->
             </xs:sequence>
         </xs:complexType>
     </xs:element>

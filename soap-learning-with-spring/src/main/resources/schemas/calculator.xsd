@@ -8,7 +8,7 @@
     <xs:element name="addRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="numberInputs" type="tns:numberInputs"/>
+                <xs:element name="numberInputs" type="tns:numberInputs"/> <!-- This points to the tns namespace (arbitrary name defined in the first line (xs:schema). -->
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -16,11 +16,12 @@
     <xs:element name="addResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="calculationResult" type="xs:decimal"/>
+                <xs:element name="calculationResult" type="xs:decimal"/> <!-- The default type for http://www.w3.org/2001/XMLSchema decimal, in Java, is BigDecimal  -->
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
+    <!-- This type is used in the addRequest -->
     <xs:complexType name="numberInputs">
         <xs:sequence>
             <xs:element name="firstNumber" type="xs:decimal"/>

@@ -36,9 +36,9 @@ public class WebServiceConfig extends WsConfigurerAdapter {
     @Bean(name = "calculator")
     public WsdlDefinition calculatorWsdlDefinition(XsdSchema calculatorSchema){
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
-        wsdl11Definition.setPortTypeName("CalculatorPort");
-        wsdl11Definition.setLocationUri("/ws");
-        wsdl11Definition.setTargetNamespace("http://noitcereon.com/calculator");
+        wsdl11Definition.setPortTypeName("CalculatorPort"); // basically the name used to identify what to call.
+        wsdl11Definition.setLocationUri("/ws"); // Where can the service be called? ("host:port/ws". Example: "localhost:8080/ws")
+        wsdl11Definition.setTargetNamespace("http://noitcereon.com/calculator"); // The namespace used in calculator.xsd
         wsdl11Definition.setSchema(calculatorSchema);
         return wsdl11Definition;
     }
