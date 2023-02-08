@@ -1,0 +1,22 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           targetNamespace="http://noitcereon.com/calculator"
+           xmlns:tns="http://noitcereon.com/calculator"
+>
+
+    <xs:complexType name="addRequest">
+       <xs:sequence>
+           <xs:element name="numberInputs" type="tns:numberInputs"/>
+       </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="addResponse" type="xs:decimal"/>
+
+
+    <xs:complexType name="numberInputs">
+        <xs:sequence>
+            <xs:element name="firstNumber" type="xs:decimal"/>
+            <xs:element name="secondNumber" type="xs:decimal"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
