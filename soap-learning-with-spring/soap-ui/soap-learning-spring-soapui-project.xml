@@ -69,4 +69,68 @@
          <gs:name>Poland</gs:name>\r
       </gs:getCountryRequest>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://spring.io/guides/gs-producing-web-service/CountriesPort/getCountryRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://spring.io/guides/gs-producing-web-service/CountriesPort/getCountryRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" id="1daca836-58ed-4863-a029-ff77f66f7a62" wsaVersion="NONE" name="CalculatorPortSoap11" type="wsdl" bindingName="{http://noitcereon.com/calculator}CalculatorPortSoap11" soapVersion="1_1" anonymous="optional" definition="file:/C:/Users/tba/Desktop/calculator.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/C:/Users/tba/Desktop/calculator.wsdl"><con:part><con:url>file:/C:/Users/tba/Desktop/calculator.wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="http://noitcereon.com/calculator" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://noitcereon.com/calculator" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://noitcereon.com/calculator">
+  <wsdl:types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://noitcereon.com/calculator" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="addRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="numberInputs" type="tns:numberInputs"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="addResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="calculationResult" type="xs:decimal"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="numberInputs">
+        <xs:sequence>
+          <xs:element name="firstNumber" type="xs:decimal"/>
+          <xs:element name="secondNumber" type="xs:decimal"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="addResponse">
+    <wsdl:part element="tns:addResponse" name="addResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addRequest">
+    <wsdl:part element="tns:addRequest" name="addRequest"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="CalculatorPort">
+    <wsdl:operation name="add">
+      <wsdl:input message="tns:addRequest" name="addRequest"></wsdl:input>
+      <wsdl:output message="tns:addResponse" name="addResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CalculatorPortSoap11" type="tns:CalculatorPort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="add">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="addRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CalculatorPortService">
+    <wsdl:port binding="tns:CalculatorPortSoap11" name="CalculatorPortSoap11">
+      <soap:address location="http://localhost:8080/ws"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/ws</con:endpoint></con:endpoints><con:operation id="00ff78d8-cd63-4205-8752-10b4d242e409" isOneWay="false" action="" name="add" bindingOperationName="add" type="Request-Response" outputName="addResponse" inputName="addRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="6bbe7b51-1f4e-4b3b-bcd8-3cfb1840724d" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cal="http://noitcereon.com/calculator">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <cal:addRequest>\r
+         <cal:numberInputs>\r
+            <cal:firstNumber>5.3</cal:firstNumber>\r
+            <cal:secondNumber>4.75</cal:secondNumber>\r
+         </cal:numberInputs>\r
+      </cal:addRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://noitcereon.com/calculator/CalculatorPort/addRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
