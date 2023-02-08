@@ -10,7 +10,7 @@
     </parent>
     <groupId>me.noitcereon</groupId>
     <artifactId>soap-learning-with-spring</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.0</version>
     <name>soap-learning-with-spring</name>
     <description>soap-learning-with-spring</description>
     <properties>
