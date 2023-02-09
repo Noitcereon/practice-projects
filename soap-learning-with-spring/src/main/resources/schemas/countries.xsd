@@ -60,7 +60,13 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="deleteCountryResponse" type="xs:string"/>
+    <xs:element name="deleteCountryResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="deleteCountryResponseMessage"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 
     <!-- Types -->
     <xs:complexType name="country">
