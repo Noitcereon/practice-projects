@@ -48,4 +48,35 @@ public class CountryRepositoryStub implements CountryRepository {
         if(countries.containsKey(capitalizedName)) return countries.get(capitalizedName);
         throw new CountryNotFoundException("Could not find the country " + capitalizedName + " in our data. Perhaps casing is wrong?");
     }
+    public Country createCountry(Country newCountry){
+        if(newCountry == null)
+            throw new IllegalArgumentException("The country must not be null");
+
+        countries.put(newCountry.getName(), newCountry);
+        return countries.get(newCountry.getName());
+    }
+
+    /**
+     *
+     * @param name Name of the country to update.
+     * @param updatedCountry A <code>Country</code> object with the new values.
+     * @return The changed country.
+     */
+    public Country updateCountry(String name, Country updatedCountry){
+        if(name == null) throw new IllegalArgumentException("The country's name must not be null");
+        if(updatedCountry == null) throw new IllegalArgumentException("updatedCountry must not be null.");
+        Country countryToUpdate = countries.get(name);
+        countryToUpdate.setCapital(updatedCountry.getCapital());
+        countryToUpdate.setCurrency(updatedCountry.getCurrency());
+        countryToUpdate.setName(updatedCountry.getName());
+        countryToUpdate.setPopulation(updatedCountry.getPopulation());
+        return countryToUpdate;
+    }
+    public String deleteCountry(String countryName){
+        if(countries.containsKey(countryName)) {
+            countries.remove(countryName);
+            return "Successfully removed " + countryName;
+        }
+        return countryName + " was not found and thus could not be deleted.";
+    }
 }
