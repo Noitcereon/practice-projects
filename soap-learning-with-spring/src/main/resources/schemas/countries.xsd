@@ -1,6 +1,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://spring.io/guides/gs-producing-web-service"
            targetNamespace="http://spring.io/guides/gs-producing-web-service" elementFormDefault="qualified">
 
+    <!-- Read (singular) -->
     <xs:element name="getCountryRequest">
         <xs:complexType>
             <xs:sequence>
@@ -17,6 +18,57 @@
         </xs:complexType>
     </xs:element>
 
+    <!-- Create -->
+    <xs:element name="createCountryRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="country" type="tns:country"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="createCountryResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="createdCountry" type="tns:country"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Update -->
+    <xs:element name="updateCountryRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="nameOfCountryToUpdate" type="xs:string"/>
+                <xs:element name="updatedCountry" type="tns:country"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="updateCountryResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="updatedCountry" type="tns:country"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Delete -->
+    <xs:element name="deleteCountryRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="nameOfCountryToDelete" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="deleteCountryResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="deleteCountryResponseMessage"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Types -->
     <xs:complexType name="country">
         <xs:sequence>
             <xs:element name="name" type="xs:string"/>

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project id="ce19d089-e898-4383-8439-c0fc76852028" activeEnvironment="Default" name="soap-learning-spring" resourceRoot="" soapui-version="5.7.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="18763f4d-4898-4d6b-badf-1fe2b3bddb5a" wsaVersion="NONE" name="CountriesPortSoap11" type="wsdl" bindingName="{http://spring.io/guides/gs-producing-web-service}CountriesPortSoap11" soapVersion="1_1" anonymous="optional" definition="file:/C:/Users/tandersen24/OneDrive%20-%20DXC%20Production/Desktop/countries.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/C:/Users/tandersen24/OneDrive%20-%20DXC%20Production/Desktop/countries.wsdl"><con:part><con:url>file:/C:/Users/tandersen24/OneDrive%20-%20DXC%20Production/Desktop/countries.wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="http://spring.io/guides/gs-producing-web-service" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://spring.io/guides/gs-producing-web-service">
+<con:soapui-project id="ce19d089-e898-4383-8439-c0fc76852028" activeEnvironment="Default" name="soap-learning-spring" resourceRoot="" soapui-version="5.7.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="18763f4d-4898-4d6b-badf-1fe2b3bddb5a" wsaVersion="NONE" name="CountriesPortSoap11" type="wsdl" bindingName="{http://spring.io/guides/gs-producing-web-service}CountriesPortSoap11" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/ws/countries.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/ws/countries.wsdl"><con:part><con:url>http://localhost:8080/ws/countries.wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="http://spring.io/guides/gs-producing-web-service" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://spring.io/guides/gs-producing-web-service" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://spring.io/guides/gs-producing-web-service">
   <wsdl:types>
-    <xs:schema elementFormDefault="qualified" targetNamespace="http://spring.io/guides/gs-producing-web-service">
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://spring.io/guides/gs-producing-web-service" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <!--Read (singular)-->
       <xs:element name="getCountryRequest">
         <xs:complexType>
           <xs:sequence>
@@ -16,6 +17,47 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
+      <!--Create-->
+      <xs:element name="createCountryRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="country" type="tns:country"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="createCountryResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="createdCountry" type="tns:country"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!--Update-->
+      <xs:element name="updateCountryRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="nameOfCountryToUpdate" type="xs:string"/>
+            <xs:element name="updatedCountry" type="tns:country"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="updateCountryResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="updatedCountry" type="tns:country"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!--Delete-->
+      <xs:element name="deleteCountryRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="nameOfCountryToDelete" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="deleteCountryResponse" type="xs:string"/>
+      <!--Types-->
       <xs:complexType name="country">
         <xs:sequence>
           <xs:element name="name" type="xs:string"/>
@@ -33,26 +75,83 @@
       </xs:simpleType>
     </xs:schema>
   </wsdl:types>
+  <wsdl:message name="updateCountryRequest">
+    <wsdl:part element="tns:updateCountryRequest" name="updateCountryRequest"></wsdl:part>
+  </wsdl:message>
   <wsdl:message name="getCountryResponse">
-    <wsdl:part element="tns:getCountryResponse" name="getCountryResponse"/>
+    <wsdl:part element="tns:getCountryResponse" name="getCountryResponse"></wsdl:part>
   </wsdl:message>
   <wsdl:message name="getCountryRequest">
-    <wsdl:part element="tns:getCountryRequest" name="getCountryRequest"/>
+    <wsdl:part element="tns:getCountryRequest" name="getCountryRequest"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteCountryResponse">
+    <wsdl:part element="tns:deleteCountryResponse" name="deleteCountryResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteCountryRequest">
+    <wsdl:part element="tns:deleteCountryRequest" name="deleteCountryRequest"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createCountryRequest">
+    <wsdl:part element="tns:createCountryRequest" name="createCountryRequest"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateCountryResponse">
+    <wsdl:part element="tns:updateCountryResponse" name="updateCountryResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createCountryResponse">
+    <wsdl:part element="tns:createCountryResponse" name="createCountryResponse"></wsdl:part>
   </wsdl:message>
   <wsdl:portType name="CountriesPort">
+    <wsdl:operation name="updateCountry">
+      <wsdl:input message="tns:updateCountryRequest" name="updateCountryRequest"></wsdl:input>
+      <wsdl:output message="tns:updateCountryResponse" name="updateCountryResponse"></wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="getCountry">
-      <wsdl:input message="tns:getCountryRequest" name="getCountryRequest"/>
-      <wsdl:output message="tns:getCountryResponse" name="getCountryResponse"/>
+      <wsdl:input message="tns:getCountryRequest" name="getCountryRequest"></wsdl:input>
+      <wsdl:output message="tns:getCountryResponse" name="getCountryResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteCountry">
+      <wsdl:input message="tns:deleteCountryRequest" name="deleteCountryRequest"></wsdl:input>
+      <wsdl:output message="tns:deleteCountryResponse" name="deleteCountryResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createCountry">
+      <wsdl:input message="tns:createCountryRequest" name="createCountryRequest"></wsdl:input>
+      <wsdl:output message="tns:createCountryResponse" name="createCountryResponse"></wsdl:output>
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="CountriesPortSoap11" type="tns:CountriesPort">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="updateCountry">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="updateCountryRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updateCountryResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="getCountry">
       <soap:operation soapAction=""/>
       <wsdl:input name="getCountryRequest">
         <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="getCountryResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteCountry">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="deleteCountryRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deleteCountryResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createCountry">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="createCountryRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createCountryResponse">
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
@@ -69,7 +168,46 @@
          <gs:name>Poland</gs:name>\r
       </gs:getCountryRequest>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://spring.io/guides/gs-producing-web-service/CountriesPort/getCountryRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" id="1daca836-58ed-4863-a029-ff77f66f7a62" wsaVersion="NONE" name="CalculatorPortSoap11" type="wsdl" bindingName="{http://noitcereon.com/calculator}CalculatorPortSoap11" soapVersion="1_1" anonymous="optional" definition="file:/C:/Users/tba/Desktop/calculator.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/C:/Users/tba/Desktop/calculator.wsdl"><con:part><con:url>file:/C:/Users/tba/Desktop/calculator.wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="http://noitcereon.com/calculator" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://noitcereon.com/calculator" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://noitcereon.com/calculator">
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://spring.io/guides/gs-producing-web-service/CountriesPort/getCountryRequest"/><con:wsrmConfig version="1.2"/></con:call><con:call id="140c6a18-a2d7-4707-80e9-be7a241190c2" name="Request Denmark"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:gs="http://spring.io/guides/gs-producing-web-service">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <gs:getCountryRequest>\r
+         <gs:name>Denmark</gs:name>\r
+      </gs:getCountryRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://spring.io/guides/gs-producing-web-service/CountriesPort/getCountryRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="9114d442-c442-472d-94d0-50c18037767a" isOneWay="false" action="" name="updateCountry" bindingOperationName="updateCountry" type="Request-Response" outputName="updateCountryResponse" inputName="updateCountryRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="72de97c1-a018-4dc4-b457-327d2eb864bf" name="Update Denmark"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:gs="http://spring.io/guides/gs-producing-web-service">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <gs:updateCountryRequest>\r
+         <gs:nameOfCountryToUpdate>Denmark</gs:nameOfCountryToUpdate>\r
+         <gs:updatedCountry>\r
+            <gs:name>Denmark</gs:name>\r
+            <gs:population>6000000</gs:population>\r
+            <gs:capital>Copenhagen</gs:capital>\r
+            <gs:currency>EUR</gs:currency>\r
+         </gs:updatedCountry>\r
+      </gs:updateCountryRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://spring.io/guides/gs-producing-web-service/CountriesPort/updateCountryRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="e0ebd198-04d6-41ed-b13f-2d380cb25145" isOneWay="false" action="" name="deleteCountry" bindingOperationName="deleteCountry" type="Request-Response" outputName="deleteCountryResponse" inputName="deleteCountryRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="eb8bfd54-af88-4b50-b1a2-73256e5182b9" name="Delete Denmark"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:gs="http://spring.io/guides/gs-producing-web-service">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <gs:deleteCountryRequest>\r
+         <gs:nameOfCountryToDelete>Denmark</gs:nameOfCountryToDelete>\r
+      </gs:deleteCountryRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://spring.io/guides/gs-producing-web-service/CountriesPort/deleteCountryRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="a029e9ae-4ab7-476a-8446-2375c6e04cee" isOneWay="false" action="" name="createCountry" bindingOperationName="createCountry" type="Request-Response" outputName="createCountryResponse" inputName="createCountryRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="594403b9-5378-49eb-825a-8dd46a08a3d4" name="Create Denmark"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:gs="http://spring.io/guides/gs-producing-web-service">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <gs:createCountryRequest>\r
+         <gs:country>\r
+            <gs:name>Denmark</gs:name>\r
+            <gs:population>6000000</gs:population>\r
+            <gs:capital>Copenhagen</gs:capital>\r
+            <gs:currency>DKK</gs:currency>\r
+         </gs:country>\r
+      </gs:createCountryRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://spring.io/guides/gs-producing-web-service/CountriesPort/createCountryRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" id="1daca836-58ed-4863-a029-ff77f66f7a62" wsaVersion="NONE" name="CalculatorPortSoap11" type="wsdl" bindingName="{http://noitcereon.com/calculator}CalculatorPortSoap11" soapVersion="1_1" anonymous="optional" definition="file:/C:/Users/tba/Desktop/calculator.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/C:/Users/tba/Desktop/calculator.wsdl"><con:part><con:url>file:/C:/Users/tba/Desktop/calculator.wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="http://noitcereon.com/calculator" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://noitcereon.com/calculator" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://noitcereon.com/calculator">
   <wsdl:types>
     <xs:schema elementFormDefault="qualified" targetNamespace="http://noitcereon.com/calculator" xmlns:xs="http://www.w3.org/2001/XMLSchema">
       <xs:element name="addRequest">
@@ -133,4 +271,50 @@
          </cal:numberInputs>\r
       </cal:addRequest>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://noitcereon.com/calculator/CalculatorPort/addRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://noitcereon.com/calculator/CalculatorPort/addRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite id="d9bbd485-4d53-4524-a0a0-3577a6fc4dec" name="CountriesPortSoap11 TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="778a21c4-4539-4761-9ef2-97bedc31ef32" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="CountriesPortSoap11 TestSuite" searchProperties="true"><con:settings/><con:testStep type="request" id="fb7ccd7d-bcb3-4218-bd39-b14b711d21d0" name="createCountry (Denmark)"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CountriesPortSoap11</con:interface><con:operation>createCountry</con:operation><con:request name="createCountry (Denmark)" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="63e5854a-84ad-42f7-a6b4-37b550196b8e"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:gs="http://spring.io/guides/gs-producing-web-service">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <gs:createCountryRequest>\r
+         <gs:country>\r
+            <gs:name>Denmark</gs:name>\r
+            <gs:population>6000000</gs:population>\r
+            <gs:capital>Copenhagen</gs:capital>\r
+            <gs:currency>DKK</gs:currency>\r
+         </gs:country>\r
+      </gs:createCountryRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Fault Assertion" id="41a784c8-31e5-419d-8630-7195bb4983f8" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://spring.io/guides/gs-producing-web-service/CountriesPort/createCountryRequest"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="daf612d2-4695-492b-8cc2-53f41b507d41" name="getCountry 1 (Denmark)"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CountriesPortSoap11</con:interface><con:operation>getCountry</con:operation><con:request name="getCountry 1 (Denmark)" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="1590b04a-8a51-4eae-8242-aa135a4de562"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:gs="http://spring.io/guides/gs-producing-web-service">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <gs:getCountryRequest>\r
+         <gs:name>Denmark</gs:name>\r
+      </gs:getCountryRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Fault Assertion" id="a5335849-3b3e-4cfd-8028-d35d43c3ec11" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://spring.io/guides/gs-producing-web-service/CountriesPort/getCountryRequest"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="deb7ce62-60ae-4eaf-9947-18beaeff7eea" name="updateCountry (Denmark)"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CountriesPortSoap11</con:interface><con:operation>updateCountry</con:operation><con:request name="updateCountry (Denmark)" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="512a91c2-0f20-4602-86a4-e57cebb4d545"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:gs="http://spring.io/guides/gs-producing-web-service">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <gs:updateCountryRequest>\r
+         <gs:nameOfCountryToUpdate>Denmark</gs:nameOfCountryToUpdate>\r
+         <gs:updatedCountry>\r
+            <gs:name>Denmark</gs:name>\r
+            <gs:population>6000000</gs:population>\r
+            <gs:capital>Copenhagen</gs:capital>\r
+            <gs:currency>EUR</gs:currency>\r
+         </gs:updatedCountry>\r
+      </gs:updateCountryRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Fault Assertion" id="5ab34f7e-7ad4-42b5-a117-957b9ab96af8" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://spring.io/guides/gs-producing-web-service/CountriesPort/updateCountryRequest"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="78ffaac4-bb28-491b-ac9e-8f17a35509b0" name="getCountry 2 (Denmark)"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CountriesPortSoap11</con:interface><con:operation>getCountry</con:operation><con:request name="getCountry 2 (Denmark)" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="1590b04a-8a51-4eae-8242-aa135a4de562"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:gs="http://spring.io/guides/gs-producing-web-service">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <gs:getCountryRequest>\r
+         <gs:name>Denmark</gs:name>\r
+      </gs:getCountryRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Fault Assertion" id="146b81aa-e3f4-4381-b018-535741c1c531" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://spring.io/guides/gs-producing-web-service/CountriesPort/getCountryRequest"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="27a18f06-a1f2-4a53-a2ac-466216e1ebc4" name="deleteCountry (Denmark)"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CountriesPortSoap11</con:interface><con:operation>deleteCountry</con:operation><con:request name="deleteCountry (Denmark)" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="48fbf4f6-80ce-4da5-8bc1-bfdfedba57fa"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:gs="http://spring.io/guides/gs-producing-web-service">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <gs:deleteCountryRequest>\r
+         <gs:nameOfCountryToDelete>Denmark</gs:nameOfCountryToDelete>\r
+      </gs:deleteCountryRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Fault Assertion" id="d3ba9fa4-9822-4474-8311-b17756306ad4" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://spring.io/guides/gs-producing-web-service/CountriesPort/deleteCountryRequest"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
