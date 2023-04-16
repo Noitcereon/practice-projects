@@ -1,4 +1,4 @@
-# Practice Projects
+# Practice Projects Sweet baby jesus!
 
 I created this repository to house all my practice projects (only intended for practice, nothing else). 
 The "projects" are often on the small side, to try out only a specific functionality, but in other cases they go a bit further, e.g. web app with keycloak.
