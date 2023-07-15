@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+# When using the exercism CLI it moves makes a folder called 'bash' and places the exercise inside.
+# I do not want this bash folder.
+# Therefore this script will move the exercise out of the bash folder and remove the bash folder.
+
+# Usage
+# download-exercise "<exercism-download-command>"
+# OR
+# bash download-exercise "<exercism-download-command>"
+
+# Example:
+# download-exercise "exercism download --exercise=two-fer --track=bash"
+
+# since a file with no extension does not execute you can use:
+# bash download-exercise "exercism download --exercise=two-fer --track=bash"
+
+COMMAND=$1
+echo "Running command: $COMMAND"
+$COMMAND
+echo "Moving excercise files to current directory"
+mv bash/* .
+
+rm -r bash;
+echo "Deleted bash folder"
