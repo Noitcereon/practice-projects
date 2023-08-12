@@ -15,6 +15,18 @@
 # since a file with no extension does not execute you can use:
 # bash download-exercise "exercism download --exercise=two-fer --track=bash"
 
+# Uncomment below line to debug the script
+#set -x
+ARG_COUNT="$#"
+
+if [[ "$ARG_COUNT" != "1" ]]; then
+	echo "Invalid usage."
+	echo "Usage:"
+      	echo "On Windows: 'bash download-exercise \"<exercism-download-command>\""
+	echo "On Linux: 'download-exercise \"<exercism-download-command>\""
+	exit 1
+fi
+
 COMMAND=$1
 echo "Running command: $COMMAND"
 $COMMAND
@@ -23,3 +35,5 @@ mv bash/* .
 
 rm -r bash;
 echo "Deleted bash folder"
+exit 0
+
