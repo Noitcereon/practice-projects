@@ -1,0 +1,32 @@
+/** global.css contain css used between different html pages **/
+
+/***** Override default styles *****/
+body{
+    padding:0;
+    margin:0;
+}
+
+.default-container{
+    width: 90%;
+    margin: 0px auto;
+}
+.default-footer{
+    background: rgba(240, 240, 240, 1);
+    
+}
+.full-width-container{
+    width:100%;
+    padding: 1rem 1rem;
+}
+.dark-mode{
+    color: antiquewhite;
+    background: linear-gradient(90deg, rgba(184,184,227,1) 0%, rgba(12,15,73,1) 0%);
+}
+
+/** When screens go below a certain size, layout changes */
+@media only screen and (max-width: 680px)  {
+    
+}
+
+
+

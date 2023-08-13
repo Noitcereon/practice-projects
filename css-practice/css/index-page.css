@@ -1,0 +1,33 @@
+.box-1-of-3{
+    justify-content: center;
+    align-items: flex-start;
+    background: rgba(0,0,0, 0.8);
+    color:aliceblue;
+    border-color: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%); 
+    padding:10px;
+}
+.box-2-of-3{
+    justify-content: center;
+    flex-direction: column;
+}
+.box-3-of-3{
+    justify-content: center;
+    flex-direction: column;
+}
+.justify-center{
+   justify-content: center;
+}
+.flex{
+    display:flex;
+}
+.three-box-container{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+/** When screens go below a certain size, layout changes */
+@media only screen and (max-width: 680px)  {
+    .three-box-container{
+        grid-template-columns: 1fr;
+    }
+}

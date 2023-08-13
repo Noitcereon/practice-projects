@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>My CSS Practice</title>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" href="./css/global.css">
+        <link rel="stylesheet" href="./css/index-page.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body class="light-mode">
+            <header class="default-container">
+                <h1>Page Header - H1 tag</h1>
+                <button id="dark-mode-switch">Toggle dark mode</button>
+            </header>
+            <main class="default-container">
+                <h2>Main - H2 tag</h2>
+                <p>Paragraph with text</p>
+                <section class="three-box-container">
+                    <div class="box-1-of-3 flex justify-center">
+                        <div>I am box 1</div>
+                    </div>
+                    <div class="box-2-of-3 flex justify-center">
+                        <p>I am box 2</p>
+                    </div>
+                    <div class="box-3-of-3 flex justify-center">
+                        <p>I am box 3</p>
+                    </div>
+                </section>
+            </main>
+            <footer class="full-width-container default-footer dark-mode">
+                Page Footer
+            </footer>
+    </body>
+    <script>
+        document.getElementById("dark-mode-switch").addEventListener("click", () => {
+            toggleDarkMode();
+        })
+        function toggleDarkMode(){
+            const darkModeKey = "isDarkMode";
+            const isDarkMode = window.localStorage.getItem(darkModeKey) == "true" ? true : false;
+            
+            const newDarkModeSetting = !isDarkMode;
+            console.log("Toggle dark mode to: " + newDarkModeSetting);
+            window.localStorage.setItem(darkModeKey, newDarkModeSetting);
+        }
+    </script>
+</html>
+
