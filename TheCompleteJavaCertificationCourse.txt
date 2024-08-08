@@ -1,0 +1,3 @@
+I have put this project in a separate repository due to it having a different git history + to save some storage space when downloading practice-projects.
+
+Link to repo: https://github.com/Noitcereon/TheCompleteJavaCertificationCourse
