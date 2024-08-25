@@ -1,0 +1,12 @@
+
+canvas{
+    background-color:bisque;
+    width: 500px;
+    max-width: 95%;
+    height:300px;
+    display:block;
+    overflow: scroll;
+}
+noscript h1{
+    color:red;
+}

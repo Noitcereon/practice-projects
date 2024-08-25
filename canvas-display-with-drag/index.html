@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draggable Canvas</title>
+    <link rel="stylesheet" href="main.css"/>
+    <script type="javascript" src="main.js"></script>
+</head>
+<body>
+<noscript>
+    <h1>
+        Info: JavaScript is either disabled or you're using a browser that doesn't support it.
+    </h1>
+</noscript>
+<main>
+    <header>
+        <h1>Canvas Dragging Interface Practice </h1>
+        <p>
+            My goal is to make a &lt;canvas&gt;, which contains boxes with info in which you can drag your viewpoint
+            around and zoom in and out, similar to Google Maps.
+        </p>
+    </header>
+    <canvas id="the-canvas">
+
+    </canvas>
+</main>
+<script>
+    console.log("Initializing index.html script section")
+    /**
+     * Initializes the canvas with a drawn image and returns the canvas.
+     * @returns {HTMLCanvasElement}
+     */
+    function initializeCanvas() {
+        try {
+            const canvas = document.getElementById("the-canvas");
+            const context = canvas.getContext("2d")
+            const familyTreeImg = new Image()
+            familyTreeImg.src = "proof-of-concept-family-tree-img.png";
+            // onload event is triggered when the familyTreeImg has finished loading in the document, thus making it drawable.
+            familyTreeImg.onload = () => {
+                context.drawImage(familyTreeImg, 0, 0)
+            }
+            return canvas
+        } catch (exception) {
+            console.error("Failed to initialize canvas.")
+            return null;
+        }
+    }
+
+    // Using window.onload to ensure external main.js script has been loaded.
+    document.addEventListener("DOMContentLoaded", () => {
+        console.log("banzai")
+        const canvas = initializeCanvas();
+        canvas.addEventListener("mousedown", (mouseEvent) => {
+            console.log(mouseEvent.offsetX);
+            console.log(mouseEvent.offsetY);
+        })
+    })
+</script>
+</body>
+</html>
