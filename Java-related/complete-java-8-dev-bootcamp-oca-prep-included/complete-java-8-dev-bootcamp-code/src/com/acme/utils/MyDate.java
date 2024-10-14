@@ -1,9 +1,9 @@
-package acme.order.system;
+package com.acme.utils;
 
 public class MyDate {
-    int year;
-    int month;
-    int day;
+    public int year;
+    public int month;
+    public int day;
     {
         setDate(1, 1, 2000); // 1st of January the year 2000.
     }
@@ -15,7 +15,7 @@ public class MyDate {
         // A constructor in the most horrible date format (month-day-year)... But this is to follow the intruction from the course.
         setDate(month, day, year);
     }
-    void setDate (int month, int day, int year){
+    public void setDate (int month, int day, int year){
         this.month = month;
         this.day = day;
         this.year = year;
