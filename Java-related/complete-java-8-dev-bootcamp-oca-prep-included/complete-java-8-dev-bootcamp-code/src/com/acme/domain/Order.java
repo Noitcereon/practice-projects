@@ -2,12 +2,20 @@ package com.acme.domain;
 
 import com.acme.utils.MyDate;
 
+/**
+ * The domain model representing an Order in the system.
+ * Aside from holding information it can calculate the tax of an order or a specified amount based on the taxRate.
+ */
 public class Order {
     MyDate orderDate;
     double orderAmount = 0.00;
     String customer;
     String product;
     int quantity;
+    /**
+     * The rate used to calculate the tax with. <br>
+     * Default value: taxRate = 0.05.
+     */
     public static double taxRate = 0.05;
 
     public Order(MyDate date, double amount, String customer, String productName, int quantity) {
