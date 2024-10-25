@@ -8,9 +8,9 @@ public class TestMyDate{
 		MyDate date1 = new MyDate(11,11,1918);
 
 		MyDate date2 = new MyDate();
-		date2.day = 11;
-		date2.month = 11;
-		date2.year = 1918;
+		date2.setDay(11);
+		date2.setMonth(11);
+		date2.setYear(1918);
 
 		MyDate date3 = new MyDate();
 		date3.setDate(4,21,1968);
@@ -27,5 +27,8 @@ public class TestMyDate{
 		System.out.println(str3);
 		System.out.println(str4);
 
+		System.out.println("Is " + 2020 + " a leap year? " + MyDate.isLeapYear(2020));
+
+		MyDate.listHolidays();
 	}
 }
