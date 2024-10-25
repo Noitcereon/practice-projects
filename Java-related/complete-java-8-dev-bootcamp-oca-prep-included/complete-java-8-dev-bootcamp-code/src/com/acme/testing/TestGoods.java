@@ -5,6 +5,9 @@ import com.acme.domain.Liquid;
 import com.acme.domain.Solid;
 import com.acme.domain.Good.UnitOfMeasureType;
 
+import java.util.Collections;
+import java.util.Comparator;
+
 public class TestGoods {
 
 	public static void main(String[] args) {
@@ -18,7 +21,7 @@ public class TestGoods {
 		System.out.println(glue);
 		System.out.println(paint);
 		System.out.println(anvil);
-		
+
 		System.out.println("The weight of " + glue + " is " + glue.weight());
 		System.out.println("The weight of " + paint + " is " + paint.weight());
 		System.out.println("The weight of " + anvil + " is " + anvil.weight());
@@ -27,5 +30,15 @@ public class TestGoods {
 		System.out.println("Is " + x + " flammable?  " + x.isFlammable());
 		x = paint;
 		System.out.println("Is " + x + " flammable?  " + x.isFlammable());
+
+		// Part of Lab15 test
+		System.out.println(Good.getCatalog());
+		Good.getCatalog().remove(1);
+
+		// Lab 16 test
+		Collections.sort(Good.getCatalog());
+		System.out.println(Good.getCatalog());
+		int indexIfFoundOrMinusValue = Collections.binarySearch(Good.getCatalog(), x); // note: binarySearch requires a sorted collection.
+		System.out.println(indexIfFoundOrMinusValue);
 	}
 }
