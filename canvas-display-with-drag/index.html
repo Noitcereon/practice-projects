@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Draggable Canvas</title>
     <link rel="stylesheet" href="main.css"/>
-    <script type="javascript" src="main.js"></script>
 </head>
 <body>
 <noscript>
@@ -48,13 +47,14 @@
         }
     }
 
-    // Using window.onload to ensure external main.js script has been loaded.
     document.addEventListener("DOMContentLoaded", () => {
         console.log("banzai")
         const canvas = initializeCanvas();
         canvas.addEventListener("mousedown", (mouseEvent) => {
-            console.log(mouseEvent.offsetX);
-            console.log(mouseEvent.offsetY);
+            console.log("xOffset", mouseEvent.offsetX);
+            console.log("yOffset", mouseEvent.offsetY);
+            // TODO: Somehow pan and zoom around image/canvas (like google map)
+            // Maybe this can inspire: https://codepen.io/chengarda/details/wRxoyB
         })
     })
 </script>
