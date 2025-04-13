@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Other Page</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="./styles.css">
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="other-page.html">Go to other page</a></li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <h1>Other Page</h1>
+    <p>This is an experiment. Let's try to change the color of a button via input on this page.</p>
+    <div>
+        <label>
+            Hexadecimal color code
+            <input id="colorInput" name="colorInput" type="text" minlength="4" maxlength="7" placeholder="#A02BCA" title="A hexadecimal color code (format: #123456 or #123)">
+        </label>
+        <button type="button" style="display:block;" id="myButton">Change color of this button</button>
+    </div>
+</main>
+<script src="/js/neutralino.js"></script>
+<!-- Your app's source files -->
+<script src="/js/otherPage.js"></script>
+</body>
+
+</html>
