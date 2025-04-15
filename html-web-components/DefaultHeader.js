@@ -7,8 +7,8 @@ class DefaultHeader extends HTMLElement {
         defaultHeader.innerHTML = `
                 <nav>
                     <ul>
-                         <li>Item 1</li>
-                         <li>Item 2</li>
+                         <li> <a href="./index.html">Home</a></li>
+                         <li><a href="./second-page.html">2nd Page</a></li>
                          <li>Item 3</li>
                     </ul>
                 </nav>
